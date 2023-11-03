@@ -16,8 +16,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de">
+      <header><Navigation /></header>
       <body className={inter.className}>
-        <Navigation />
         {children}
       </body>
     </html>
