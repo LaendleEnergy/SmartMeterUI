@@ -43,14 +43,6 @@ export default function Home() {
             <Link className="text-zinc-600 text-xl font-semibold font-['Inter'] underline tracking-widest" href="/register">Registriere deinen Haushalt kostenlos</Link>
           </div>
         </div>
-        <div className="Logo w-80 h-60 p-2.5 left-[624px] top-[58px] absolute mix-blend-hard-light justify-start items-start gap-2.5 inline-flex">
-          <Image className="Image1 w-80 h-60" src="images/logo.png" alt="placeholder" />
-        </div>
-        <div className="NavigationBar w-96 h-28 left-0 top-[-1px] absolute bg-indigo-50 flex-col justify-start items-start gap-6 inline-flex">
-          <div className="Center w-96 h-px relative">
-            <div className="Divider w-96 h-px left-0 top-0 absolute bg-zinc-200" />
-          </div>
-        </div>
       </div>
     </div>
   )

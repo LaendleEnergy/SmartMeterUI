@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
-import Logo from "./Logo";
+import Logo from "./../Logo";
 import { usePathname } from "next/navigation";
 
 const Navbar = () => {
@@ -15,8 +15,8 @@ const Navbar = () => {
   return (
     <div className="NavigationBar h-28 left-0 top-0 absolute bg-indigo-50 flex-col justify-start items-start gap-6 inline-flex">
       <div className="Center w-96 h-28 relative">
-        <div className="Logo w-56 h-24 left-[35.90px] top-[-0px] absolute flex-col justify-start items-start gap-2.5 inline-flex">
-          <Logo />
+        <div className="Logo left-[35.90px] top-[-0px] absolute flex-col justify-start items-start gap-2.5 inline-flex">
+          <Logo></Logo>
         </div>
         <div className="Items w-96 h-10 left-[897.52px] top-[33px] absolute justify-end items-center gap-8 inline-flex">
           <NavLink href="/pages/energy-consumption" text="Stromverbrauch" />
@@ -42,7 +42,7 @@ function NavLink({ href, text }: NavLinkProps) {
 
   return (
     <Link href={href}>
-      <a className={isActive ? "PrimaryMedium w-28 px-5 py-2 bg-sky-600 rounded-full justify-center items-center flex" : "text-neutral-800 text-base font-medium font-['Inter'] leading-normal"}>{text}</a>
+      <a className={isActive ? "PrimaryMedium w-28 px-5 py-2 bg-sky-600 rounded-full justify-center items-center flex font-['Inter']" : "text-neutral-800 text-base font-medium font-['Inter'] leading-normal"}>{text}</a>
     </Link>
   );
 }
