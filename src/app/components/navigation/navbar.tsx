@@ -13,12 +13,12 @@ const Navbar = () => {
           <Logo />
         </div>
         <div className="Items w-96 h-10 left-[897.52px] top-[33px] absolute justify-end items-center gap-8 inline-flex">
-          <NavLink href="/energy-consumption" text="Stromverbrauch" />
-          <NavLink href="/energy-saving" text="Stromsparen" />
-          <NavLink href="/rewards" text="Belohnungen" />
-          <NavLink href="/devices" text="Geräte" />
-          <NavLink href="/personal-information" text="Persönliche Daten" />
-          <NavLink href="/household" text="Haushalt" />       </div>
+          <NavLink href="/pages/energy-consumption" text="Stromverbrauch" />
+          <NavLink href="/pages/energy-saving" text="Stromsparen" />
+          <NavLink href="/pages/rewards" text="Belohnungen" />
+          <NavLink href="/pages/devices" text="Geräte" />
+          <NavLink href="/pages/personal-information" text="Persönliche Daten" />
+          <NavLink href="/pages/household" text="Haushalt" />       </div>
         <div className="Divider w-96 h-px left-0 top-[105px] absolute bg-zinc-200"></div>
       </div>
     </div>
