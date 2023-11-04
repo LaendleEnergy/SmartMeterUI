@@ -5,7 +5,6 @@ export default function DeviceOverview() {
         <div className="DevicesOverview w-96 h-96 bg-white flex-col justify-start items-start gap-2.5 inline-flex">
             <header><Navigation /></header>
             <div className="Page w-96 h-96 relative">
-
                 <div className="Trend w-96 h-96 left-[428px] top-[391px] absolute">
                     <div className="Rectangle9 w-96 h-96 left-0 top-0 absolute bg-indigo-50 border-2 border-black"></div>
                     <div className="Frame16 w-96 h-96 left-[17px] top-[37px] absolute">
