@@ -1,8 +1,8 @@
-import Image from 'next/image'
-
+import Navigation from "../../components/navigation/navbar";
 export default function PersonalInformation() {
     return (
         <div className="PersonalInformation w-96 h-96 bg-white flex-col justify-start items-start gap-2.5 inline-flex">
+            <header><Navigation /></header>
             <div className="Page w-96 h-96 relative">
 
                 <div className="PersonalInformation px-12 py-20 left-[549px] top-[219px] absolute flex-col justify-start items-center gap-11 inline-flex">

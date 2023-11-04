@@ -1,4 +1,3 @@
-import Navigation from "./components/navigation/navbar";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -16,7 +15,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de">
-      <header><Navigation /></header>
       <body className={inter.className}>
         {children}
       </body>

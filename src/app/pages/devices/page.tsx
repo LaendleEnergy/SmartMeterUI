@@ -1,8 +1,10 @@
-import Image from 'next/image'
+import { FaPlusCircle } from "react-icons/fa";
+import Navigation from "../../components/navigation/navbar";
 
 export default function DeviceOverview() {
     return (
         <div className="Devices w-96 h-96 bg-white flex-col justify-start items-start gap-2.5 inline-flex">
+            <header><Navigation /></header>
             <div className="Page w-96 h-96 relative">
 
             </div>
@@ -41,12 +43,10 @@ export default function DeviceOverview() {
                     </div>
                 </div>
                 <div className="Frame13 w-96 h-40 relative">
-                    <div className="PrimaryMedium w-80 h-14 px-5 py-2 left-[36.50px] top-[44px] absolute bg-sky-600 rounded-full justify-center items-center inline-flex">
+                    <div className="PrimaryMedium w-80 h-14 px-5 py-2 left-[36.50px] top-[44px] absolute bg-primary-600 rounded-full justify-center items-center inline-flex">
                         <div className="Default text-white text-base font-medium font-['Inter'] leading-normal">Neues Gerät hinzufügen </div>
                     </div>
-                    <div className="Icon p-3 left-[297px] top-[50px] absolute rounded-lg justify-start items-start inline-flex">
-                        <div className="IconsMediumPlus w-6 h-6 relative" />
-                    </div>
+                    <FaPlusCircle></FaPlusCircle>
                 </div>
             </div>
             <div className="CircleArrowLeft w-32 h-32 left-0 top-[106px] absolute bg-white">

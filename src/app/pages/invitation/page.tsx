@@ -1,8 +1,10 @@
-import Image from 'next/image'
+import Image from "next/image";
+import Navigation from "../../components/navigation/navbar";
 
 export default function AcceptInvitation() {
     return (
         <div className="AcceptInvitation w-96 h-96 bg-white flex-col justify-start items-start gap-2.5 inline-flex">
+            <header><Navigation /></header>
             <div className="Page w-96 h-96 justify-start items-start gap-96 inline-flex">
                 <div className="NavigationBar w-96 bg-indigo-50 flex-col justify-start items-start gap-6 inline-flex">
                     <div className="Center w-96 h-28 relative">
@@ -27,7 +29,7 @@ export default function AcceptInvitation() {
                         <div className="Password text-zinc-600 text-base font-normal font-['Inter'] tracking-wider">Passwort wiederholen</div>
                     </div>
                     <div className="RegisterButton w-32 h-24 pr-2 pt-2 pb-12 left-[131px] top-[463px] absolute justify-start items-center inline-flex">
-                        <div className="PrimaryMedium w-32 h-10 px-5 py-2 bg-sky-600 rounded-full justify-center items-center inline-flex">
+                        <div className="PrimaryMedium w-32 h-10 px-5 py-2 bg-primary-600 rounded-full justify-center items-center inline-flex">
                             <div className="Default text-center text-white text-base font-medium font-['Inter'] leading-normal">Profil erstellen</div>
                         </div>
                     </div>

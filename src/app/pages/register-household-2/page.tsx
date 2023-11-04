@@ -15,7 +15,7 @@ export default function Register2() {
         <div className="Ellipse1 w-14 h-12 left-[37.62px] top-[35.58px] absolute rounded-full border-2 border-slate-900" />
       </div>
       <div className="ProgressBar w-96 h-10 relative">
-        <div className="Ellipse2 w-10 h-10 left-[79px] top-0 absolute bg-sky-600 rounded-full" />
+        <div className="Ellipse2 w-10 h-10 left-[79px] top-0 absolute bg-primary-600 rounded-full" />
       </div>
       <div className="CompleteProfil w-96 h-96 relative">
         <div className="NumberOfPeople w-96 h-14 left-0 top-[140px] absolute" />
@@ -44,7 +44,7 @@ export default function Register2() {
           </div>
         </div>
         <div className="ConfirmButton w-32 h-24 pt-2 pb-12 left-[244px] top-[440px] absolute justify-center items-center inline-flex">
-          <div className="PrimaryMedium w-32 px-5 py-2 bg-sky-600 rounded-full justify-center items-center inline-flex">
+          <div className="PrimaryMedium w-32 px-5 py-2 bg-primary-600 rounded-full justify-center items-center inline-flex">
             <div className="Default text-center text-white text-base font-medium font-['Inter'] leading-normal">Registrieren</div>
           </div>
         </div>

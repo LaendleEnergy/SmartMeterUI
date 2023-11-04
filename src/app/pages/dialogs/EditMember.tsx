@@ -27,7 +27,7 @@
                         <div className="Default text-center text-white text-base font-medium font-['Inter'] leading-normal">Abbrechen</div>
                     </div>
                 </div>
-                <div className="ConfirmButton h-10 px-5 py-2 bg-sky-600 rounded-full justify-center items-center inline-flex">
+                <div className="ConfirmButton h-10 px-5 py-2 bg-primary-600 rounded-full justify-center items-center inline-flex">
                     <div className="Default text-center text-white text-base font-medium font-['Inter'] leading-normal">Bestätigen</div>
                 </div>
             </div>

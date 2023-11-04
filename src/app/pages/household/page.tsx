@@ -1,8 +1,9 @@
-import Image from 'next/image'
+import Navigation from "../../components/navigation/navbar";
 
 export default function PersonalInformation() {
     return (
         <div className="Account w-96 h-96 bg-white flex-col justify-start items-start gap-2.5 inline-flex">
+            <header><Navigation /></header>
             <div className="Page w-96 h-96 relative">
 
                 <div className="PersonalInformation px-12 py-20 left-[549px] top-[174px] absolute flex-col justify-start items-center gap-11 inline-flex">
@@ -25,7 +26,7 @@ export default function PersonalInformation() {
                     <div className="Zaehlernummern w-96 h-14 pl-3.5 pr-2.5 py-2.5 rounded border-4 border-black justify-start items-center gap-2.5 inline-flex">
                         <div className="Password text-zinc-600 text-base font-normal font-['Inter'] tracking-wider">Zählernummer</div>
                     </div>
-                    <div className="PrimaryMedium h-16 px-5 py-2 bg-sky-600 rounded-full justify-center items-center inline-flex">
+                    <div className="PrimaryMedium h-16 px-5 py-2 bg-primary-600 rounded-full justify-center items-center inline-flex">
                         <div className="Default text-center text-white text-xl font-medium font-['Inter'] leading-normal">Haushaltsmitglieder verwalten</div>
                     </div>
                     <div className="Name" />

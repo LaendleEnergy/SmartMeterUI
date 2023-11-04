@@ -1,7 +1,7 @@
 <div className="AddLabelDialog w-96 h-96 relative">
     <div className="Rectangle1 w-96 h-96 left-0 top-0 absolute bg-indigo-50 border-2 border-black" />
     <div className="ConfirmButton pl-px pr-2.5 pt-9 pb-2 left-[336px] top-[309px] absolute justify-start items-center inline-flex">
-        <div className="PrimaryMedium w-32 px-5 py-2 bg-sky-600 rounded-full justify-center items-center inline-flex">
+        <div className="PrimaryMedium w-32 px-5 py-2 bg-primary-600 rounded-full justify-center items-center inline-flex">
             <div className="Default text-center text-white text-base font-medium font-['Inter'] leading-normal">Bestätigen</div>
         </div>
     </div>

@@ -1,8 +1,9 @@
-import Image from 'next/image'
+import Navigation from "../../components/navigation/navbar";
 
 export default function Rewards() {
     return (
         <div className="Rewards w-96 h-96 bg-white flex-col justify-start items-start gap-2.5 inline-flex">
+            <header><Navigation /></header>
             <div className="Page w-96 h-96 relative">
                 <div className="Background w-96 h-56 pl-96 pr-7 pt-52 left-[492px] top-[211px] absolute bg-indigo-50 rounded-sm border-2 border-black justify-end items-center inline-flex">
                     <div className="Icon p-3 bg-white bg-opacity-0 rounded-lg justify-start items-start inline-flex">
@@ -47,7 +48,7 @@ export default function Rewards() {
                     </div>
                 </div>
                 <div className="Bearbeiten left-[912px] top-[392px] absolute text-black text-xl font-normal font-['Inter']">noch 5 Tage</div>
-                <div className="PrimaryMedium h-16 px-5 py-2 left-[621px] top-[898px] absolute bg-sky-600 rounded-full justify-center items-center inline-flex">
+                <div className="PrimaryMedium h-16 px-5 py-2 left-[621px] top-[898px] absolute bg-primary-600 rounded-full justify-center items-center inline-flex">
                     <div className="Default text-center text-white text-xl font-medium font-['Inter'] leading-normal">Jetzt Verbrauch zuordnen</div>
                 </div>
             </div>

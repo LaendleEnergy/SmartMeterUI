@@ -1,5 +1,9 @@
 # Smart Meter
 
+Icons:
+npm install react-icons
+https://react-icons.github.io/react-icons/icons?name=fa
+
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -44,3 +48,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 
 npm i sharp
+

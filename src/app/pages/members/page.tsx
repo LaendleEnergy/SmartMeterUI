@@ -1,8 +1,9 @@
-import Image from 'next/image'
+import Navigation from "../../components/navigation/navbar";
 
 export default function Members() {
     return (
         <div className="Members w-96 h-96 bg-white flex-col justify-start items-start gap-2.5 inline-flex">
+            <header><Navigation /></header>
             <div className="Page w-96 h-96 relative">
 
                 <div className="CircleArrowLeft w-32 h-32 left-[36px] top-[103px] absolute bg-white">
@@ -15,13 +16,13 @@ export default function Members() {
                 <div className="Bearbeiten w-14 h-10 left-[768px] top-[372px] absolute text-black text-base font-bold font-['Inter']">Name 1</div>
                 <div className="Bearbeiten w-28 h-5 left-[738px] top-[424px] absolute text-black text-base font-normal font-['Inter']">Geburtsdatum</div>
                 <div className="Bearbeiten w-24 h-5 left-[750px] top-[455px] absolute text-black text-base font-normal font-['Inter']">Geschlecht</div>
-                <div className="PrimaryMedium w-32 h-12 px-5 py-2 left-[848px] top-[584px] absolute bg-sky-600 rounded-full justify-center items-center inline-flex">
+                <div className="PrimaryMedium w-32 h-12 px-5 py-2 left-[848px] top-[584px] absolute bg-primary-600 rounded-full justify-center items-center inline-flex">
                     <div className="Default text-white text-sm font-medium font-['Inter'] leading-normal">Email hinzufügen</div>
                 </div>
-                <div className="PrimaryMedium w-32 h-12 px-5 py-2 left-[620px] top-[584px] absolute bg-sky-600 rounded-full justify-center items-center inline-flex">
+                <div className="PrimaryMedium w-32 h-12 px-5 py-2 left-[620px] top-[584px] absolute bg-primary-600 rounded-full justify-center items-center inline-flex">
                     <div className="Default text-white text-sm font-medium font-['Inter'] leading-normal">Bearbeiten</div>
                 </div>
-                <div className="PrimaryMedium w-80 h-14 px-5 py-2 left-[629px] top-[797px] absolute bg-sky-600 rounded-full justify-center items-center inline-flex">
+                <div className="PrimaryMedium w-80 h-14 px-5 py-2 left-[629px] top-[797px] absolute bg-primary-600 rounded-full justify-center items-center inline-flex">
                     <div className="Default text-white text-base font-medium font-['Inter'] leading-normal">Neues Mitglied hinzufügen </div>
                 </div>
                 <div className="Group1 w-12 h-9 left-[927px] top-[349px] absolute">

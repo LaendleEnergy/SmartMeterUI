@@ -1,8 +1,9 @@
-import Image from 'next/image'
+import Navigation from "../../components/navigation/navbar";
 
 export default function Home() {
   return (
     <div className="EnergySaving w-96 h-96 bg-white flex-col justify-start items-start gap-2.5 inline-flex">
+      <header><Navigation /></header>
       <div className="Page w-96 h-96 relative">
         <div className="Rectangle20 w-72 h-36 left-[1299px] top-[271px] absolute bg-gray-300 bg-opacity-40 border border-black" />
 
@@ -15,7 +16,7 @@ export default function Home() {
               <div className="Ellipse w-5 h-5 left-[1.50px] top-[1.50px] absolute bg-white rounded-full shadow" />
             </div>
             <div className="StateOn w-10 h-6 relative">
-              <div className="Rectangle w-10 h-6 left-0 top-0 absolute bg-sky-600 rounded-3xl" />
+              <div className="Rectangle w-10 h-6 left-0 top-0 absolute bg-primary-600 rounded-3xl" />
               <div className="Ellipse w-5 h-5 left-[16.50px] top-[1.50px] absolute bg-white rounded-full shadow" />
             </div>
           </div>

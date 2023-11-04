@@ -17,7 +17,7 @@ const Navbar = () => {
       <nav className="NavigationBar container mx-auto px-8 py-4">
         <div className="Center flex justify-between items-center">
           <div className="Logo inline-flex justify-start items-start">
-            <Logo></Logo>
+            <Logo h={96} w={160}></Logo>
           </div>
           <div className="Items inline-flex space-x-12 items-end">
             <NavLink href="/pages/energy-consumption" text="Stromverbrauch" />
@@ -44,7 +44,7 @@ function NavLink({ href, text }: NavLinkProps) {
 
   return (
     <Link href={href}>
-      <a className={isActive ? "PrimaryMedium w-42 px-4 py-2 bg-sky-600 rounded-full justify-center items-center flex font-['Inter']" : "text-neutral-800 text-base font-medium font-['Inter'] leading-normal"}>{text}</a>
+      <a className={isActive ? "ActiveButton w-42 px-4 py-2 bg-primary-600 rounded-full justify-center items-center flex font-medium leading-normal" : "text-neutral-800 font-medium leading-normal"}>{text}</a>
     </Link>
   );
 }

@@ -1,8 +1,9 @@
-import Image from 'next/image'
+import Navigation from "../../components/navigation/navbar";
 
 export default function DeviceOverview() {
     return (
         <div className="DevicesOverview w-96 h-96 bg-white flex-col justify-start items-start gap-2.5 inline-flex">
+            <header><Navigation /></header>
             <div className="Page w-96 h-96 relative">
 
                 <div className="Trend w-96 h-96 left-[428px] top-[391px] absolute">
@@ -33,7 +34,7 @@ export default function DeviceOverview() {
                     </div>
                 </div>
                 <div className="Devices w-32 h-10 left-[733px] top-[131px] absolute text-black text-4xl font-bold font-['Inter']">Geräte</div>
-                <div className="PrimaryMedium h-16 px-5 py-2 left-[694px] top-[868px] absolute bg-sky-600 rounded-full justify-center items-center inline-flex">
+                <div className="PrimaryMedium h-16 px-5 py-2 left-[694px] top-[868px] absolute bg-primary-600 rounded-full justify-center items-center inline-flex">
                     <div className="Default text-center text-white text-xl font-medium font-['Inter'] leading-normal">Geräte verwalten</div>
                 </div>
                 <div className="DeviceOverview w-96 h-36 left-[428px] top-[209px] absolute">

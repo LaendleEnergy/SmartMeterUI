@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div className="AddButton w-32 h-14 relative" />
-            <div className="PrimaryMedium h-10 px-5 py-2 bg-sky-600 rounded-full justify-center items-center inline-flex">
+            <div className="PrimaryMedium h-10 px-5 py-2 bg-primary-600 rounded-full justify-center items-center inline-flex">
                 <div className="Default text-center text-white text-base font-medium font-['Inter'] leading-normal">Hinzufügen</div>
             </div>
         </div>

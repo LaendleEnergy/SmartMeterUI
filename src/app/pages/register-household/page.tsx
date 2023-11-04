@@ -1,5 +1,5 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Register() {
   return (
@@ -17,7 +17,7 @@ export default function Register() {
           <div className="Ellipse1 w-14 h-12 left-[37.62px] top-[35.58px] absolute rounded-full border-2 border-slate-900" />
         </div>
         <div className="ProgressBar w-96 h-10 relative">
-          <div className="Ellipse2 w-10 h-10 left-[48px] top-0 absolute bg-sky-600 rounded-full" />
+          <div className="Ellipse2 w-10 h-10 left-[48px] top-0 absolute bg-primary-600 rounded-full" />
           <div className="Ellipse3 w-10 h-10 left-[411px] top-0 absolute bg-gray-400 rounded-full" />
           <div className="Line19 w-20 h-px left-[83px] top-[16.50px] absolute origin-top-left -rotate-180 border-8 border-sky-600"></div>
         </div>
@@ -43,8 +43,8 @@ export default function Register() {
             <div className="Password text-zinc-600 text-base font-normal font-['Inter'] tracking-wider">Passwort wiederholen</div>
           </div>
           <div className="RegisterButton w-32 h-24 pl-0.5 pr-1.5 pt-2 pb-12 left-[263px] top-[467px] absolute justify-start items-center inline-flex">
-            <div className="PrimaryMedium w-32 h-10 px-5 py-2 bg-sky-600 rounded-full justify-center items-center inline-flex">
-            <Link href="/register-household-2" className="Default text-center text-white text-base font-medium font-['Inter'] leading-normal"><span className="Text text-center text-white text-base font-medium font-['Inter'] leading-normal">Weiter</span></Link>
+            <div className="PrimaryMedium w-32 h-10 px-5 py-2 bg-primary-600 rounded-full justify-center items-center inline-flex">
+            <Link href="../register-household-2" className="Default text-center text-white text-base font-medium font-['Inter'] leading-normal"><span className="Text text-center text-white text-base font-medium font-['Inter'] leading-normal">Weiter</span></Link>
             </div>
           </div>
           <div className="RegisterHousehold left-[12px] top-0 absolute text-black text-4xl font-bold font-['Inter']">Haushalt registrieren</div>

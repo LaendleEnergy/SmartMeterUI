@@ -1,8 +1,9 @@
-import Image from 'next/image'
+import Navigation from "../../components/navigation/navbar";
 
 export default function EnergyConsumption() {
 return (
 <div className="Page w-96 h-96 relative">
+<header><Navigation /></header>
   <div className="Stromverbrauch w-96 h-96 left-[458px] top-[194px] absolute">
     <div
       className="EnergyConsumption w-72 h-11 left-[188px] top-0 absolute text-black text-4xl font-bold font-['Inter']">
