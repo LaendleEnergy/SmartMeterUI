@@ -31,7 +31,7 @@ export default function Home() {
           </div>
           <div className="Login flex-col justify-start items-center gap-7 flex">
             <div className="LogIn w-96 h-14 p-2.5 rounded-lg border-4 border-black justify-center items-center gap-2.5 inline-flex">
-            <Link href="/register" className="PrimaryMedium w-32 px-5 py-2 bg-gray-400 rounded-full justify-center items-center inline-flex"><span className="Text text-center text-white text-base font-medium font-['Inter'] leading-normal">Log In</span></Link>
+            <Link href="/register-household" className="PrimaryMedium w-32 px-5 py-2 bg-gray-400 rounded-full justify-center items-center inline-flex"><span className="Text text-center text-white text-base font-medium font-['Inter'] leading-normal">Log In</span></Link>
             </div>
           </div>
           <div className="PasswortVergessen flex-col justify-start items-center gap-5 flex">

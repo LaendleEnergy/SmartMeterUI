@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Register() {
   return (
@@ -43,7 +44,7 @@ export default function Register() {
           </div>
           <div className="RegisterButton w-32 h-24 pl-0.5 pr-1.5 pt-2 pb-12 left-[263px] top-[467px] absolute justify-start items-center inline-flex">
             <div className="PrimaryMedium w-32 h-10 px-5 py-2 bg-sky-600 rounded-full justify-center items-center inline-flex">
-              <div className="Default text-center text-white text-base font-medium font-['Inter'] leading-normal">Weiter</div>
+            <Link href="/register-household-2" className="Default text-center text-white text-base font-medium font-['Inter'] leading-normal"><span className="Text text-center text-white text-base font-medium font-['Inter'] leading-normal">Weiter</span></Link>
             </div>
           </div>
           <div className="RegisterHousehold left-[12px] top-0 absolute text-black text-4xl font-bold font-['Inter']">Haushalt registrieren</div>
