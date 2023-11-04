@@ -1,5 +1,7 @@
 # Smart Meter
 
+Next.js 13.5.6
+
 Icons:
 npm install react-icons
 https://react-icons.github.io/react-icons/icons?name=fa
