@@ -1,4 +1,4 @@
-import Navigation from "../../components/navigation/navbar";
+import Navigation from "../../components/navigation/NavBar";
 
 export default function Home() {
   return (
@@ -75,7 +75,7 @@ export default function Home() {
             <div className=" w-24 h-7 left-[68px] top-[318px] absolute text-black text-xl font-normal font-['Inter']">2020</div>
             <div className="TimeframeSelect w-80 h-20 left-[299px] top-[75px] absolute justify-start items-start inline-flex">
               <div className="TimeframeSelect w-96 h-14 pl-3.5 pr-2.5 py-2.5 rounded border-4 border-black justify-start items-center gap-2.5 flex">
-                <div className="TimeframeSelect text-zinc-600 text-base font-normal font-['Inter'] tracking-wider">Zeitraum (Tag/ Woche/ Monat/ Jahr</div>
+                <div className="TimeframeSelect text-zinc-600 text-base font-normal font-['Inter'] tracking-wider">Zeitraum (Tag/ Woche/ Monat/ Jahr)</div>
               </div>
             </div>
             <div className="TrendPositivNegativ w-64 h-9 left-[21px] top-[37px] absolute text-black text-2xl font-bold font-['Inter']">Trend positiv/ negativ</div>

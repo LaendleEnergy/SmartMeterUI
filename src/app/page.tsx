@@ -9,9 +9,7 @@ export default function Home() {
     <div className="Welcome p-[5%]">
       <div className="RegisterOrLogin flex-col justify-start items-center gap-8 inline-flex">
         <Logo h={388} w={740}></Logo>
-        <div className="WelcomePhrase p-2.5 flex justify-start items-center">
-          <div className="WillkommenBeiLaendleenergy text-4xl font-bold ">Willkommen bei LaendleEnergy!</div>
-        </div>
+        <div className="WillkommenBeiLaendleenergy text-4xl font-bold ">Willkommen bei LaendleEnergy!</div>
         <div className="Text text-lg">Registriere dich jetzt, um den Stromverbrauch deines Haushaltes und die damit verbundenen Kosten beobachten und Feedback über die Energieeffizienz deiner Geräte erhalten zu können.</div>
         <InputAttribute name="Email" type="text"></InputAttribute>
         <InputAttribute name="Password" type="password"></InputAttribute>

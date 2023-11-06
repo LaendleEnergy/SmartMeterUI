@@ -1,4 +1,4 @@
-import Navigation from "../../components/navigation/navbar";
+import Navigation from "../../components/navigation/NavBar";
 
 export default function DeviceOverview() {
     return (

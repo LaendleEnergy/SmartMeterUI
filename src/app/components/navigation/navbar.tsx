@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
-import Logo from "./../Logo";
+import Logo from "../Logo";
 import { usePathname } from "next/navigation";
 
 const Navbar = () => {
@@ -14,7 +14,7 @@ const Navbar = () => {
 
   return (
     <div className="bg-indigo-50 fixed top-0 w-full shadow-md">
-      <nav className="NavigationBar container mx-auto px-8 py-4">
+      <nav className="NavigationBar container mx-auto py-4">
         <div className="Center flex justify-between items-center">
           <div className="Logo inline-flex justify-start items-start">
             <Logo h={96} w={160}></Logo>

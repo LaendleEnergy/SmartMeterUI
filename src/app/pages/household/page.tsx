@@ -1,6 +1,6 @@
-import Navigation from "../../components/navigation/navbar";
+import Navigation from "../../components/navigation/NavBar";
 
-export default function PersonalInformation() {
+export default function Household() {
     return (
         <div className="Account w-96 h-96 bg-white flex-col justify-start items-start gap-2.5 inline-flex">
             <header><Navigation /></header>
