@@ -27,7 +27,7 @@ export default function Household() {
                     <div className="Zaehlernummern w-96 h-14 pl-3.5 pr-2.5 py-2.5 rounded border-4 border-black justify-start items-center gap-2.5 inline-flex">
                         <div className="Password text-zinc-600 text-base     tracking-wider">Zählernummer</div>
                     </div>
-                    <div className="ActiveButton w-42 px-8 py-4 bg-primary-600 rounded-full justify-center items-center flex">
+                    <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
                         <Link href="../pages/members"><span className="Text text-center text-white text-base font-medium leading-normal">Haushaltsmitglieder verwalten</span></Link>
                     </div>
                     <div className="Name" />

@@ -13,7 +13,7 @@ const Navbar = () => {
   });
 
   return (
-    <div className="bg-indigo-50 fixed top-0 w-full shadow-md">
+    <div className="bg-indigo-50 fixed top-0 w-full shadow-md mb-5">
       <nav className="NavigationBar container mx-auto py-4">
         <div className="Center flex justify-between items-center">
           <div className="Logo inline-flex justify-start items-start">
@@ -44,7 +44,7 @@ function NavLink({ href, text }: NavLinkProps) {
 
   return (
     <Link href={href}>
-      <a className={isActive ? "ActiveButton w-42 px-4 py-2 bg-primary-600 rounded-full justify-center items-center flex font-medium leading-normal" : "text-neutral-800 font-medium leading-normal"}>{text}</a>
+      <a className={isActive ? "ActiveButton w-42 px-4 py-2 bg-primary-600 rounded-full justify-center items-center flex font-medium leading-normal text-white" : "text-neutral-800 font-medium leading-normal"}>{text}</a>
     </Link>
   );
 }

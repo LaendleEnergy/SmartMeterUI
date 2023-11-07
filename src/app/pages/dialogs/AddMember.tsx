@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function AddMemberDialog() {
     return (
         <div className="AddMemberDialog w-96 h-96 relative">
@@ -29,9 +31,11 @@ export default function AddMemberDialog() {
                         </div>
                     </div>
                     <div className="AddButton w-32 h-14 relative" />
-                    <div className="ActiveButton w-42 px-8 py-4 bg-primary-600 rounded-full justify-center items-center flex">
-                        <div className="Default text-center text-white text-base font-medium   leading-normal">Hinzufügen</div>
-                    </div>
+                    <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+                    <Link href="../pages/members">
+                        <span className="Default text-center text-white text-xl font-medium   leading-normal">Hinzufügen</span>
+                    </Link>
+                </div>
                 </div>
                 <div className="AddMember w-96 h-12 left-[60px] top-0   text-center   text-3xl font-bold  ">Haushaltsmitglied hinzufügen</div>
             </div>

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function EditMemberDialog() {
     return (
         <div className="EditMemberDialog w-96 h-96 flex-col justify-center items-center inline-flex">
@@ -29,9 +31,11 @@ export default function EditMemberDialog() {
                                 <div className="Default text-center text-white text-base font-medium   leading-normal">Abbrechen</div>
                             </div>
                         </div>
-                        <div className="ConfirmButton h-10 px-5 py-2 bg-primary-600 rounded-full justify-center items-center inline-flex">
-                            <div className="Default text-center text-white text-base font-medium   leading-normal">Bestätigen</div>
-                        </div>
+                        <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+                    <Link href="../pages/members">
+                        <span className="Default text-center text-white text-xl font-medium leading-normal">Bestätigen</span>
+                    </Link>
+                </div>
                     </div>
                     <div className="EditMember w-96 h-12 left-[60px] top-0   text-center   text-3xl font-bold  ">Haushaltsmitglied bearbeiten</div>
                 </div>

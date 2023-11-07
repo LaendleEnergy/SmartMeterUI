@@ -8,23 +8,26 @@ interface MemberProps {
 
 export default function MemberCard({ name, dateOfBirth = "", gender = "" }: MemberProps) {
     return (
-        <div className="flex justify-center">
-            <div className="Background p-5 w-96 h-7 2bg-indigo-50" >
-                <div className="Group inline-flex justify-center">
-                    <div className="font-bold">{name}</div>
-                    <div className="DeleteButton w-12 h-7 justify-end items-end inline-flex space-x-3">
-                        <div className="PrimaryMedium w-12 h-7 bg-red-600 rounded-full" />
-                        <FaTrash className="text-white"></FaTrash>
+        <div className="flex items-center justify-center">
+            <div className="grid grid-rows-3 bg-primary-100 p-5 space-y-3">
+                <div className="Wrapper flex justify-center relative">
+                    <div className="font-bold">Testname</div>
+                    <div className="DeleteButton absolute top-0 right-0">
+                        <div className="PrimaryMedium h-7 w-12 rounded-full bg-red-600 inline-flex justify-center items-center">
+                            <FaTrash className="text-white"></FaTrash>
+                        </div>
                     </div>
                 </div>
-                <div>{dateOfBirth}</div>
-                <div>{gender}</div>
-                <div className="inline-flex space-x-5">
-                    <div className="ActiveButton w-42 px-8 py-4 bg-primary-600 rounded-full justify-center items-center flex">
-                        <div className="Default text-white text-sm font-medium">Email hinzufügen</div>
+                <div className="text-center">
+                    <div>1.1.1999</div>
+                    <div>weiblich</div>
+                </div>
+                <div className="inline-flex space-x-5 justify-center items-center">
+                    <div className="ActiveButton inline-block bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+                        <div className="Default text-sm font-medium text-white">Email hinzufügen</div>
                     </div>
-                    <div className="ActiveButton w-42 px-8 py-4 bg-primary-600 rounded-full justify-center items-center flex">
-                        <div className="Default text-white text-sm font-medium">Bearbeiten</div>
+                    <div className="ActiveButton inline-block bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+                        <div className="Default text-sm font-medium text-white">Bearbeiten</div>
                     </div>
                 </div>
             </div>

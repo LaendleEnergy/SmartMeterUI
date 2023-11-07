@@ -42,11 +42,9 @@ export default function Register() {
           <div className="ConfirmPassword w-96 h-14 pl-3.5 pr-2.5 py-2.5 left-[1px] top-[339px]   rounded border-4 border-black justify-start items-center gap-2.5 inline-flex">
             <div className="Password text-zinc-600 text-base     tracking-wider">Passwort wiederholen</div>
           </div>
-          <div className="RegisterButton w-32 h-24 pl-0.5 pr-1.5 pt-2 pb-12 left-[263px] top-[467px]   justify-start items-center inline-flex">
-            <div className="ActiveButton w-42 px-8 py-4 bg-primary-600 rounded-full justify-center items-center flex">
-            <Link href="../register-household-2" className="Default text-center text-white text-base font-medium   leading-normal"><span className="Text text-center text-white text-base font-medium   leading-normal">Weiter</span></Link>
+          <div className="RegisterButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+            <Link href="../register-household-2" className="Default text-center text-white text-base font-medium leading-normal"><span className="Text text-center text-white text-base font-medium   leading-normal">Weiter</span></Link>
             </div>
-          </div>
           <div className="RegisterHousehold left-[12px] top-0     text-4xl font-bold  ">Haushalt registrieren</div>
           <div className="CancelButton w-32 h-24 pl-px pr-2 pt-2 pb-12 left-0 top-[467px]   justify-start items-center inline-flex">
             <div className="ActiveButton w-42 px-8 py-4 bg-primary-600 rounded-full justify-center items-center flex">

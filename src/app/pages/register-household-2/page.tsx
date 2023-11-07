@@ -1,4 +1,5 @@
-import Image from 'next/image'
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Register2() {
   return (
@@ -43,10 +44,8 @@ export default function Register2() {
             <div className="Default text-center text-white text-base font-medium   leading-normal">Abbrechen</div>
           </div>
         </div>
-        <div className="ConfirmButton w-32 h-24 pt-2 pb-12 left-[244px] top-[440px]   justify-center items-center inline-flex">
-          <div className="ActiveButton w-42 px-8 py-4 bg-primary-600 rounded-full justify-center items-center flex">
-            <div className="Default text-center text-white text-base font-medium   leading-normal">Registrieren</div>
-          </div>
+        <div className="ConfirmButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+          <Link href="../register-household-2" className="Default text-center text-white text-base font-medium leading-normal"><span className="Text text-center text-white text-base font-medium   leading-normal">Registrieren</span></Link>
         </div>
         <div className="CompleteProfile left-[6px] top-0     text-4xl font-bold  ">Haushalt registrieren</div>
       </div>

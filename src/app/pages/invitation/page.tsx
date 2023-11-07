@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Navigation from "../../components/navigation/NavBar";
+import Link from "next/link";
 
 export default function AcceptInvitation() {
     return (
@@ -28,10 +29,10 @@ export default function AcceptInvitation() {
                     <div className="ConfirmPassword w-96 h-14 pl-3.5 pr-2.5 py-2.5 left-0 top-[298px]   rounded border-4 border-black justify-start items-center gap-2.5 inline-flex">
                         <div className="Password text-zinc-600 text-base     tracking-wider">Passwort wiederholen</div>
                     </div>
-                    <div className="RegisterButton w-32 h-24 pr-2 pt-2 pb-12 left-[131px] top-[463px]   justify-start items-center inline-flex">
-                        <div className="ActiveButton w-42 px-8 py-4 bg-primary-600 rounded-full justify-center items-center flex">
-                            <div className="Default text-center text-white text-base font-medium   leading-normal">Profil erstellen</div>
-                        </div>
+                    <div className="RegisterButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+                        <Link href="../pages/energy-consumption">
+                            <span className="Default text-center text-white text-xl font-medium   leading-normal">Profil erstellen</span>
+                        </Link>
                     </div>
                     <div className="RegisterHousehold left-[34px] top-0     text-4xl font-bold  ">Haushalt beitreten</div>
                 </div>

@@ -1,4 +1,5 @@
 import Navigation from "../../components/navigation/NavBar";
+import Link from "next/link";
 
 export default function Rewards() {
     return (
@@ -36,7 +37,7 @@ export default function Rewards() {
                         <div className="IconsMediumStar w-6 h-6 relative" />
                     </div>
                 </div>
-               
+
                 <div className="Edit w-36 h-12 left-[761px] top-[268px]   justify-center items-center inline-flex">
                     <div className="Bearbeiten   text-xl    ">Bearbeiten</div>
                     <div className="Icon w-12 h-12 p-3 bg-indigo-50 rounded-lg justify-start items-start inline-flex">
@@ -48,8 +49,10 @@ export default function Rewards() {
                     </div>
                 </div>
                 <div className="Bearbeiten left-[912px] top-[392px]     text-xl    ">noch 5 Tage</div>
-                <div className="ActiveButton w-42 px-8 py-4 bg-primary-600 rounded-full justify-center items-center flex">
-                    <div className="Default text-center text-white text-xl font-medium   leading-normal">Jetzt Verbrauch zuordnen</div>
+                <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+                    <Link href="../pages/energy-consumption">
+                        <span className="Default text-center text-white text-xl font-medium   leading-normal">Jetzt Verbrauch zuordnen</span>
+                    </Link>
                 </div>
             </div>
         </div>)

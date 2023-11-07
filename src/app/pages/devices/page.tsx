@@ -10,7 +10,7 @@ export default function DeviceOverview() {
                 <div className="Devices text-4xl font-bold">Deine Geräte</div>
                 <DeviceCard name="Kühlschrank"></DeviceCard>
                 <DeviceCard name="Waschmaschine"></DeviceCard>
-                <div className="ActiveButton flex h-14 w-80 items-center justify-center rounded-full bg-blue-600 px-5 py-2 space-x-3">
+                <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
                     <div className="Default font-medium text-white">Neues Gerät hinzufügen</div>
                     <FaPlusCircle className="text-white"></FaPlusCircle>
                 </div>
