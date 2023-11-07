@@ -1,4 +1,5 @@
 import Navigation from "../../components/navigation/NavBar";
+import Link from "next/link";
 
 export default function Household() {
     return (
@@ -27,7 +28,7 @@ export default function Household() {
                         <div className="Password text-zinc-600 text-base     tracking-wider">Zählernummer</div>
                     </div>
                     <div className="ActiveButton w-42 px-8 py-4 bg-primary-600 rounded-full justify-center items-center flex">
-                        <div className="Default text-center text-white text-xl font-medium   leading-normal">Haushaltsmitglieder verwalten</div>
+                        <Link href="../pages/members"><span className="Text text-center text-white text-base font-medium leading-normal">Haushaltsmitglieder verwalten</span></Link>
                     </div>
                     <div className="Name" />
                 </div>

@@ -4,7 +4,7 @@ interface DeviceProps {
     name: string;
 }
 
-export default function Logo({ name }: DeviceProps) {
+export default function DeviceCard({ name }: DeviceProps) {
     return (
         <div className="flex justify-center">
             <div className="inline-flex justify-center items-center space-x-3">
