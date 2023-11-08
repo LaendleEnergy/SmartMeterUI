@@ -19,7 +19,7 @@ export default function Register2() {
           <InputAttribute name="Aktueller Stromtarif"></InputAttribute>
           <InputAttribute name="Stromanbieter"></InputAttribute>
           <InputAttribute name="Zählernummer"></InputAttribute>
-          <div className="inline-flex justify-center items-center">
+          <div className="inline-flex space-x-5 justify-center items-center">
             <div className="CancelButton inline-block bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-700 hover:shadow">
               <button onClick={() => router.back()} className="Default text-center text-white text-base font-medium leading-normal">Zurück</button>
             </div>
