@@ -2,7 +2,7 @@ import Navigation from "../../components/navigation/NavBar";
 import DeviceCard from "../../components/DeviceCard";
 import { FaPlusCircle } from "react-icons/fa";
 
-export default function DeviceOverview() {
+export default function Devices() {
     return (
         <div className="CurrentDevices">
             <header><Navigation /></header>

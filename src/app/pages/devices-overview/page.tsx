@@ -2,10 +2,10 @@ import Navigation from "../../components/navigation/NavBar";
 
 export default function DeviceOverview() {
     return (
-        <div className="DevicesOverview w-96 h-96 bg-white flex-col justify-start items-start gap-2.5 inline-flex">
+        <div className="DevicesOverview">
             <header><Navigation /></header>
-            <div className="Page w-96 h-96 relative">
-                <div className="Trend w-96 h-96 left-[428px] top-[391px]  ">
+            <div className="Page flex-col flex justify-center items-center space-y-10 py-[10%]">
+                <div className="Trend">
                     <div className="Rectangle9 w-96 h-96 left-0 top-0   bg-indigo-50 border-2 border-black"></div>
                     <div className="Frame16 w-96 h-96 left-[17px] top-[37px]  ">
                         <div className="Rectangle3 w-20 h-36 left-[81px] top-[124px]   bg-blue-200"></div>
@@ -50,3 +50,4 @@ export default function DeviceOverview() {
         </div>
     )
 }
+

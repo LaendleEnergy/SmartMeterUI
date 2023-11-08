@@ -5,7 +5,7 @@ import Link from "next/link";
 import Logo from "../Logo";
 import { usePathname } from "next/navigation";
 
-const Navbar = () => {
+const Navbar = ({showTabs = true}) => {
 
   // render navbar when the page changes
   useEffect(() => {
@@ -19,11 +19,11 @@ const Navbar = () => {
           <div className="Logo inline-flex justify-start items-start">
             <Logo h={96} w={160}></Logo>
           </div>
-          <div className="Items inline-flex space-x-12 items-end">
+          <div className={showTabs ? "Items inline-flex space-x-12 items-end" : "hidden"}>
             <NavLink href="/pages/energy-consumption" text="Stromverbrauch" />
             <NavLink href="/pages/energy-saving" text="Stromsparen" />
             <NavLink href="/pages/rewards" text="Belohnungen" />
-            <NavLink href="/pages/devices" text="Geräte" />
+            <NavLink href="/pages/devices-overview" text="Geräte" />
             <NavLink href="/pages/personal-information" text="Persönliche Daten" />
             <NavLink href="/pages/household" text="Haushalt" />
           </div>
