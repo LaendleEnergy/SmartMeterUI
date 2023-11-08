@@ -6,8 +6,8 @@ export default function Devices() {
     return (
         <div className="CurrentDevices">
             <header><Navigation /></header>
-            <div className="Page flex-col flex justify-center items-center space-y-10 py-[10%]">
-                <div className="Devices text-4xl font-bold">Deine Geräte</div>
+            <div className="flex-col flex justify-center items-center space-y-10 py-[10%]">
+                <div className="text-4xl font-bold">Deine Geräte</div>
                 <DeviceCard name="Kühlschrank"></DeviceCard>
                 <DeviceCard name="Waschmaschine"></DeviceCard>
                 <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">

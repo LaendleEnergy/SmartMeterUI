@@ -6,7 +6,7 @@ Icons:
 npm install react-icons
 https://react-icons.github.io/react-icons/icons?name=fa
 
-npm install flowbite
+npm install @headlessui/react
 
 
 npm install

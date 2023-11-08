@@ -11,21 +11,21 @@ export default function Register() {
 
   return (
     <div className="Register">
-      <div className="Page flex-col flex justify-center items-center space-y-10 py-[10%]">
+      <div className="flex-col flex justify-center items-center space-y-10 py-[10%]">
         <Navbar showTabs={false}></Navbar>
         <Stepper></Stepper>
-        <div className="RegisterHousehold text-4xl font-bold">Haushalt registrieren</div>
-        <div className="Register space-y-5">
+        <div className="text-4xl font-bold">Haushalt registrieren</div>
+        <div className="space-y-5">
           <InputAttribute name="Email"></InputAttribute>
           <InputAttribute name="Name"></InputAttribute>
           <InputAttribute name="Passwort" type="password"></InputAttribute>
           <InputAttribute name="Passwort wiederholen" type="password"></InputAttribute>
-          <div className="inline-flex space-x-5 justify-center items-center">
-            <div className="CancelButton inline-block bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-700 hover:shadow">
-              <button onClick={() => router.back()} className="Default text-center text-white text-base font-medium leading-normal">Zurück</button>
+          <div className="flex grow space-x-8 justify-center items-center">
+            <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
+              <button onClick={() => router.back()} className="text-center text-white text-base font-medium leading-normal">Zurück</button>
             </div>
-            <div className="ConfirmButton inline-block bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-              <Link href="./register-household-2" className="Default text-center text-white text-base font-medium leading-normal"><span className="Text text-center text-white text-base font-medium leading-normal">Registrieren</span></Link>
+            <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+              <Link href="./register-household-2" className="text-center text-white text-base font-medium leading-normal"><span className="Text text-center text-white text-base font-medium leading-normal">Weiter</span></Link>
             </div>
           </div>
         </div>

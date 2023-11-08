@@ -11,20 +11,20 @@ export default function Register2() {
 
   return (
     <div className="Register2">
-      <div className="Page flex-col flex justify-center items-center space-y-10 py-[10%]">
+      <div className="flex-col flex justify-center items-center space-y-10 py-[10%]">
         <Navbar showTabs={false}></Navbar>
         <Stepper step2={true}></Stepper>
-        <div className="RegisterHousehold text-4xl font-bold">Haushalt registrieren</div>
-        <div className="Register space-y-5">
+        <div className="text-4xl font-bold">Haushalt registrieren</div>
+        <div className="space-y-5">
           <InputAttribute name="Aktueller Stromtarif"></InputAttribute>
           <InputAttribute name="Stromanbieter"></InputAttribute>
           <InputAttribute name="Zählernummer"></InputAttribute>
-          <div className="inline-flex space-x-5 justify-center items-center">
-            <div className="CancelButton inline-block bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-700 hover:shadow">
-              <button onClick={() => router.back()} className="Default text-center text-white text-base font-medium leading-normal">Zurück</button>
+          <div className="flex grow space-x-8 justify-center items-center">
+            <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
+              <button onClick={() => router.back()} className="text-center text-white text-base font-medium leading-normal">Zurück</button>
             </div>
-            <div className="ConfirmButton inline-block bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-              <Link href="./energy-consumption" className="Default text-center text-white text-base font-medium leading-normal"><span className="Text text-center text-white text-base font-medium leading-normal">Registrieren</span></Link>
+            <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+              <Link href="./energy-consumption" className="text-center text-white text-base font-medium leading-normal"><span className="Text text-center text-white text-base font-medium leading-normal">Registrieren</span></Link>
             </div>
           </div>
         </div>

@@ -5,8 +5,8 @@ export default function DeviceOverview() {
     return (
         <div className="DevicesOverview">
             <header><Navigation /></header>
-            <div className="Page flex-col flex justify-center items-center space-y-10 py-[10%]">
-                <div className="Devices w-32 h-10 text-4xl font-bold">Geräte</div>
+            <div className="flex-col flex justify-center items-center space-y-10 py-[10%]">
+                <div className="w-32 h-10 text-4xl font-bold">Geräte</div>
                 <div className="DeviceOverview inline-flex space-x-5">
                     <div className="w-96 h-36 border-2 bg-indigo-50 border-black border-solid text-center">
                         <div className="text-lg font-bold ">Schlechteste Energieineffizienz</div>
@@ -18,7 +18,7 @@ export default function DeviceOverview() {
                     </div>
                 </div>
                 <div className="Trend">
-                    <div className="EnergieeffizienzVon text-xl font-bold justify-center inline-flex space-x-2">Energieeffizienz von:
+                    <div className="text-xl font-bold justify-center inline-flex space-x-2">Energieeffizienz von:
                         <button id="dropdownDefaultButton" data-dropdown-toggle="devices-dropdown" className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" type="button">Gerät auswählen
                             <svg className="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" /></svg>
                         </button>
