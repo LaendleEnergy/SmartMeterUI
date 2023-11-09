@@ -1,3 +1,5 @@
+'use client';
+import Dropdown from "@/app/components/Dropdown";
 import Navigation from "../../components/navigation/NavBar";
 import Link from "next/link";
 
@@ -18,20 +20,9 @@ export default function DeviceOverview() {
                     </div>
                 </div>
                 <div className="Trend">
-                    <div className="text-xl font-bold justify-center inline-flex space-x-2">Energieeffizienz von:
-                        <button id="dropdownDefaultButton" data-dropdown-toggle="devices-dropdown" className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" type="button">Gerät auswählen
-                            <svg className="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" /></svg>
-                        </button>
-                        <div id="devices-dropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                            <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                                <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Kühlschrank</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Haarföhn</a>
-                                </li>
-                            </ul>
-                        </div>
+                    <div className="text-xl font-bold justify-center items-center inline-flex space-x-2">
+                        <span>Energieeffizienz von:</span>
+                        <Dropdown title="Gerät auswählen" values={["Kühlschrank", "Haarföhn", "Waschmaschine"]}></Dropdown>
                     </div>
                 </div>
                 <div className="Fazit border-2 bg-indigo-50 border-black border-solid p-2"><span className="text-lg font-bold">Fazit:<br /></span><span className="text-lg">Dein Gerät verbraucht 200 kWh (Jahr) mehr als vergleichbare Geräte.</span></div>

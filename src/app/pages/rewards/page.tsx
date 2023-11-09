@@ -26,7 +26,7 @@ export default function Rewards() {
                 </div>
                 <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
                     <Link href="../pages/energy-consumption">
-                        <span className="Default text-center text-white text-xl font-medium   leading-normal">Jetzt Verbrauch zuordnen</span>
+                        <span className="Default text-center text-white text-xl font-medium leading-normal">Jetzt Verbrauch zuordnen</span>
                     </Link>
                 </div>
             </div>
