@@ -1,5 +1,5 @@
 import Navigation from "../../components/navigation/NavBar";
-import DeviceCard from "../../components/DeviceCard";
+import DeviceCard from "../../components/cards/DeviceCard";
 import { FaPlusCircle } from "react-icons/fa";
 
 export default function Devices() {

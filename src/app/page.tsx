@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import 'tailwindcss/tailwind.css';
 import Logo from "./components/Logo";
-import InputAttribute from "@/app/components/InputAttribute";
+import InputAttribute from "@/app/components/input/InputAttribute";
 
 export default function Home() {
 

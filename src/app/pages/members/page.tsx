@@ -1,5 +1,5 @@
 import Navigation from "../../components/navigation/NavBar";
-import MemberCard from "@/app/components/MemberCard";
+import MemberCard from "@/app/components/cards/MemberCard";
 import { FaPlusCircle } from "react-icons/fa";
 
 export default function Members() {

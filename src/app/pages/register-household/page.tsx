@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import InputAttribute from "@/app/components/InputAttribute";
+import InputAttribute from "@/app/components/input/InputAttribute";
 import Navbar from "@/app/components/navigation/NavBar";
 import { useRouter } from 'next/navigation'
 import Stepper from "@/app/components/navigation/Stepper";

@@ -1,4 +1,4 @@
-import DisplayAttribute from "@/app/components/DisplayAttribute";
+import DisplayAttribute from "@/app/components/input/DisplayAttribute";
 import Navigation from "../../components/navigation/NavBar";
 import Link from "next/link";
 import { FaEdit } from "react-icons/fa";
