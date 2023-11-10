@@ -4,8 +4,7 @@ import DisplayAttribute from "@/app/components/input/DisplayAttribute";
 import Navigation from "../../components/navigation/NavBar";
 import { FaEdit } from "react-icons/fa";
 import Link from "next/link";
-import { useState, Fragment } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+import { useState } from 'react';
 import GenericDialog from "../../components/GenericDialog";
 
 export default function Household() {

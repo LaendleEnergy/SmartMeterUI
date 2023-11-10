@@ -11,8 +11,8 @@ export default function Home() {
         <Logo h={388} w={740}></Logo>
         <div className="text-4xl font-bold ">Willkommen bei LaendleEnergy!</div>
         <div className="text-lg">Registriere dich jetzt, um den Stromverbrauch deines Haushaltes und die damit verbundenen Kosten beobachten und Feedback über die Energieeffizienz deiner Geräte erhalten zu können.</div>
-        <InputAttribute name="Email" type="text"></InputAttribute>
-        <InputAttribute name="Password" type="password"></InputAttribute>
+        <InputAttribute name="Email"></InputAttribute>
+        <InputAttribute name="Passwort" type="password"></InputAttribute>
         <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full px-8 py-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
           <Link href="./pages/energy-consumption"><span className="Text text-center text-white text-base font-medium leading-normal">Log In</span></Link>
         </div>

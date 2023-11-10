@@ -1,6 +1,6 @@
 import GenericDialog from "@/app/components/GenericDialog";
 import Link from "next/link";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 
 interface MemberProps {
