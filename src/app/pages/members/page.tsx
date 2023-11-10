@@ -4,7 +4,7 @@ import Navigation from "../../components/navigation/NavBar";
 import { FaPlusCircle } from "react-icons/fa";
 import { useState } from 'react';
 import MemberCard from "@/app/components/cards/MemberCard";
-import MemberDialog from "../dialogs/MemberDialog";
+import GenericDialog from "../../components/GenericDialog";
 
 export default function Members() {
     let [isOpen, setIsOpen] = useState(false);
@@ -19,7 +19,7 @@ export default function Members() {
                     <FaPlusCircle className="text-white"></FaPlusCircle>
                 </div>
             </div>
-            <MemberDialog title="Haushaltsmitglied hinzufügen" isOpen={isOpen} activeButtonLabel="Hinzufügen" setIsOpen={setIsOpen}></MemberDialog>
+            <GenericDialog title="Haushaltsmitglied hinzufügen" isOpen={isOpen} activeButtonLabel="Hinzufügen" setIsOpen={setIsOpen} delete={false}></GenericDialog>
         </div>
     )
 }

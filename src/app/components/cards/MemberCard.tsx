@@ -1,4 +1,5 @@
-import MemberDialog from "@/app/pages/dialogs/MemberDialog";
+import GenericDialog from "@/app/components/GenericDialog";
+import Link from "next/link";
 import { Dispatch, SetStateAction, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 
@@ -8,11 +9,11 @@ interface MemberProps {
     gender?: string;
 }
 
-export default function MemberCard({ name, dateOfBirth = "", gender = ""}: MemberProps) {
+export default function MemberCard({ name, dateOfBirth = "", gender = "" }: MemberProps) {
     let [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center border-2 border-solid border-black">
             <div className="grid grid-rows-3 bg-primary-100 p-5 space-y-3">
                 <div className="Wrapper flex justify-center relative">
                     <div className="font-bold">{name}</div>
@@ -26,16 +27,16 @@ export default function MemberCard({ name, dateOfBirth = "", gender = ""}: Membe
                     <div>{dateOfBirth}</div>
                     <div>{gender}</div>
                 </div>
-                <div className="inline-flex space-x-5 justify-center items-center">
-                    <div className="ActiveButton inline-block bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                        <div className="Default text-sm font-medium text-white">Email hinzufügen</div>
+                <div className="inline-flex space-x-5 justify-center items-center grow">
+                    <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+                        <Link href="./invitation" className="text-center text-white text-base font-medium leading-normal"><span className="Text text-center text-white text-base font-medium leading-normal">Email hinzufügen</span></Link>
                     </div>
-                    <div className="ActiveButton inline-block bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+                    <div className="ActiveButton inline-block bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow grow">
                         <button onClick={() => setIsOpen(true)} className="Default text-sm font-medium text-white">Bearbeiten</button>
                     </div>
                 </div>
             </div>
-            <MemberDialog title="Haushaltsmitglied bearbeiten" isOpen={isOpen} activeButtonLabel="Bestätigen" setIsOpen={setIsOpen}></MemberDialog>
+            <GenericDialog title="Haushaltsmitglied bearbeiten" isOpen={isOpen} activeButtonLabel="Bestätigen" setIsOpen={setIsOpen} delete={false}></GenericDialog>
         </div>
     )
 }
