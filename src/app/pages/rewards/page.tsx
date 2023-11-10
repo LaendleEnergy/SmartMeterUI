@@ -9,7 +9,7 @@ export default function Rewards() {
             <header><Navigation /></header>
             <div className="flex flex-col justify-center items-center space-y-10 py-[10%]">
                 <div className="text-4xl font-bold">Belohnungen</div>
-                <div className="space-y-2 bg-indigo-50 rounded-sm border-2 border-black p-4">
+                <div className="space-y-4 bg-indigo-50 rounded-sm border-2 border-black p-4">
                     <div className="text-3xl font-bold text-center">Aktuelle Belohnung</div>
                     <div className="Edit justify-center items-center inline-flex space-x-3">
                         <div className="Bearbeiten text-xl">Bearbeiten</div>

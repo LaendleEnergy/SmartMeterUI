@@ -18,16 +18,16 @@ export default function MemberCard({ name, dateOfBirth = "", gender = "" }: Memb
                 <div className="Wrapper flex justify-center relative">
                     <div className="font-bold">{name}</div>
                     <div className="DeleteButton absolute top-0 right-0">
-                        <div className="PrimaryMedium h-7 w-12 rounded-full bg-red-600 inline-flex justify-center items-center">
+                        <button className="PrimaryMedium h-7 w-12 rounded-full bg-red-600 inline-flex justify-center items-center">
                             <FaTrash className="text-white"></FaTrash>
-                        </div>
+                        </button>
                     </div>
                 </div>
                 <div className="text-center">
                     <div>{dateOfBirth}</div>
                     <div>{gender}</div>
                 </div>
-                <div className="inline-flex space-x-5 justify-center items-center grow">
+                <div className="flex grow space-x-8 justify-center items-center">
                     <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
                         <Link href="./invitation" className="text-center text-white text-base font-medium leading-normal"><span className="Text text-center text-white text-base font-medium leading-normal">Email hinzufügen</span></Link>
                     </div>

@@ -2,7 +2,7 @@
 
 import DisplayAttribute from "@/app/components/input/DisplayAttribute";
 import Navigation from "../../components/navigation/NavBar";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import Link from "next/link";
 import { useState } from 'react';
 import GenericDialog from "../../components/GenericDialog";
@@ -31,8 +31,8 @@ export default function Household() {
                 </div>
             </div>
 
-            <div className="ConfirmButton inline-flex fixed bottom-4 right-4 bg-red-600 rounded-full p-3 space-x-3 space-y-10 transition duration-150 ease-in-out hover:bg-red-700 hover:shadow">
-                <button onClick={() => setIsOpen(true)} className="text-center text-white text-base font-medium leading-normal right">Account löschen</button>
+            <div className="DeleteButton inline-flex fixed bottom-4 right-4 bg-red-600 rounded-full p-3 space-y-10 transition duration-150 ease-in-out hover:bg-red-700 hover:shadow">
+                <button onClick={() => setIsOpen(true)} className="text-center text-white text-base font-medium leading-normal right grow w-50 h-15 inline-flex justify-center items-center space-x-3 ">Account löschen  <FaTrash className="text-white"></FaTrash> </button>
             </div>
 
             <GenericDialog title="Account löschen" isOpen={isOpen} activeButtonLabel="Account löschen" setIsOpen={setIsOpen} delete={true}></GenericDialog>
