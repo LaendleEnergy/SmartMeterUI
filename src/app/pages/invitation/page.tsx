@@ -13,7 +13,7 @@ export default function AcceptInvitation() {
                 <InputAttribute name="Passwort" type="password"></InputAttribute>
                 <InputAttribute name="Passwort wiederholen" type="password"></InputAttribute>
                 <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full px-8 py-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                    <Link href="./pages/energy-consumption"><span className="Text text-center text-white text-base font-medium leading-normal">Haushalt beitreten</span></Link>
+                    <Link href="./energy-consumption"><span className="Text text-center text-white text-base font-medium leading-normal">Haushalt beitreten</span></Link>
                 </div>
             </div>
         </div>)
