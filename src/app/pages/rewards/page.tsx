@@ -18,7 +18,7 @@ export default function Rewards() {
                     <div className="text-xl font-bold text-center">Gratis Pizza</div>
                     <div className="text-lg text-right">noch 5 Tage</div>
                 </div>
-                <div className="Leaderboard flex flex-col space-y-2 rounded-sm border-2 border-black bg-indigo-50 p-4">
+                <div className="Leaderboard flex flex-col space-y-5 rounded-sm border-2 border-black bg-indigo-50 p-4">
                     <div className="Rangliste text-3xl font-bold">Rangliste</div>
                     <DisplayAttribute name="Name 1 - Anzahl der Labels"></DisplayAttribute>
                     <DisplayAttribute name="Name 2 - Anzahl der Labels" star={true}></DisplayAttribute>
