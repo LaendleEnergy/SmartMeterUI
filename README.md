@@ -8,7 +8,6 @@ https://react-icons.github.io/react-icons/icons?name=fa
 
 npm install @headlessui/react
 
-
 npm install
 npm run build
 npm run start
