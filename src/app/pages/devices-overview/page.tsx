@@ -1,4 +1,3 @@
-'use client';
 import Dropdown from "@/app/components/input/Dropdown";
 import Navigation from "../../components/navigation/NavBar";
 import Link from "next/link";

@@ -1,3 +1,5 @@
+"use client";
+
 import { FaChevronDown, FaCheck } from 'react-icons/fa';
 import { Listbox, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
