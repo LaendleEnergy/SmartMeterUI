@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="EnergySaving">
       <header><Navigation /></header>
-      <div className="flex-col flex justify-center items-center space-y-10 py-[10%]">
+      <div className="flex-col flex justify-center items-center space-y-8 py-[10%]">
         <div className="text-4xl font-bold">Stromsparen</div>
         <div className="space-y-6 fixed top-[15%] right-[5%]">
           <div className="inline-flex items-center fixed top-[15%] right-[5%] space-x-2">

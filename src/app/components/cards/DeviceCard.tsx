@@ -11,7 +11,7 @@ export default function DeviceCard({ name }: DeviceProps) {
                 <div className="w-96 h-14 p-3 rounded border-4 border-black">
                     <div className="text-zinc-600 tracking-wider">{name}</div>
                 </div>
-                <FaMinusCircle></FaMinusCircle>
+                <FaMinusCircle class="text-red-600"></FaMinusCircle>
             </div>
         </div>
     )

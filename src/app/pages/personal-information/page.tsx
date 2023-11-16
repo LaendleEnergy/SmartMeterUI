@@ -6,7 +6,7 @@ export default function PersonalInformation() {
     return (
         <div className="PersonalInformation">
             <header><Navigation /></header>
-            <div className="flex-col flex justify-center items-center space-y-5 py-[10%]">
+            <div className="flex-col flex justify-center items-center space-y-8 py-[10%]">
                 <div className="space-y-2">
                     <div className="text-4xl font-bold">Persönliche Daten</div>
                     <div className="Edit justify-center items-center inline-flex space-x-3">
@@ -14,7 +14,7 @@ export default function PersonalInformation() {
                         <FaEdit></FaEdit>
                     </div>
                 </div>
-                <div className="PersonalInformation px-12 py-20 flex-col items-center gap-10 inline-flex">
+                <div className="PersonalInformation flex-col items-center gap-8 inline-flex">
                     <DisplayAttribute name="Name"></DisplayAttribute>
                     <DisplayAttribute name="Email"></DisplayAttribute>
                     <DisplayAttribute name="Geburtsdatum (Optional)"></DisplayAttribute>

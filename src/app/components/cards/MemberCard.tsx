@@ -36,7 +36,7 @@ export default function MemberCard({ name, dateOfBirth = "", gender = "" }: Memb
                     </div>
                 </div>
             </div>
-            <GenericDialog title="Haushaltsmitglied bearbeiten" isOpen={isOpen} activeButtonLabel="Bestätigen" setIsOpen={setIsOpen} delete={false}></GenericDialog>
+            <GenericDialog title="Haushaltsmitglied bearbeiten" isOpen={isOpen} activeButtonLabel="Bestätigen" setIsOpen={setIsOpen} delete={false} device={false}></GenericDialog>
         </div>
     )
 }

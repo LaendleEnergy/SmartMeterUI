@@ -11,7 +11,7 @@ export default function Register() {
   useEffect(() => {
 
   });
-  
+
   const [step, setStep] = useState(1);
   const router = useRouter();
 
@@ -66,20 +66,14 @@ export default function Register() {
 
   return (
     <div>
-      {/* Progress Stepper */}
       <div className="flex grow space-x-20 justify-center items-center py-[7%]">
         {steps.map((s, index) => (
-          <div key={index} className="inline-flex items-center">
-            <div className={index === 0 && step === 1 ? "z-1 h-3 w-full absolute bg-gray-400" : "hidden"} style={{ left: `${(index * 100) / (steps.length - 1)}%` }}></div>
-            <span className={index === 0 || step == 2 ? "z-2 font-bold bg-primary-600 rounded-full p-3 text-white" : "z-2 font-normal bg-gray-400 rounded-full p-3 text-white"}>
-              {s.title}
-            </span>
-            <div className={index === 1 && step === 2 ? "z-1 h-3 w-full absolute bg-primary-600" : "hidden"} style={{ left: `${(index * 100) / (steps.length - 1)}%` }}></div>
-          </div>
+          <span key={index} className={index === 0 || step == 2 ? "z-2 font-bold bg-primary-600 rounded-full p-3 text-white" : "z-2 font-normal bg-gray-400 rounded-full p-3 text-white"}>
+            {s.title}
+          </span>
         ))}
       </div>
 
-      {/* Current Step Content */}
       <div>
         <div className="flex-col flex justify-center items-center">
           <Navbar showTabs={false}></Navbar>

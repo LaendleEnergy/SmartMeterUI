@@ -5,7 +5,7 @@ import Navbar from "@/app/components/navigation/NavBar";
 export default function AcceptInvitation() {
     return (
         <div className="Invitation">
-            <div className="flex-col flex justify-center items-center space-y-10 py-[10%]">
+            <div className="flex-col flex justify-center items-center space-y-8 py-[10%]">
                 <Navbar showTabs={false}></Navbar>
                 <div className="text-4xl font-bold ">Haushalt beitreten</div>
                 <div className="text-lg">Nimm deine Einladung, deinem Haushalt beizutreten an, indem du hier deine gewünschten Login-Daten angibst.</div>
