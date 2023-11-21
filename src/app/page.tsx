@@ -1,12 +1,24 @@
+"use client";
+
 import Link from 'next/link';
 import 'tailwindcss/tailwind.css';
 import Logo from "./components/Logo";
 import InputAttribute from "@/app/components/input/InputAttribute";
 
 export default function Home() {
+  const callAPI = async () => {
+    try {
+      const res = await fetch(`http://localhost:8080/household/get/HouseholdID1`);
+      const data = await res.json();
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="Welcome p-[5%]">
+      <button onClick={callAPI}>Make API Call</button>
       <div className="RegisterOrLogin flex-col justify-center items-center space-y-8 inline-flex">
         <Logo h={388} w={740}></Logo>
         <div className="text-4xl font-bold ">Willkommen bei LaendleEnergy!</div>

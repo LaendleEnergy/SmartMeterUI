@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  smartmeterui:
+    container_name: smartmeter_ui
+    build:
+      context: .
+    ports:
+      - "8081:8081"
