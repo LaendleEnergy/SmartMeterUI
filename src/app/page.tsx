@@ -4,30 +4,62 @@ import Link from 'next/link';
 import 'tailwindcss/tailwind.css';
 import Logo from "./components/Logo";
 import InputAttribute from "@/app/components/input/InputAttribute";
+import { FormEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const callAPI = async () => {
-    try {
-      const res = await fetch(`http://localhost:8080/household/get/HouseholdID1`);
-      const data = await res.json();
-      console.log(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  })
+
+  const router = useRouter();
+  const data = new FormData();
+  const formURL = 'http://localhost:8080/user/login';
+
+  const handleInput = (event: any) => {
+    const { name, value } = event.currentTarget;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+
+  async function submitLoginForm(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    // Turn formData state into data which can be used with a form submission
+    Object.entries(formData).forEach(([key, value]) => {
+      data.append(key, value);
+    })
+
+    fetch(formURL, {
+      method: "POST",
+      body: data,
+    }).then(() => {
+      setFormData({
+        email: "",
+        password: "",
+      })
+    });
+
+    router.push("./pages/energy-consumption");
+  }
 
   return (
     <div className="Welcome p-[5%]">
-      <button onClick={callAPI}>Make API Call</button>
       <div className="RegisterOrLogin flex-col justify-center items-center space-y-8 inline-flex">
         <Logo h={388} w={740}></Logo>
         <div className="text-4xl font-bold ">Willkommen bei LaendleEnergy!</div>
         <div className="text-lg max-w-[750%]">Registriere dich jetzt, um den Stromverbrauch deines Haushaltes und die damit verbundenen Kosten beobachten und Feedback über die Energieeffizienz deiner Geräte erhalten zu können.</div>
-        <InputAttribute name="Email"></InputAttribute>
-        <InputAttribute name="Passwort" type="password"></InputAttribute>
-        <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full px-8 py-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-          <Link href="./pages/energy-consumption"><span className="Text text-center text-white text-base font-medium leading-normal">Log In</span></Link>
-        </div>
+        <form method="POST" onSubmit={submitLoginForm} className="flex flex-col space-y-5 justify-center items-center">
+          <InputAttribute name="email" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.email} required={true}></InputAttribute>
+          <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password} required={true}></InputAttribute>
+          <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full px-8 py-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+            <button><span className="Text text-center text-white text-base font-medium leading-normal">Log In</span></button>
+          </div>
+        </form>
         <div className="PasswortVergessen justify-start items-center flex">
           <div className="PasswortVergessen underline tracking-wider">Passwort vergessen?</div>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, SetStateAction, Dispatch } from 'react';
+import { Fragment, SetStateAction, Dispatch, useState, FormEvent } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import InputAttribute from '@/app/components/input/InputAttribute';
 import Dropdown from './input/Dropdown';
@@ -16,6 +16,58 @@ interface DialogProps {
 }
 
 export default function GenericDialog(props: DialogProps) {
+
+    const [formData, setFormData] = useState({
+        name: "",
+        dateOfBirth: "",
+        gender: "",
+    });
+
+    const [deviceFormData, setDeviceFormData] = useState({
+        description: "",
+        deviceType: "",
+    });
+
+    const data = new FormData();
+    const formURL = '';
+
+    const handleInput = (event: any) => {
+        const { name, value } = event.currentTarget;
+
+        setFormData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    }
+
+    async function submitEditInformationForm(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        // Turn formData state into data which can be used with a form submission
+        Object.entries(formData).forEach(([key, value]) => {
+            data.append(key, value);
+        })
+
+        fetch(formURL, {
+            method: "POST",
+            body: data,
+        }).then(() => {
+            setFormData({
+                name: "",
+                dateOfBirth: "",
+                gender: "",
+            })
+        });
+    }
+
+    const handleDeviceInput = (event: any) => {
+        const { name, value } = event.currentTarget;
+
+        setDeviceFormData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    }
 
     return (
         <div>
@@ -41,9 +93,11 @@ export default function GenericDialog(props: DialogProps) {
 
                                 <div className="flex-col space-y-6">
                                     <div className={props.delete || props.device ? "hidden" : "inline-block w-full max-w-md p-6 my-8 space-y-10 text-center justify-center items-center"}>
-                                        <InputAttribute name="Name"></InputAttribute>
-                                        <InputAttribute name="Geburtsdatum (Optional)" type="date"></InputAttribute>
-                                        <InputAttribute name="Geschlecht (Optional)"></InputAttribute>
+                                        <form method="POST" onSubmit={submitEditInformationForm} className="space-y-5">
+                                            <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name} required={true}></InputAttribute>
+                                            <InputAttribute name="dateOfBirth" type="date" handleInput={handleInput} placeholder="Geburtsdatum (Optional)" value={formData.dateOfBirth} required={false}></InputAttribute>
+                                            <InputAttribute name="gender" handleInput={handleInput} placeholder="Geschlecht (Optional)" value={formData.gender} required={false}></InputAttribute>
+                                        </form>
                                     </div>
 
                                     <div className={props.delete ? "space-y-4" : "hidden"}>
@@ -52,8 +106,10 @@ export default function GenericDialog(props: DialogProps) {
                                     </div>
 
                                     <div className={props.device ? "flex flex-col space-y-8 w-96" : "hidden"}>
-                                        <InputAttribute name="Bezeichnung"></InputAttribute>
-                                        <Dropdown title="Gerätetyp auswählen" values={["Kühlschrank", "Haarföhn", "Waschmaschine"]}></Dropdown>
+                                        <form method="POST" className="space-y-5">
+                                            <InputAttribute name="description" handleInput={handleDeviceInput} placeholder="Bezeichnung" value={deviceFormData.description} required={true}></InputAttribute>
+                                            <Dropdown title="Gerätetyp auswählen" values={["Kühlschrank", "Haarföhn", "Waschmaschine"]}></Dropdown>
+                                        </form>
                                     </div>
 
                                     <div className="inline-flex grow space-x-8 justify-center items-center">
