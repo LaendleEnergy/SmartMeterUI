@@ -51,21 +51,6 @@ export default function AcceptInvitation() {
         }
     }
 
-    async function submitAccountForm(event: FormEvent<HTMLFormElement>) {
-        if (formData.password == formData.confirmPassword) {
-            event.preventDefault();
-
-            // Turn formData state into data which can be used with a form submission
-            Object.entries(formData).forEach(([key, value]) => {
-                data.append(key, value);
-            })
-
-            handleNext();
-        } else {
-            alert("Passwörter stimmen nicht überein.")
-        }
-    }
-
 
     return (
         <div className="Invitation">
