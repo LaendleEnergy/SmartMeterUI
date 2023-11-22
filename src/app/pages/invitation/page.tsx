@@ -23,10 +23,11 @@ export default function AcceptInvitation() {
             ...prevState,
             [name]: value,
         }));
-    }
+    };
 
     async function submitRegistrationForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        
         if (formData.password == formData.confirmPassword) {
 
             // Turn formData state into data which can be used with a form submission

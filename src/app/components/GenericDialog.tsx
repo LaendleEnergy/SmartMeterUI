@@ -4,6 +4,7 @@ import { Fragment, SetStateAction, Dispatch, useState, FormEvent } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import InputAttribute from '@/app/components/input/InputAttribute';
 import Dropdown from './input/Dropdown';
+import Label from './input/Label';
 
 
 interface DialogProps {
@@ -93,9 +94,12 @@ export default function GenericDialog(props: DialogProps) {
 
                                 <div className="flex-col space-y-6">
                                     <div className={props.delete || props.device ? "hidden" : "inline-block w-full max-w-md p-6 my-8 space-y-10 text-center justify-center items-center"}>
-                                        <form method="POST" onSubmit={submitEditInformationForm} className="space-y-5">
+                                        <form method="POST" onSubmit={submitEditInformationForm} className="flex flex-col items-center space-y-3">
+                                            <Label name="Name"></Label>
                                             <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name} required={true}></InputAttribute>
+                                            <Label name="Geburtsdatum (Optional)"></Label>
                                             <InputAttribute name="dateOfBirth" type="date" handleInput={handleInput} placeholder="Geburtsdatum (Optional)" value={formData.dateOfBirth} required={false}></InputAttribute>
+                                            <Label name="Geschlecht (Optional)"></Label>
                                             <InputAttribute name="gender" handleInput={handleInput} placeholder="Geschlecht (Optional)" value={formData.gender} required={false}></InputAttribute>
                                         </form>
                                     </div>
@@ -106,7 +110,8 @@ export default function GenericDialog(props: DialogProps) {
                                     </div>
 
                                     <div className={props.device ? "flex flex-col space-y-8 w-96" : "hidden"}>
-                                        <form method="POST" className="space-y-5">
+                                        <form method="POST" className="flex flex-col items-center space-y-3">
+                                            <Label name="Bezeichnung"></Label>
                                             <InputAttribute name="description" handleInput={handleDeviceInput} placeholder="Bezeichnung" value={deviceFormData.description} required={true}></InputAttribute>
                                             <Dropdown title="Gerätetyp auswählen" values={["Kühlschrank", "Haarföhn", "Waschmaschine"]}></Dropdown>
                                         </form>

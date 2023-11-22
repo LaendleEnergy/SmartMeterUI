@@ -5,11 +5,11 @@ import InputAttribute from '@/app/components/input/InputAttribute';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/app/components/navigation/NavBar';
 import React from 'react';
+import Label from '@/app/components/input/Label';
 
 export default function Register() {
 
   const [step, setStep] = useState(1);
-  const [isFormValid, setIsFormValid] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -20,12 +20,11 @@ export default function Register() {
     deviceId: "",
   })
 
-  useEffect(() => {});
+  useEffect(() => { });
 
   const router = useRouter();
   const data = new FormData();
   const formURL = 'http://localhost:8080/household/create';
-  let passwordError = ""
 
   const handleNext = () => {
     setStep(step + 1);
@@ -45,9 +44,9 @@ export default function Register() {
   }
 
   async function submitAccountForm(event: FormEvent<HTMLFormElement>) {
-    if (formData.password == formData.confirmPassword) {
-      event.preventDefault();
+    event.preventDefault();
 
+    if (formData.password == formData.confirmPassword) {
       // Turn formData state into data which can be used with a form submission
       Object.entries(formData).forEach(([key, value]) => {
         data.append(key, value);
@@ -62,40 +61,42 @@ export default function Register() {
   async function submitHouseholdForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (isFormValid) {
-      Object.entries(formData).forEach(([key, value]) => {
-        data.append(key, value);
-      });
+    Object.entries(formData).forEach(([key, value]) => {
+      data.append(key, value);
+    });
 
-      fetch(formURL, {
-        method: "POST",
-        body: data,
-      }).then(() => {
-        setFormData({
-          email: "",
-          name: "",
-          password: "",
-          confirmPassword: "",
-          pricingPlan: "",
-          supplier: "",
-          deviceId: "",
-        })
-      });
+    fetch(formURL, {
+      method: "POST",
+      body: data,
+    }).then(() => {
+      setFormData({
+        email: "",
+        name: "",
+        password: "",
+        confirmPassword: "",
+        pricingPlan: "",
+        supplier: "",
+        deviceId: "",
+      })
+    });
 
-      router.push("./energy-consumption");
-    }
+    router.push("./energy-consumption");
   }
 
   const steps = [
     {
       title: 'Account', content:
 
-        <form method="POST" onSubmit={submitAccountForm} className="space-y-5">
+        <form method="POST" onSubmit={submitAccountForm} className="flex flex-col items-center space-y-5 border-2 bg-indigo-50 border-black border-solid">
+          <Label name="E-Mail"></Label>
           <InputAttribute name="email" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.email} required={true}></InputAttribute>
+          <Label name="Name"></Label>
           <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name} required={true}></InputAttribute>
+          <Label name="Passwort"></Label>
           <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password} required={true}></InputAttribute>
+          <Label name="Passwort wiederholen"></Label>
           <InputAttribute name="confirmPassword" type="password" handleInput={handleInput} placeholder="Passwort wiederholenn" value={formData.confirmPassword} required={true}></InputAttribute>
-          <div className="flex grow space-x-8 justify-center items-center">
+          <div className="flex grow space-x-8 mt-10 justify-center items-center">
             <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
               <button onClick={() => router.back()} className="text-center text-white text-base font-medium leading-normal">Zurück</button>
             </div>
@@ -107,11 +108,11 @@ export default function Register() {
     },
     {
       title: 'Haushalt', content:
-        <form method="POST" onSubmit={submitHouseholdForm} className="space-y-5">
+        <form method="POST" onSubmit={submitHouseholdForm} className="space-y-5 border-2 bg-indigo-50 border-black border-solid">
           <InputAttribute name="supplier" handleInput={handleInput} placeholder="Stromanbieter" value={formData.supplier} required={true}></InputAttribute>
           <InputAttribute name="pricingPlan" handleInput={handleInput} placeholder="Stromtarif" value={formData.pricingPlan} required={true}></InputAttribute>
           <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId} required={true}></InputAttribute>
-          <div className="flex grow space-x-8 justify-center items-center">
+          <div className="flex grow space-x-8 mt-10 justify-center items-center">
             <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
               <button onClick={handleBack} className="text-center text-white text-base font-medium leading-normal">Zurück</button>
             </div>

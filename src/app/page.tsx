@@ -6,6 +6,7 @@ import Logo from "./components/Logo";
 import InputAttribute from "@/app/components/input/InputAttribute";
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Label from './components/input/Label';
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ export default function Home() {
       ...prevState,
       [name]: value,
     }));
-  }
+  };
 
   async function submitLoginForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -37,15 +38,15 @@ export default function Home() {
     fetch(formURL, {
       method: "POST",
       body: data,
-    }).then(() => {
-      setFormData({
-        email: "",
-        password: "",
-      })
+    }).then((result => result.json()
+    )).then(result => {
+      if (result == true) {
+        router.push("./pages/energy-consumption");
+      } else {
+        alert("E-Mail Adresse und Passwort stimmen nicht überein");
+      }
     });
-
-    router.push("./pages/energy-consumption");
-  }
+  };
 
   return (
     <div className="Welcome p-[5%]">
@@ -53,11 +54,13 @@ export default function Home() {
         <Logo h={388} w={740}></Logo>
         <div className="text-4xl font-bold ">Willkommen bei LaendleEnergy!</div>
         <div className="text-lg max-w-[750%]">Registriere dich jetzt, um den Stromverbrauch deines Haushaltes und die damit verbundenen Kosten beobachten und Feedback über die Energieeffizienz deiner Geräte erhalten zu können.</div>
-        <form method="POST" onSubmit={submitLoginForm} className="flex flex-col space-y-5 justify-center items-center">
+        <form method="POST" onSubmit={submitLoginForm} className="flex flex-col items-center space-y-3">
+          <Label name="E-Mail"></Label>
           <InputAttribute name="email" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.email} required={true}></InputAttribute>
+          <Label name="Passwort"></Label>
           <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password} required={true}></InputAttribute>
           <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full px-8 py-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-            <button><span className="Text text-center text-white text-base font-medium leading-normal">Log In</span></button>
+            <button type="submit"><span className="Text text-center text-white text-base font-medium leading-normal">Log In</span></button>
           </div>
         </form>
         <div className="PasswortVergessen justify-start items-center flex">
