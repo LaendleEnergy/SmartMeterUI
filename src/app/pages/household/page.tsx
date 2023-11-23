@@ -8,6 +8,8 @@ import { FormEvent, useState } from 'react';
 import GenericDialog from "../../components/GenericDialog";
 import InputAttribute from "@/app/components/input/InputAttribute";
 import Label from "@/app/components/input/Label";
+import SupplierDropdown from "@/app/components/input/SupplierDropdown";
+import PricingPlanDropdown from "@/app/components/input/PricingPlanDropdown";
 
 export default function Household() {
     let [isOpen, setIsOpen] = useState(false);
@@ -29,6 +31,20 @@ export default function Household() {
             [name]: value,
         }));
     };
+
+    const handlePricingPlanInput = (selectedValue: any) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            ["pricingPlan"]: selectedValue.name,
+        }));
+    }
+
+    const handleSupplierInput = (selectedValue: any) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            ["supplier"]: selectedValue,
+        }));
+    }
 
 
     async function submitForm(event: FormEvent<HTMLFormElement>) {
@@ -72,9 +88,9 @@ export default function Household() {
                 </div>
                 <form method="POST" onSubmit={submitForm} className={editMode ? "HouseholdInformation flex flex-col items-center space-y-5 p-5 border-2 bg-indigo-50 border-black border-solid" : "hidden"}>
                     <Label name="Stromanbieter"></Label>
-                    <InputAttribute name="supplier" handleInput={handleInput} placeholder="Stromanbieter" value={formData.supplier}></InputAttribute>
+                    <SupplierDropdown handleInput={handleSupplierInput} value={formData.supplier}></SupplierDropdown>
                     <Label name="Stromtarif"></Label>
-                    <InputAttribute name="pricingPlan" handleInput={handleInput} placeholder="Aktueller Stromtarif" value={formData.pricingPlan}></InputAttribute>
+                    <PricingPlanDropdown handleInput={handlePricingPlanInput} value={formData.pricingPlan}></PricingPlanDropdown>
                     <Label name="Zählernummer"></Label>
                     <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId}></InputAttribute>
                     <div className="flex grow space-x-8 mt-10 justify-center items-center">
