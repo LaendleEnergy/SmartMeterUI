@@ -11,7 +11,7 @@ export default function PersonalInformation() {
 
     const [editMode, setEditMode] = useState(false);
     const data = new FormData();
-    const formURL = 'http://localhost:8080/user/updateUser';
+    const updateURL = 'http://localhost:8080/user/updateUser';
 
     const [formData, setFormData] = useState({
         name: "",
@@ -38,7 +38,7 @@ export default function PersonalInformation() {
             data.append(key, value);
         })
 
-        fetch(formURL, {
+        fetch(updateURL, {
             method: "POST",
             body: data,
         }).then(() => {
@@ -73,9 +73,9 @@ export default function PersonalInformation() {
                 </div>
                 <form method="POST" onSubmit={submitForm} className={editMode ? "PersonalInformation flex flex-col items-center space-y-5 border-2 bg-indigo-50 border-black border-solid p-5" : "hidden"}>
                     <Label name="Name"></Label>
-                    <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name} required={true}></InputAttribute>
+                    <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
                     <Label name="E-Mail"></Label>
-                    <InputAttribute name="email" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.email} required={true}></InputAttribute>
+                    <InputAttribute name="email" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.email}></InputAttribute>
                     <Label name="Geburtsdatum (Optional)"></Label>
                     <InputAttribute name="dateOfBirth" handleInput={handleInput} placeholder="Geburtsdatum (Optional)" value={formData.dateOfBirth} required={false}></InputAttribute>
                     <Label name="Geschlecht (Optional)"></Label>

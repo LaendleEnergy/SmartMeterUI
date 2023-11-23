@@ -13,7 +13,7 @@ export default function Household() {
     let [isOpen, setIsOpen] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const data = new FormData();
-    const formURL = 'http://localhost:8080/user/updateUser';
+    const updateURL = 'http://localhost:8080/household/update';
 
     const [formData, setFormData] = useState({
         supplier: "",
@@ -39,7 +39,7 @@ export default function Household() {
             data.append(key, value);
         })
 
-        fetch(formURL, {
+        fetch(updateURL, {
             method: "POST",
             body: data,
         }).then(() => {
@@ -72,11 +72,11 @@ export default function Household() {
                 </div>
                 <form method="POST" onSubmit={submitForm} className={editMode ? "HouseholdInformation flex flex-col items-center space-y-5 p-5 border-2 bg-indigo-50 border-black border-solid" : "hidden"}>
                     <Label name="Stromanbieter"></Label>
-                    <InputAttribute name="supplier" handleInput={handleInput} placeholder="Stromanbieter" value={formData.supplier} required={true}></InputAttribute>
+                    <InputAttribute name="supplier" handleInput={handleInput} placeholder="Stromanbieter" value={formData.supplier}></InputAttribute>
                     <Label name="Stromtarif"></Label>
-                    <InputAttribute name="pricingPlan" handleInput={handleInput} placeholder="Aktueller Stromtarif" value={formData.pricingPlan} required={true}></InputAttribute>
+                    <InputAttribute name="pricingPlan" handleInput={handleInput} placeholder="Aktueller Stromtarif" value={formData.pricingPlan}></InputAttribute>
                     <Label name="Zählernummer"></Label>
-                    <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId} required={true}></InputAttribute>
+                    <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId}></InputAttribute>
                     <div className="flex grow space-x-8 mt-10 justify-center items-center">
                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                             <button onClick={() => setEditMode(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>

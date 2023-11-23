@@ -96,11 +96,11 @@ export default function GenericDialog(props: DialogProps) {
                                     <div className={props.delete || props.device ? "hidden" : "inline-block w-full max-w-md p-6 my-8 space-y-10 text-center justify-center items-center"}>
                                         <form method="POST" onSubmit={submitEditInformationForm} className="flex flex-col items-center space-y-3">
                                             <Label name="Name"></Label>
-                                            <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name} required={true}></InputAttribute>
+                                            <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
                                             <Label name="Geburtsdatum (Optional)"></Label>
-                                            <InputAttribute name="dateOfBirth" type="date" handleInput={handleInput} placeholder="Geburtsdatum (Optional)" value={formData.dateOfBirth} required={false}></InputAttribute>
+                                            <InputAttribute name="dateOfBirth" type="date" handleInput={handleInput} placeholder="Geburtsdatum (Optional)" value={formData.dateOfBirth}></InputAttribute>
                                             <Label name="Geschlecht (Optional)"></Label>
-                                            <InputAttribute name="gender" handleInput={handleInput} placeholder="Geschlecht (Optional)" value={formData.gender} required={false}></InputAttribute>
+                                            <InputAttribute name="gender" handleInput={handleInput} placeholder="Geschlecht (Optional)" value={formData.gender}></InputAttribute>
                                         </form>
                                     </div>
 
