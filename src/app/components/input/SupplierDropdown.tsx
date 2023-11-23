@@ -9,21 +9,16 @@ interface DropdownProps {
     value: string;
 }
 
-interface ElectricityPricingPlan {
-    name: string;
-    supplier: string;
-    averagePricePerKwh: number;
-}
-
 export default function Dropdown({ handleInput, value }: DropdownProps) {
-    const [data, setData] = useState<ElectricityPricingPlan[]>([{ name: "Stromtarif auswählen", supplier: "", averagePricePerKwh: 0 }]);
+    const [data, setData] = useState(["Stromanbieter auswählen"]);
     const [selected, setSelected] = useState(data[0]);
 
+
     useEffect(() => {
-        fetch('http://localhost:8080/household/get/pricingPlans')
+        fetch('http://localhost:8080/household/get/suppliers')
             .then((res) => res.json())
             .then((data) => {
-                let parsedValues: ElectricityPricingPlan[] = [];
+                let parsedValues: string[] = [];
 
                 data.map((value: any) => {
                     parsedValues.push(JSON.parse(value));
@@ -35,10 +30,10 @@ export default function Dropdown({ handleInput, value }: DropdownProps) {
 
 
     return (
-        <Listbox value={selected} onChange={arg => { handleInput(arg); setSelected(arg); }} name="pricingPlan">
+        <Listbox value={selected} onChange={arg => { handleInput(arg); setSelected(arg); }} name="supplier">
             <div className="relative mt-1 p-3">
                 <Listbox.Button className="z-20 text-white w-96 h-14 relative cursor-default rounded bg-blue-500 hover:bg-primary-700 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-white focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:text-sm">
-                    <span className="block truncate">{selected.name}</span>
+                    <span className="block truncate">{selected}</span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                         <FaChevronDown
                             className="h-5 w-5"
@@ -55,7 +50,7 @@ export default function Dropdown({ handleInput, value }: DropdownProps) {
                     <Listbox.Options className="absolute mt-1 max-h-60 w-96 overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none text-sm">
                         {data.map(item => (
                             <Listbox.Option
-                                key={item.name}
+                                key={item}
                                 className={({ active }) =>
                                     `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-primary-600 text-white' : 'text-black'
                                     }`
@@ -68,7 +63,7 @@ export default function Dropdown({ handleInput, value }: DropdownProps) {
                                             className={`block truncate ${selected ? 'font-medium' : 'font-normal'
                                                 }`}
                                         >
-                                            {item.name}
+                                            {item}
                                         </span>
                                         {selected ? (
                                             <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
