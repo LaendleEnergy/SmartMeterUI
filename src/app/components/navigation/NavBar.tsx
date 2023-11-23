@@ -5,7 +5,7 @@ import Link from "next/link";
 import Logo from "../Logo";
 import { usePathname } from "next/navigation";
 
-const Navbar = ({showTabs = true}) => {
+const NavBar = ({showTabs = true}) => {
 
   // render navbar when the page changes
   useEffect(() => {
@@ -49,5 +49,5 @@ function NavLink({ href, text }: NavLinkProps) {
   );
 }
 
-export default Navbar;
+export default NavBar;
 

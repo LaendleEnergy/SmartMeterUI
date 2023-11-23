@@ -1,9 +1,13 @@
+"use client";
+
 import Toggle from "@/app/components/input/Toggle";
 import Navigation from "../../components/navigation/NavBar";
 import { FaEdit } from "react-icons/fa";
 import Dropdown from "@/app/components/input/Dropdown";
+import {useState} from "react";
 
 export default function Home() {
+  const [enabled, setEnabled] = useState(true);
   return (
     <div className="EnergySaving">
       <header><Navigation /></header>
@@ -12,7 +16,7 @@ export default function Home() {
         <div className="space-y-6 fixed top-[15%] right-[5%]">
           <div className="inline-flex items-center fixed top-[15%] right-[5%] space-x-2">
             <span className="text-xl font-bold">Bericht erhalten ja/nein</span>
-            <Toggle></Toggle>
+            <Toggle setEnabled={setEnabled} enabled={enabled}></Toggle>
           </div>
           <div className="w-96 h-28 border-black border-solid border-2 bg-gray-100 right-[5%] p-3">
             <span>Der Bericht beinhaltet eine Zusammenfassung von verschiedenen Informationen über den Stromverbrauch und das Stromsparen. Solch ein Bericht wird monatlich erstellt.</span>

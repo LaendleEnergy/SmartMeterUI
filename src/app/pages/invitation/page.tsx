@@ -1,7 +1,7 @@
 "use client";
 
 import InputAttribute from "@/app/components/input/InputAttribute";
-import Navbar from "@/app/components/navigation/NavBar";
+import NavBar from "@/app/components/navigation/NavBar";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
@@ -56,7 +56,7 @@ export default function AcceptInvitation() {
     return (
         <div className="Invitation">
             <div className="flex-col flex justify-center items-center space-y-8 py-[10%]">
-                <Navbar showTabs={false}></Navbar>
+                <NavBar showTabs={false}></NavBar>
                 <div className="text-4xl font-bold ">Haushalt beitreten</div>
                 <div className="text-lg">Nimm deine Einladung, deinem Haushalt beizutreten an, indem du hier deine gewünschten Login-Daten angibst.</div>
                 <form method="POST" onSubmit={submitRegistrationForm} className="flex flex-col space-y-5 justify-center items-center">

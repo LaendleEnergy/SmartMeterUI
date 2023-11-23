@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import InputAttribute from '@/app/components/input/InputAttribute';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/app/components/navigation/NavBar';
+import NavBar from '@/app/components/navigation/NavBar';
 import React from 'react';
 import Label from '@/app/components/input/Label';
 import PricingPlanDropdown from '@/app/components/input/PricingPlanDropdown';
@@ -139,7 +139,7 @@ export default function Register() {
 
       <div>
         <div className="flex-col flex justify-center items-center">
-          <Navbar showTabs={false}></Navbar>
+          <NavBar showTabs={false}></NavBar>
           <div className="text-4xl font-bold pb-10">Haushalt registrieren</div>
           <p>{steps[step - 1].content}</p>
         </div>

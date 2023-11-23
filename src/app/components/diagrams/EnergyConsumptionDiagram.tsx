@@ -21,6 +21,7 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 type ValuePiece = Date | string | null;
 
 import Dropdown from "../input/Dropdown";
+import Toggle from "@/app/components/input/Toggle";
 
 
 const data = [
@@ -62,46 +63,46 @@ export default function EnergyConsumptionDiagram({data1}: EnergyConsumptionDiagr
 
 
     return (
-        <div>
-            <label>
-                Aktiviere Leistungshistorie für Annotierung:
-                <input
-                    type="checkbox"
-                    onChange={handleCheckboxChange}
-                    checked={barChartIsActivated}
-                />
-            </label>
-            <br/>
-            <br/>
-            <div style={{width:"40%", display:"inline-block"}}>
-
+        <div style={{ textAlignLast: "center" }}>
+            <div style={{ textAlignLast: "center" }}>
+                <span className="text-xl font-bold"> Aktiviere Leistungshistorie für Annotierung (ja/nein): </span>
+                <br/>
+                <Toggle enabled={barChartIsActivated} setEnabled={setBarChartIsActivated}></Toggle>
             </div>
-            <div style={{width:"40%", display:"inline-block"}}>
-                <DatePicker
-                    selected={startDate}
-                    selectsStart
-                    startDate={startDate}
-                    endDate={endDate}
-                    onChange={date => {
-                        if(date != null){
-                            setStartDate(date)
+            <br/>
+            <br/>
+            <div style={{width:"100%", display:"inline-block"}}>
+                <div style={{width:"50%", display:"inline-block"}}>
+                    <DatePicker
+                        showTimeSelect
+                        selected={startDate}
+                        selectsStart
+                        startDate={startDate}
+                        endDate={endDate}
+                        onChange={date => {
+                            if(date != null){
+                                setStartDate(date)
+                                }
                             }
                         }
+                    />
+                </div>
+                <div style={{width:"50%", display:"inline-block"}}>
+                    <DatePicker
+                        showTimeSelect
+                        selected={endDate}
+                        selectsEnd
+                        startDate={startDate}
+                        endDate={endDate}
+                        minDate={startDate}
+                        onChange={date => {
+                        if(date != null){
+                            setEndDate(date)
+                        }
                     }
-                />
-                <DatePicker
-                    selected={endDate}
-                    selectsEnd
-                    startDate={startDate}
-                    endDate={endDate}
-                    minDate={startDate}
-                    onChange={date => {
-                    if(date != null){
-                        setEndDate(date)
                     }
-                }
-                }
-                />
+                    />
+                </div>
             </div>
             { barChartIsActivated && (<div>
                 <BarChart
