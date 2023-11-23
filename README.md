@@ -1,6 +1,11 @@
 # Smart Meter
 
+## Requirements
+- Node.js Version >= 18
+- npm Version >= 10
+
 Next.js 13.5.6
+
 
 Icons:
 npm install react-icons
