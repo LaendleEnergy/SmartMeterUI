@@ -102,7 +102,7 @@ export default function Register() {
   const steps = [
     {
       title: 'Account', content:
-        <form method="POST" onSubmit={submitAccountForm} className="flex flex-col items-center space-y-5 border-2 bg-indigo-50 border-black border-solid">
+        <form method="POST" onSubmit={submitAccountForm} className="flex flex-col items-center space-y-3 p-5 border-2 bg-indigo-50 border-black border-solid">
           <Label name="E-Mail"></Label>
           <InputAttribute name="email" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.email}></InputAttribute>
           <Label name="Name"></Label>
@@ -111,7 +111,7 @@ export default function Register() {
           <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password}></InputAttribute>
           <Label name="Passwort wiederholen"></Label>
           <InputAttribute name="confirmPassword" type="password" handleInput={handleInput} placeholder="Passwort wiederholen" value={formData.confirmPassword}></InputAttribute>
-          <div className="flex grow space-x-8 mt-10 mb-10 justify-center items-center">
+          <div className="flex grow space-x-8 mt-10 justify-center items-center">
             <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
               <button onClick={() => router.back()} className="text-center text-white text-base font-medium leading-normal">Zurück</button>
             </div>
@@ -123,14 +123,14 @@ export default function Register() {
     },
     {
       title: 'Haushalt', content:
-        <form method="POST" onSubmit={submitHouseholdForm} className="flex flex-col items-center space-y-5 border-2 bg-indigo-50 border-black border-solid">
+        <form method="POST" onSubmit={submitHouseholdForm} className="flex flex-col items-center space-y-3 border-2 bg-indigo-50 border-black border-solid">
           <Label name="Stromanbieter"></Label>
           <SupplierDropdown handleInput={handleSupplierInput} value={formData.supplier}></SupplierDropdown>
           <Label name="Stromtarif"></Label>
           <PricingPlanDropdown handleInput={handlePricingPlanInput} value={formData.pricingPlan}></PricingPlanDropdown>
           <Label name="Zählernummer"></Label>
           <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId}></InputAttribute>
-          <div className="flex grow space-x-8 mt-10 mb-10 justify-center items-center">
+          <div className="flex grow space-x-8 mt-10 justify-center items-center">
             <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
               <button onClick={handleBack} className="text-center text-white text-base font-medium leading-normal">Zurück</button>
             </div>
@@ -144,7 +144,7 @@ export default function Register() {
 
   return (
     <div>
-      <div className="flex grow space-x-20 justify-center items-center py-[7%]">
+      <div className="flex grow space-x-20 justify-center items-center py-[20%]">
         {steps.map((s, index) => (
           <span key={index} className={index === 0 || step == 2 ? "z-2 font-bold bg-primary-600 rounded-full p-3 text-white" : "z-2 font-normal bg-gray-400 rounded-full p-3 text-white"}>
             {s.title}
