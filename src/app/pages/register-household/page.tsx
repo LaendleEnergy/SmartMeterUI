@@ -7,6 +7,7 @@ import Navbar from '@/app/components/navigation/NavBar';
 import React from 'react';
 import Label from '@/app/components/input/Label';
 import PricingPlanDropdown from '@/app/components/input/PricingPlanDropdown';
+import SupplierDropdown from '@/app/components/input/SupplierDropdown';
 
 export default function Register() {
 
@@ -41,6 +42,20 @@ export default function Register() {
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+  }
+
+  const handlePricingPlanInput = (selectedValue: any) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      ["pricingPlan"]: selectedValue.name,
+    }));
+  }
+
+  const handleSupplierInput = (selectedValue: any) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      ["supplier"]: selectedValue,
     }));
   }
 
@@ -110,9 +125,9 @@ export default function Register() {
       title: 'Haushalt', content:
         <form method="POST" onSubmit={submitHouseholdForm} className="flex flex-col items-center space-y-5 border-2 bg-indigo-50 border-black border-solid">
           <Label name="Stromanbieter"></Label>
-          <InputAttribute name="supplier" handleInput={handleInput} placeholder="Stromanbieter" value={formData.supplier}></InputAttribute>
+          <SupplierDropdown handleInput={handleSupplierInput} value={formData.supplier}></SupplierDropdown>
           <Label name="Stromtarif"></Label>
-          <PricingPlanDropdown title="Stromtarif auswählen" handleInput={handleInput} value={formData.pricingPlan}></PricingPlanDropdown>
+          <PricingPlanDropdown handleInput={handlePricingPlanInput} value={formData.pricingPlan}></PricingPlanDropdown>
           <Label name="Zählernummer"></Label>
           <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId}></InputAttribute>
           <div className="flex grow space-x-8 mt-10 mb-10 justify-center items-center">
