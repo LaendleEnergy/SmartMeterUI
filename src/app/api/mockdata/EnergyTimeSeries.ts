@@ -17,7 +17,7 @@ export default function mockGetFiveSecondValues(resolution: Period, startDate: D
       resolution,
       1),
     new Date(startDate),
-    getRandomInt(100, 3000))
+    getRandomInt(100, 3000) * 1000)
   );
   
   for (let i = 0; i < valuePoints; ++i) {
@@ -27,7 +27,7 @@ export default function mockGetFiveSecondValues(resolution: Period, startDate: D
       new EnergyMeasurementPoint(
         new MeasurementPeriod(resolution, 1),
         new Date(lastEntry.until.getTime() + resolution * 1000),
-        getRandomInt(100, 3000))
+        getRandomInt(100, 3000) * 1000)
       );
   }
 

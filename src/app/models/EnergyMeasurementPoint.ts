@@ -5,10 +5,10 @@ export class EnergyMeasurementPoint {
     readonly untilDayAsNumber: string;
     readonly untilDayShortName: string;
 
-    constructor(measurementResolution: MeasurementPeriod, until: Date, energy_ws: number) {
+    constructor(measurementResolution: MeasurementPeriod, until: Date, averageEnergyForPeriod_ws: number) {
         this.measurementPeriod = measurementResolution;
         this.until = until;
-        this.averageEnergyForPeriod_ws = energy_ws
+        this.averageEnergyForPeriod_ws = averageEnergyForPeriod_ws
         this.untilDayAsNumber = this.until.getDay().toString();
         this.untilDayShortName = this.until.toLocaleString('de-de', {  weekday: 'short' })
     }

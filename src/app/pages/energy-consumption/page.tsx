@@ -3,6 +3,7 @@
 import Navigation from "../../components/navigation/NavBar";
 import React, {PureComponent} from 'react';
 import EnergyConsumptionDiagram from "../../components/diagrams/EnergyConsumptionDiagram";
+import { AverageEnergyConsumptionDiagram } from "@/app/components/diagrams/AverageEnergyConsumptionDiagram";
 
 
 const data = [
@@ -39,6 +40,7 @@ export default function EnergyConsumption() {
                 <div className="text-4xl font-bold">Stromverbrauch</div>
                 <EnergyConsumptionDiagram data1={data}/>
                 <div className="w-96 h-52 bg-indigo-50 rounded-lg border-2 border-zinc-400">
+                    <AverageEnergyConsumptionDiagram />
                 </div>
                 <div className="text-2xl font-bold">Durchschnittswerte</div>
                 <div className="w-96 h-52 bg-indigo-50 rounded-lg border-2 border-zinc-400" />
