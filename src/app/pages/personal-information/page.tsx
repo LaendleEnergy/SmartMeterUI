@@ -3,7 +3,7 @@
 import DisplayAttribute from "@/app/components/input/DisplayAttribute";
 import Navigation from "../../components/navigation/NavBar";
 import { FaEdit } from "react-icons/fa";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import InputAttribute from "@/app/components/input/InputAttribute";
 import Label from "@/app/components/input/Label";
 import DatePicker from "react-datepicker";
@@ -19,8 +19,8 @@ interface UserInput {
 }
 
 interface User {
-    emailAddress: string;
-    password: string;
+    emailAddress: string | null;
+    password?: string;
     name: string;
     dateOfBirth: string;
     gender: string;
@@ -29,8 +29,7 @@ interface User {
 export default function PersonalInformation() {
 
     const [editMode, setEditMode] = useState(false);
-    const updateURL = 'http://localhost:8080/user/update';
-
+    const [displayData, setDisplayData] = useState<User>({ emailAddress: "E-Mail", name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)" });
     const [formData, setFormData] = useState<UserInput>({
         emailAddress: "",
         password: "",
@@ -38,6 +37,39 @@ export default function PersonalInformation() {
         name: "",
         dateOfBirth: new Date(),
         gender: "",
+    });
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const currentEmail = localStorage.getItem("email");
+
+        fetch(`http://localhost:8080/user/get/${currentEmail}`, {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(async (res) => await res.json())
+            .then((data) => {
+                setDisplayData(data);
+
+                Object.keys(data).forEach(function (key) {
+                    let value: string | Date;
+
+                    if (key == "dateOfBirth") {
+                        value = new Date(data[key]);
+                    } else {
+                        value = data[key];
+                    }
+
+                    setFormData((prevState) => ({
+                        ...prevState,
+                        [key]: value,
+                        "confirmPassword": data["password"]
+                    }));
+                })
+            })
     });
 
     const handleInput = (event: any) => {
@@ -76,7 +108,7 @@ export default function PersonalInformation() {
 
         const token = localStorage.getItem('token');
 
-        fetch(updateURL, {
+        fetch('http://localhost:8080/user/update', {
             method: "POST",
             body: JSON.stringify(user),
             headers: {
@@ -109,10 +141,10 @@ export default function PersonalInformation() {
                     </button>
                 </div>
                 <div className={editMode ? "hidden" : "PersonalInformation flex-col items-center gap-8 inline-flex"}>
-                    <DisplayAttribute name="Name"></DisplayAttribute>
-                    <DisplayAttribute name="Email"></DisplayAttribute>
-                    <DisplayAttribute name="Geburtsdatum (Optional)"></DisplayAttribute>
-                    <DisplayAttribute name="Geschlecht (Optional)"></DisplayAttribute>
+                    <DisplayAttribute name={displayData.name} ></DisplayAttribute>
+                    <DisplayAttribute name={displayData.emailAddress ? displayData.emailAddress : ""}></DisplayAttribute>
+                    <DisplayAttribute name={displayData.dateOfBirth}></DisplayAttribute>
+                    <DisplayAttribute name={displayData.gender}></DisplayAttribute>
                 </div>
                 <form method="POST" onSubmit={submitForm} className={editMode ? "PersonalInformation flex flex-col items-center space-y-5 border-2 bg-indigo-50 border-black border-solid p-5" : "hidden"}>
                     <Label name="Name"></Label>
@@ -126,7 +158,7 @@ export default function PersonalInformation() {
                     <Label name="Geburtsdatum (Optional)"></Label>
                     <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />
                     <Label name="Geschlecht (Optional)"></Label>
-                    <InputAttribute name="gender" type="password" handleInput={handleInput} placeholder="Geschlecht (Optional)" value={formData.gender} required={false}></InputAttribute>
+                    <InputAttribute name="gender" handleInput={handleInput} placeholder="Geschlecht (Optional)" value={formData.gender} required={false}></InputAttribute>
                     <div className="flex grow space-x-8 mt-10 justify-center items-center">
                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                             <button onClick={() => setEditMode(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>
