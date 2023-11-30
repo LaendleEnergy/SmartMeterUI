@@ -8,15 +8,21 @@ import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Label from './components/input/Label';
 
+interface AuthRequest {
+  email: string,
+  password: string,
+}
+
 export default function Home() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
 
-  const router = useRouter();
   const data = new FormData();
+  const router = useRouter();
   const formURL = 'http://localhost:8080/user/login';
+  let token;
 
   const handleInput = (event: any) => {
     const { name, value } = event.currentTarget;
@@ -27,25 +33,31 @@ export default function Home() {
     }));
   };
 
-  async function submitLoginForm(event: FormEvent<HTMLFormElement>) {
+
+  async function authenticate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    // Turn formData state into data which can be used with a form submission
-    Object.entries(formData).forEach(([key, value]) => {
-      data.append(key, value);
-    })
+    const authRequest: AuthRequest = { email: formData.email, password: formData.password };
 
-    fetch(formURL, {
+    // ToDo: Automatisch erneuern, wenn abgelaufen
+    token = await fetch(formURL, {
       method: "POST",
-      body: data,
-    }).then((result => result.json()
-    )).then(result => {
-      if (result == true) {
-        router.push("./pages/energy-consumption");
-      } else {
-        alert("E-Mail Adresse und Passwort stimmen nicht überein");
-      }
-    });
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(authRequest),
+    })
+    .then(async result => {   
+      return await result.json();
+    })
+    .catch(error => console.log(error));
+
+    const tokenValue = token["token"];
+    localStorage.setItem("token", tokenValue);
+
+    if (tokenValue.length > 0) {
+      router.push("./pages/energy-consumption");
+    }
   };
 
   return (
@@ -54,7 +66,7 @@ export default function Home() {
         <Logo h={388} w={740}></Logo>
         <div className="text-4xl font-bold ">Willkommen bei LaendleEnergy!</div>
         <div className="text-lg max-w-[750%]">Registriere dich jetzt, um den Stromverbrauch deines Haushaltes und die damit verbundenen Kosten beobachten und Feedback über die Energieeffizienz deiner Geräte erhalten zu können.</div>
-        <form method="POST" onSubmit={submitLoginForm} className="flex flex-col items-center space-y-3">
+        <form method="POST" onSubmit={authenticate} className="flex flex-col items-center space-y-3">
           <Label name="E-Mail"></Label>
           <InputAttribute name="email" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.email} required={true}></InputAttribute>
           <Label name="Passwort"></Label>

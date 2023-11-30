@@ -6,17 +6,37 @@ import { FaEdit } from "react-icons/fa";
 import { FormEvent, useState } from "react";
 import InputAttribute from "@/app/components/input/InputAttribute";
 import Label from "@/app/components/input/Label";
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css';
+
+interface UserInput {
+    emailAddress: string;
+    password: string;
+    confirmPassword: string;
+    name: string;
+    dateOfBirth: Date;
+    gender: string;
+}
+
+interface User {
+    emailAddress: string;
+    password: string;
+    name: string;
+    dateOfBirth: string;
+    gender: string;
+}
 
 export default function PersonalInformation() {
 
     const [editMode, setEditMode] = useState(false);
-    const data = new FormData();
-    const updateURL = 'http://localhost:8080/user/updateUser';
+    const updateURL = 'http://localhost:8080/user/update';
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<UserInput>({
+        emailAddress: "",
+        password: "",
+        confirmPassword: "",
         name: "",
-        email: "",
-        dateOfBirth: "",
+        dateOfBirth: new Date(),
         gender: "",
     });
 
@@ -29,30 +49,53 @@ export default function PersonalInformation() {
         }));
     };
 
+    const handleDateInput = (date: Date | null) => {
+        if (date != null) {
+            setFormData((prevState) => ({
+                ...prevState,
+                "dateOfBirth": date,
+            }));
+        }
+    };
 
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        // Turn formData state into data which can be used with a form submission
-        Object.entries(formData).forEach(([key, value]) => {
-            data.append(key, value);
-        })
+        if (formData.password != formData.confirmPassword) {
+            alert("Passwörter stimmen nicht überein.");
+            return;
+        }
+
+        const user: User = {
+            emailAddress: formData.emailAddress,
+            password: formData.password,
+            name: formData.name,
+            dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : "",
+            gender: formData.gender
+        };
+
+        const token = localStorage.getItem('token');
 
         fetch(updateURL, {
             method: "POST",
-            body: data,
+            body: JSON.stringify(user),
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
         }).then(() => {
             setFormData({
+                emailAddress: "",
+                password: "",
+                confirmPassword: "",
                 name: "",
-                email: "",
-                dateOfBirth: "",
+                dateOfBirth: new Date(),
                 gender: "",
             })
         });
 
         setEditMode(false);
     }
-
 
     return (
         <div className="PersonalInformation">
@@ -75,9 +118,13 @@ export default function PersonalInformation() {
                     <Label name="Name"></Label>
                     <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
                     <Label name="E-Mail"></Label>
-                    <InputAttribute name="email" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.email}></InputAttribute>
+                    <InputAttribute name="emailAddress" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.emailAddress}></InputAttribute>
+                    <Label name="Passwort"></Label>
+                    <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password}></InputAttribute>
+                    <Label name="Passwort wiederholen"></Label>
+                    <InputAttribute name="confirmPassword" type="password" handleInput={handleInput} placeholder="Passwort wiederholen" value={formData.confirmPassword ? formData.confirmPassword : ""}></InputAttribute>
                     <Label name="Geburtsdatum (Optional)"></Label>
-                    <InputAttribute name="dateOfBirth" handleInput={handleInput} placeholder="Geburtsdatum (Optional)" value={formData.dateOfBirth} required={false}></InputAttribute>
+                    <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />
                     <Label name="Geschlecht (Optional)"></Label>
                     <InputAttribute name="gender" type="password" handleInput={handleInput} placeholder="Geschlecht (Optional)" value={formData.gender} required={false}></InputAttribute>
                     <div className="flex grow space-x-8 mt-10 justify-center items-center">
