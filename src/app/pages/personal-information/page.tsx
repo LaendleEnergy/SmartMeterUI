@@ -45,16 +45,17 @@ export default function PersonalInformation() {
                     'Content-Type': 'application/json',
                 },
             })
-                .then(async (res) => await res.json())
+                .then(async (res) => {
+                    return await res.json();
+                }) 
                 .then((data) => {
                     setDisplayData(data);
-
 
                     Object.keys(data).forEach(function (key) {
                         let value: string | Date;
 
                         if (key == "dateOfBirth") {
-                            value = new Date(data[key]);
+                            value = data[key] != "" ? new Date(data[key]) : new Date();
                         } else {
                             value = data[key];
                         }

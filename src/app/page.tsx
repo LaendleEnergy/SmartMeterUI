@@ -9,13 +9,13 @@ import { useRouter } from 'next/navigation';
 import Label from './components/input/Label';
 
 interface AuthRequest {
-  email: string,
+  emailAddress: string,
   password: string,
 }
 
 export default function Home() {
   const [formData, setFormData] = useState({
-    email: "",
+    emailAddress: "",
     password: "",
   })
 
@@ -35,7 +35,7 @@ export default function Home() {
   async function authenticate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const authRequest: AuthRequest = { email: formData.email, password: formData.password };
+    const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
 
     // ToDo: Automatisch erneuern, wenn abgelaufen
     token = await fetch('http://localhost:8080/user/login', {
@@ -45,14 +45,14 @@ export default function Home() {
       },
       body: JSON.stringify(authRequest),
     })
-    .then(async result => {   
+    .then(async result => {  
       return await result.json();
     })
     .catch(error => console.log(error));
 
     const tokenValue = token["token"];
     localStorage.setItem("token", tokenValue);
-    localStorage.setItem("email", formData.email);
+    localStorage.setItem("email", formData.emailAddress);
 
     if (tokenValue.length > 0) {
       router.push("./pages/energy-consumption");
@@ -67,7 +67,7 @@ export default function Home() {
         <div className="text-lg max-w-[750%]">Registriere dich jetzt, um den Stromverbrauch deines Haushaltes und die damit verbundenen Kosten beobachten und Feedback über die Energieeffizienz deiner Geräte erhalten zu können.</div>
         <form method="POST" onSubmit={authenticate} className="flex flex-col items-center space-y-3">
           <Label name="E-Mail"></Label>
-          <InputAttribute name="email" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.email} required={true}></InputAttribute>
+          <InputAttribute name="emailAddress" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.emailAddress} required={true}></InputAttribute>
           <Label name="Passwort"></Label>
           <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password} required={true}></InputAttribute>
           <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full px-8 py-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">

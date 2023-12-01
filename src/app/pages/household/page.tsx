@@ -11,6 +11,7 @@ import Label from "@/app/components/input/Label";
 import SupplierDropdown from "@/app/components/input/SupplierDropdown";
 import PricingPlanDropdown from "@/app/components/input/PricingPlanDropdown";
 
+
 export default function Household() {
     let [isOpen, setIsOpen] = useState(false);
     const [editMode, setEditMode] = useState(false);

@@ -1,5 +1,10 @@
 # Smart Meter
 
+
+LOGIN DATEN: 
+alice@example.com
+password1
+
 ## Requirements
 - Node.js Version >= 18
 - npm Version >= 10
