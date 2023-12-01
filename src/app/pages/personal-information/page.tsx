@@ -28,49 +28,47 @@ interface User {
 
 export default function PersonalInformation() {
 
+    const [render, setRender] = useState(true);
     const [editMode, setEditMode] = useState(false);
     const [displayData, setDisplayData] = useState<User>({ emailAddress: "E-Mail", name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)" });
-    const [formData, setFormData] = useState<UserInput>({
-        emailAddress: "",
-        password: "",
-        confirmPassword: "",
-        name: "",
-        dateOfBirth: new Date(),
-        gender: "",
-    });
+    const [formData, setFormData] = useState<UserInput>({ emailAddress: "", password: "", confirmPassword: "", name: "", dateOfBirth: new Date(), gender: "" });
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        const currentEmail = localStorage.getItem("email");
+        if (render) {
+            const token = localStorage.getItem('token');
+            const currentEmail = localStorage.getItem("email");
 
-        fetch(`http://localhost:8080/user/get/${currentEmail}`, {
-            method: "GET",
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(async (res) => await res.json())
-            .then((data) => {
-                setDisplayData(data);
-
-                Object.keys(data).forEach(function (key) {
-                    let value: string | Date;
-
-                    if (key == "dateOfBirth") {
-                        value = new Date(data[key]);
-                    } else {
-                        value = data[key];
-                    }
-
-                    setFormData((prevState) => ({
-                        ...prevState,
-                        [key]: value,
-                        "confirmPassword": data["password"]
-                    }));
-                })
+            fetch(`http://localhost:8080/user/get/${currentEmail}`, {
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
             })
-    });
+                .then(async (res) => await res.json())
+                .then((data) => {
+                    setDisplayData(data);
+
+
+                    Object.keys(data).forEach(function (key) {
+                        let value: string | Date;
+
+                        if (key == "dateOfBirth") {
+                            value = new Date(data[key]);
+                        } else {
+                            value = data[key];
+                        }
+
+                        setFormData((prevState) => ({
+                            ...prevState,
+                            [key]: value,
+                            "confirmPassword": data["password"]
+                        }));
+                    });
+                });
+            setRender(false);
+        }
+    }, [render]);
 
     const handleInput = (event: any) => {
         const { name, value } = event.currentTarget;
@@ -106,26 +104,16 @@ export default function PersonalInformation() {
             gender: formData.gender
         };
 
-        const token = localStorage.getItem('token');
-
-        fetch('http://localhost:8080/user/update', {
+        await fetch('http://localhost:8080/user/update', {
             method: "POST",
             body: JSON.stringify(user),
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
             },
-        }).then(() => {
-            setFormData({
-                emailAddress: "",
-                password: "",
-                confirmPassword: "",
-                name: "",
-                dateOfBirth: new Date(),
-                gender: "",
-            })
-        });
+        }).catch((e) => console.log(e));
 
+        setRender(true);
         setEditMode(false);
     }
 

@@ -94,7 +94,7 @@ export default function Register() {
         supplier: "",
         deviceId: "",
       })
-    });
+    }).catch((e) => console.log(e));
 
     router.push("./energy-consumption");
   }

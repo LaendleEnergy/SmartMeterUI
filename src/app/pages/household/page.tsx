@@ -64,7 +64,7 @@ export default function Household() {
                 pricingPlan: "",
                 deviceId: "",
             })
-        });
+        }).catch((e) => console.log(e));
 
         setEditMode(false);
     }
