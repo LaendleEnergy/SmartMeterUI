@@ -109,8 +109,6 @@ export default function Register() {
     })
     .catch(error => console.log(error));
 
-    //localStorage.clear();
-
     const tokenValue = token["token"];
     localStorage.setItem("token", tokenValue);
     localStorage.setItem("email", formData.emailAddress);

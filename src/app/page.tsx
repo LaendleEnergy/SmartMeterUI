@@ -37,7 +37,7 @@ export default function Home() {
     const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
 
     // ToDo: Automatisch erneuern, wenn abgelaufen
-    token = await fetch('http://localhost:8080/user/authenticate', {
+    token = await fetch('http://localhost:8080/user/login', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -49,11 +49,13 @@ export default function Home() {
     })
     .catch(error => console.log(error));
 
-    //localStorage.clear();
+    console.log(token)
 
     const tokenValue = token["token"];
     localStorage.setItem("token", tokenValue);
     localStorage.setItem("email", formData.emailAddress);
+    localStorage.setItem("deviceId", token["deviceId"]);
+
 
     if (tokenValue.length > 0) {
       router.push("./pages/energy-consumption");
