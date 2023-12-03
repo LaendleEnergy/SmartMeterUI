@@ -9,7 +9,6 @@ import Label from '@/app/components/input/Label';
 import PricingPlanDropdown from '@/app/components/input/PricingPlanDropdown';
 import SupplierDropdown from '@/app/components/input/SupplierDropdown';
 
-
 interface CreateHousehold {
   emailAddress: string;
   password: string;
@@ -20,12 +19,18 @@ interface CreateHousehold {
   deviceId: string;
 }
 
+interface AuthRequest {
+  emailAddress: string,
+  password: string,
+}
+
 export default function Register() {
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<CreateHousehold>({ emailAddress: "", name: "", password: "", confirmPassword: "", pricingPlan: "", supplier: "", deviceId: "" });
   const router = useRouter();
   const data = new FormData();
+  let token;
 
   const handleBack = () => {
     setStep(step - 1);
@@ -81,7 +86,7 @@ export default function Register() {
       deviceId: formData.deviceId
     };
 
-    fetch('http://localhost:8080/household/create', {
+    await fetch('http://localhost:8080/household/create', {
       method: "POST",
       body: JSON.stringify(household),
       headers: {
@@ -89,8 +94,32 @@ export default function Register() {
       },
     }).catch((e) => console.log(e));
 
-    router.push("./energy-consumption");
-  }
+    const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
+
+    // ToDo: Automatisch erneuern, wenn abgelaufen
+    token = await fetch('http://localhost:8080/user/authenticate', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(authRequest),
+    })
+    .then(async result => {  
+      return await result.json();
+    })
+    .catch(error => console.log(error));
+
+    //localStorage.clear();
+
+    const tokenValue = token["token"];
+    localStorage.setItem("token", tokenValue);
+    localStorage.setItem("email", formData.emailAddress);
+    localStorage.setItem("deviceId", formData.deviceId);
+
+    if (tokenValue.length > 0) {
+      router.push("../pages/energy-consumption");
+    }
+  };
 
   const steps = [
     {
