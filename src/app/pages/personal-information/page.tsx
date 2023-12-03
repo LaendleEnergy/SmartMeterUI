@@ -23,7 +23,7 @@ interface User {
     password?: string;
     name: string;
     dateOfBirth: string;
-    gender: string;
+    gender: string | null;
 }
 
 export default function PersonalInformation() {
@@ -47,7 +47,7 @@ export default function PersonalInformation() {
             })
                 .then(async (res) => {
                     return await res.json();
-                }) 
+                })
                 .then((data) => {
                     setDisplayData(data);
 
@@ -102,7 +102,7 @@ export default function PersonalInformation() {
             password: formData.password,
             name: formData.name,
             dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : "",
-            gender: formData.gender
+            gender: formData.gender == "" ? null : formData.gender
         };
 
         await fetch('http://localhost:8080/user/update', {
@@ -121,7 +121,7 @@ export default function PersonalInformation() {
     return (
         <div className="PersonalInformation">
             <header><Navigation /></header>
-            <div className="flex-col flex justify-center items-center space-y-8 py-[10%]">
+            <div className="flex-col flex justify-center items-center space-y-8 py-[15%]">
                 <div className="space-y-2">
                     <div className="text-4xl font-bold">Persönliche Daten</div>
                     <button className={editMode ? "hidden" : "Edit justify-center items-center inline-flex space-x-3 bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow"} onClick={() => setEditMode(true)}>
@@ -129,11 +129,15 @@ export default function PersonalInformation() {
                         <FaEdit class="text-white"></FaEdit>
                     </button>
                 </div>
-                <div className={editMode ? "hidden" : "PersonalInformation flex-col items-center gap-8 inline-flex"}>
+                <div className={editMode ? "hidden" : "PersonalInformation flex-col items-center gap-3 inline-flex"}>
+                    <Label name="Name"></Label>
                     <DisplayAttribute name={displayData.name} ></DisplayAttribute>
+                    <Label name="E-Mail"></Label>
                     <DisplayAttribute name={displayData.emailAddress ? displayData.emailAddress : ""}></DisplayAttribute>
+                    <Label name="Geburtsdatum (Optional)"></Label>
                     <DisplayAttribute name={displayData.dateOfBirth}></DisplayAttribute>
-                    <DisplayAttribute name={displayData.gender}></DisplayAttribute>
+                    <Label name="Geschlecht (Optional)"></Label>
+                    <DisplayAttribute name={displayData.gender ? displayData.gender : ""}></DisplayAttribute>
                 </div>
                 <form method="POST" onSubmit={submitForm} className={editMode ? "PersonalInformation flex flex-col items-center space-y-5 border-2 bg-indigo-50 border-black border-solid p-5" : "hidden"}>
                     <Label name="Name"></Label>
