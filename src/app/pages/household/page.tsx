@@ -4,7 +4,7 @@ import DisplayAttribute from "@/app/components/input/DisplayAttribute";
 import Navigation from "../../components/navigation/NavBar";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Link from "next/link";
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import GenericDialog from "../../components/GenericDialog";
 import InputAttribute from "@/app/components/input/InputAttribute";
 import Label from "@/app/components/input/Label";
@@ -12,17 +12,52 @@ import SupplierDropdown from "@/app/components/input/SupplierDropdown";
 import PricingPlanDropdown from "@/app/components/input/PricingPlanDropdown";
 
 
+interface UpdateHousehold {
+    deviceId: string;
+    pricingPlan: string;
+    supplier: string;
+    incentive: string;
+    savingTarget: string;
+}
+
+
 export default function Household() {
     let [isOpen, setIsOpen] = useState(false);
+    const [render, setRender] = useState(true);
+    const [displayData, setDisplayData] = useState<UpdateHousehold>({ deviceId: "Zählernummer", pricingPlan: "Stromtarif", supplier: "Stromanbieter", incentive: "", savingTarget: "" });
     const [editMode, setEditMode] = useState(false);
-    const data = new FormData();
-    const updateURL = 'http://localhost:8080/household/update';
+    const [formData, setFormData] = useState<UpdateHousehold>({ deviceId: "", pricingPlan: "", supplier: "", incentive: "", savingTarget: "" });
 
-    const [formData, setFormData] = useState({
-        supplier: "",
-        pricingPlan: "",
-        deviceId: "",
-    });
+    useEffect(() => {
+        if (render) {
+            const token = localStorage.getItem('token');
+            const deviceId = localStorage.getItem("deviceId");
+
+            fetch(`http://localhost:8080/household/get/${deviceId}`, {
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(async (res) => {
+                    return await res.json();
+                })
+                .then((data) => {
+                    setDisplayData(data);
+
+                    console.log(data)
+
+                    Object.keys(data).forEach(function (key) {
+                        setFormData((prevState) => ({
+                            ...prevState,
+                            [key]: data[key],
+                        }));
+                    });
+                });
+            setRender(false);
+        }
+    }, [render]);
 
     const handleInput = (event: any) => {
         const { name, value } = event.currentTarget;
@@ -51,22 +86,24 @@ export default function Household() {
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        // Turn formData state into data which can be used with a form submission
-        Object.entries(formData).forEach(([key, value]) => {
-            data.append(key, value);
-        })
+        const household: UpdateHousehold = {
+            deviceId: formData.deviceId,
+            pricingPlan: formData.pricingPlan,
+            supplier: formData.supplier,
+            incentive: "",
+            savingTarget: ""
+        };
 
-        fetch(updateURL, {
+        fetch('http://localhost:8080/household/update', {
             method: "POST",
-            body: data,
-        }).then(() => {
-            setFormData({
-                supplier: "",
-                pricingPlan: "",
-                deviceId: "",
-            })
+            body: JSON.stringify(household),
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
         }).catch((e) => console.log(e));
 
+        setRender(true);
         setEditMode(false);
     }
 
@@ -74,7 +111,7 @@ export default function Household() {
     return (
         <div className="Household">
             <header><Navigation /></header>
-            <div className="flex-col flex justify-center items-center space-y-8 py-[10%]">
+            <div className="flex-col flex justify-center items-center space-y-8 py-[15%]">
                 <div className="space-y-2">
                     <div className="text-4xl font-bold">Dein Haushalt</div>
                     <button className={editMode ? "hidden" : "Edit justify-center items-center inline-flex space-x-3 bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow"} onClick={() => setEditMode(true)}>
@@ -82,18 +119,22 @@ export default function Household() {
                         <FaEdit class="text-white"></FaEdit>
                     </button>
                 </div>
-                <div className={editMode ? "hidden" : "HouseholdInformation flex-col items-center gap-8 inline-flex"}>
-                    <DisplayAttribute name="Stromanbieter"></DisplayAttribute>
-                    <DisplayAttribute name="Aktueller Stromtarif"></DisplayAttribute>
-                    <DisplayAttribute name="Zählernummer"></DisplayAttribute>
+                <div className={editMode ? "hidden" : "HouseholdInformation flex-col items-center gap-3 inline-flex"}>
+                    <Label name="Zählernummer"></Label>
+                    <DisplayAttribute name={displayData.deviceId}></DisplayAttribute>
+                    <Label name="Stromanbieter"></Label>
+                    <DisplayAttribute name={displayData.supplier}></DisplayAttribute>
+                    <Label name="Stromtarif"></Label>
+                    <DisplayAttribute name={displayData.pricingPlan}></DisplayAttribute>
                 </div>
-                <form method="POST" onSubmit={submitForm} className={editMode ? "HouseholdInformation flex flex-col items-center space-y-5 p-5 border-2 bg-indigo-50 border-black border-solid" : "hidden"}>
+                <form method="POST" onSubmit={submitForm} className={editMode ? "flex flex-col items-center space-y-3 border-2 bg-indigo-50 border-black border-solid" : "hidden"}>
+                    <Label name="Zählernummer"></Label>
+                    <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId}></InputAttribute>
                     <Label name="Stromanbieter"></Label>
                     <SupplierDropdown handleInput={handleSupplierInput} value={formData.supplier}></SupplierDropdown>
                     <Label name="Stromtarif"></Label>
                     <PricingPlanDropdown handleInput={handlePricingPlanInput} value={formData.pricingPlan}></PricingPlanDropdown>
-                    <Label name="Zählernummer"></Label>
-                    <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId}></InputAttribute>
+
                     <div className="flex grow space-x-8 mt-10 justify-center items-center">
                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                             <button onClick={() => setEditMode(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>

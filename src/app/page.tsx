@@ -31,14 +31,13 @@ export default function Home() {
     }));
   };
 
-
   async function authenticate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
 
     // ToDo: Automatisch erneuern, wenn abgelaufen
-    token = await fetch('http://localhost:8080/user/login', {
+    token = await fetch('http://localhost:8080/user/authenticate', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -49,6 +48,8 @@ export default function Home() {
       return await result.json();
     })
     .catch(error => console.log(error));
+
+    //localStorage.clear();
 
     const tokenValue = token["token"];
     localStorage.setItem("token", tokenValue);
