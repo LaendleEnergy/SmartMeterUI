@@ -12,7 +12,7 @@ export default function Devices() {
     return (
         <div className="CurrentDevices">
             <header><Navigation /></header>
-            <div className="flex-col flex justify-center items-center space-y-8 py-[10%]">
+            <div className="flex-col flex justify-center items-center space-y-8 py-[15%]">
                 <div className="text-4xl font-bold">Deine Geräte</div>
                 <DeviceCard name="Kühlschrank"></DeviceCard>
                 <DeviceCard name="Waschmaschine"></DeviceCard>

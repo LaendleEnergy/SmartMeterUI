@@ -12,7 +12,7 @@ export default function Members() {
     return (
         <div className="Members">
             <header><Navigation /></header>
-            <div className="flex-col flex justify-center items-center space-y-8 py-[10%]">
+            <div className="flex-col flex justify-center items-center space-y-8 py-[15%]">
                 <MemberCard name="Testname1" dateOfBirth="01.01.2000" gender="neutral"></MemberCard>
                 <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
                     <button onClick={() => setIsOpen(true)} className="Default text-white text-base font-medium">Neues Mitglied hinzufügen </button>

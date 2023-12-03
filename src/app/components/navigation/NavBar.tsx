@@ -13,7 +13,7 @@ const NavBar = ({showTabs = true}) => {
   });
 
   return (
-    <div className="bg-indigo-50 fixed top-0 w-full shadow-md mb-5 z-20">
+    <div className="bg-indigo-50 fixed top-0 w-full shadow-md mb-10 z-20">
       <nav className="NavigationBar container mx-auto py-4">
         <div className="Center flex justify-between items-center">
           <div className="Logo inline-flex justify-start items-start">
