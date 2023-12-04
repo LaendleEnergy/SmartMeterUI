@@ -20,7 +20,7 @@ interface UserInput {
 
 interface User {
     emailAddress: string | null;
-    password?: string;
+    password: string;
     name: string;
     dateOfBirth: string;
     gender: string | null;
@@ -30,7 +30,7 @@ export default function PersonalInformation() {
 
     const [render, setRender] = useState(true);
     const [editMode, setEditMode] = useState(false);
-    const [displayData, setDisplayData] = useState<User>({ emailAddress: "E-Mail", name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)" });
+    const [displayData, setDisplayData] = useState<User>({ emailAddress: "E-Mail", name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)", password: "" });
     const [formData, setFormData] = useState<UserInput>({ emailAddress: "", password: "", confirmPassword: "", name: "", dateOfBirth: new Date(), gender: "" });
 
     useEffect(() => {
@@ -105,6 +105,29 @@ export default function PersonalInformation() {
             gender: formData.gender == "" ? null : formData.gender
         };
 
+        /*console.log(user.emailAddress)
+        if (user.emailAddress != null && user.emailAddress != localStorage.getItem("email")) {
+            let token = await fetch('http://localhost:8080/user/authenticate', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({password: localStorage.getItem("password"), emailAddress: localStorage.getItem("email")}),
+            })
+                .then(async result => {
+                    return await result.json();
+                })
+                .catch(error => console.log(error));
+
+                console.log(token)
+
+            if (token) {
+                localStorage.setItem("token", token["token"]);
+                localStorage.setItem("email", user.emailAddress);
+                localStorage.setItem("password", user.password);
+            }
+        }*/
+
         await fetch('http://localhost:8080/user/update', {
             method: "POST",
             body: JSON.stringify(user),
@@ -113,10 +136,6 @@ export default function PersonalInformation() {
                 'Content-Type': 'application/json',
             },
         }).catch((e) => console.log(e));
-
-        if (user.emailAddress) {
-            localStorage.setItem("email", user.emailAddress);   
-        }
 
         setDisplayData(user);
         setRender(true);

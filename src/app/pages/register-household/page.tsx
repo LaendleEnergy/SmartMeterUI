@@ -114,6 +114,7 @@ export default function Register() {
       const tokenValue = token["token"];
       localStorage.setItem("token", tokenValue);
       localStorage.setItem("email", formData.emailAddress);
+      localStorage.setItem("password", formData.password);
       localStorage.setItem("deviceId", formData.deviceId);
       router.push("../pages/energy-consumption");
     } else {

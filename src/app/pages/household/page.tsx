@@ -92,6 +92,10 @@ export default function Household() {
             savingTarget: ""
         };
 
+        if (household.deviceId) {
+            localStorage.setItem("deviceId", household.deviceId);   
+        }
+
         fetch('http://localhost:8080/household/update', {
             method: "POST",
             body: JSON.stringify(household),
@@ -100,10 +104,6 @@ export default function Household() {
                 'Content-Type': 'application/json',
             },
         }).catch((e) => console.log(e));
-
-        if (household.deviceId) {
-            localStorage.setItem("deviceId", household.deviceId);   
-        }
 
         setDisplayData(household);
         setRender(true);
