@@ -104,18 +104,20 @@ export default function Register() {
       },
       body: JSON.stringify(authRequest),
     })
-    .then(async result => {  
-      return await result.json();
-    })
-    .catch(error => console.log(error));
+      .then(async result => {
+        return await result.json();
+      })
+      .catch(error => console.log(error));
 
-    const tokenValue = token["token"];
-    localStorage.setItem("token", tokenValue);
-    localStorage.setItem("email", formData.emailAddress);
-    localStorage.setItem("deviceId", formData.deviceId);
 
-    if (tokenValue.length > 0) {
+    if (token) {
+      const tokenValue = token["token"];
+      localStorage.setItem("token", tokenValue);
+      localStorage.setItem("email", formData.emailAddress);
+      localStorage.setItem("deviceId", formData.deviceId);
       router.push("../pages/energy-consumption");
+    } else {
+      console.log("Authorization failed")
     }
   };
 
@@ -145,9 +147,9 @@ export default function Register() {
       title: 'Haushalt', content:
         <form method="POST" onSubmit={submitHouseholdForm} className="flex flex-col items-center space-y-3 border-2 bg-indigo-50 border-black border-solid">
           <Label name="Stromanbieter"></Label>
-          <SupplierDropdown handleInput={handleSupplierInput} value={formData.supplier}></SupplierDropdown>
+          <SupplierDropdown handleInput={handleSupplierInput} supplierName={formData.supplier}></SupplierDropdown>
           <Label name="Stromtarif"></Label>
-          <PricingPlanDropdown handleInput={handlePricingPlanInput} value={formData.pricingPlan}></PricingPlanDropdown>
+          <PricingPlanDropdown handleInput={handlePricingPlanInput} pricingPlanName={formData.pricingPlan}></PricingPlanDropdown>
           <Label name="Zählernummer"></Label>
           <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId}></InputAttribute>
           <div className="flex grow space-x-8 mt-10 justify-center items-center">

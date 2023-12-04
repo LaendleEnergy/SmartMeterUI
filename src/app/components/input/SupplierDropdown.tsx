@@ -6,13 +6,12 @@ import { Fragment, useEffect, useState } from 'react';
 
 interface DropdownProps {
     handleInput: any;
-    value: string;
+    supplierName: string;
 }
 
-export default function Dropdown({ handleInput, value }: DropdownProps) {
+export default function Dropdown({ handleInput, supplierName }: DropdownProps) {
     const [data, setData] = useState(["Stromanbieter auswählen"]);
     const [selected, setSelected] = useState(data[0]);
-
 
     useEffect(() => {
         fetch('http://localhost:8080/household/get/suppliers')
@@ -23,10 +22,16 @@ export default function Dropdown({ handleInput, value }: DropdownProps) {
                 data.map((value: any) => {
                     parsedValues.push(JSON.parse(value));
                 })
-
+                
                 setData(parsedValues);
+                
+                let initialSelected = parsedValues.find((s => s == supplierName));
+                
+                if (initialSelected) {
+                    setSelected(initialSelected)
+                }
             })
-    }, []);
+    }, [supplierName]);
 
 
     return (

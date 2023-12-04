@@ -114,6 +114,11 @@ export default function PersonalInformation() {
             },
         }).catch((e) => console.log(e));
 
+        if (user.emailAddress) {
+            localStorage.setItem("email", user.emailAddress);   
+        }
+
+        setDisplayData(user);
         setRender(true);
         setEditMode(false);
     }

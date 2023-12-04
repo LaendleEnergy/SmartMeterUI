@@ -6,7 +6,7 @@ import { Fragment, useEffect, useState } from 'react';
 
 interface DropdownProps {
     handleInput: any;
-    value: string;
+    pricingPlanName: string;
 }
 
 interface ElectricityPricingPlan {
@@ -15,7 +15,7 @@ interface ElectricityPricingPlan {
     averagePricePerKwh: number;
 }
 
-export default function Dropdown({ handleInput, value }: DropdownProps) {
+export default function Dropdown({ handleInput, pricingPlanName }: DropdownProps) {
     const [data, setData] = useState<ElectricityPricingPlan[]>([{ name: "Stromtarif auswählen", supplier: "", averagePricePerKwh: 0 }]);
     const [selected, setSelected] = useState(data[0]);
 
@@ -30,8 +30,14 @@ export default function Dropdown({ handleInput, value }: DropdownProps) {
                 })
 
                 setData(parsedValues);
+
+                let initialSelected = parsedValues.find((n: ElectricityPricingPlan) => n.name == pricingPlanName);
+                
+                if (initialSelected) {
+                    setSelected(initialSelected)
+                }
             })
-    }, []);
+    }, [pricingPlanName]);
 
 
     return (

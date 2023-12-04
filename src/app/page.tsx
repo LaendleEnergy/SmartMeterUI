@@ -49,16 +49,14 @@ export default function Home() {
     })
     .catch(error => console.log(error));
 
-    console.log(token)
-
-    const tokenValue = token["token"];
-    localStorage.setItem("token", tokenValue);
-    localStorage.setItem("email", formData.emailAddress);
-    localStorage.setItem("deviceId", token["deviceId"]);
-
-
-    if (tokenValue.length > 0) {
+    if (token) {
+      const tokenValue = token["token"];
+      localStorage.setItem("token", tokenValue);
+      localStorage.setItem("email", formData.emailAddress);
+      localStorage.setItem("deviceId", token["deviceId"]);
       router.push("./pages/energy-consumption");
+    } else {
+      console.log("Authorization failed")
     }
   };
 

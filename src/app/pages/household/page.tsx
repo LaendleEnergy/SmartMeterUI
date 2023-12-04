@@ -46,8 +46,6 @@ export default function Household() {
                 .then((data) => {
                     setDisplayData(data);
 
-                    console.log(data)
-
                     Object.keys(data).forEach(function (key) {
                         setFormData((prevState) => ({
                             ...prevState,
@@ -103,6 +101,11 @@ export default function Household() {
             },
         }).catch((e) => console.log(e));
 
+        if (household.deviceId) {
+            localStorage.setItem("deviceId", household.deviceId);   
+        }
+
+        setDisplayData(household);
         setRender(true);
         setEditMode(false);
     }
@@ -131,9 +134,9 @@ export default function Household() {
                     <Label name="Zählernummer"></Label>
                     <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId}></InputAttribute>
                     <Label name="Stromanbieter"></Label>
-                    <SupplierDropdown handleInput={handleSupplierInput} value={formData.supplier}></SupplierDropdown>
+                    <SupplierDropdown handleInput={handleSupplierInput} supplierName={formData.supplier}></SupplierDropdown>
                     <Label name="Stromtarif"></Label>
-                    <PricingPlanDropdown handleInput={handlePricingPlanInput} value={formData.pricingPlan}></PricingPlanDropdown>
+                    <PricingPlanDropdown handleInput={handlePricingPlanInput} pricingPlanName={formData.pricingPlan}></PricingPlanDropdown>
 
                     <div className="flex grow space-x-8 mt-10 justify-center items-center">
                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
