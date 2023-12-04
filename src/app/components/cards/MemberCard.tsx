@@ -1,4 +1,4 @@
-import GenericDialog from "@/app/components/GenericDialog";
+import GenericDialog from "@/app/components/dialogs/GenericDialog";
 import Link from "next/link";
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
@@ -36,7 +36,7 @@ export default function MemberCard({ name, dateOfBirth = "", gender = "" }: Memb
                     </div>
                 </div>
             </div>
-            <GenericDialog title="Haushaltsmitglied bearbeiten" isOpen={isOpen} activeButtonLabel="Bestätigen" setIsOpen={setIsOpen} delete={false} device={false}></GenericDialog>
+            <GenericDialog title="Haushaltsmitglied bearbeiten" isOpen={isOpen} activeButtonLabel="Bestätigen" setIsOpen={setIsOpen} device={false}></GenericDialog>
         </div>
     )
 }

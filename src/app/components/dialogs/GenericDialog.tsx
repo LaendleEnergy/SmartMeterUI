@@ -3,8 +3,8 @@
 import { Fragment, SetStateAction, Dispatch, useState, FormEvent } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import InputAttribute from '@/app/components/input/InputAttribute';
-import Dropdown from './input/Dropdown';
-import Label from './input/Label';
+import Dropdown from '../input/Dropdown';
+import Label from '../input/Label';
 
 
 interface DialogProps {
@@ -12,7 +12,6 @@ interface DialogProps {
     activeButtonLabel: string;
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
-    delete: boolean;
     device: boolean;
 }
 
@@ -93,7 +92,7 @@ export default function GenericDialog(props: DialogProps) {
                                 <Dialog.Title><span className="text-3xl font-bold pb-4">{props.title}</span></Dialog.Title>
 
                                 <div className="flex-col space-y-6">
-                                    <div className={props.delete || props.device ? "hidden" : "inline-block w-full max-w-md p-6 my-8 space-y-10 text-center justify-center items-center"}>
+                                    <div className={props.device ? "hidden" : "inline-block w-full max-w-md p-6 my-8 space-y-10 text-center justify-center items-center"}>
                                         <form method="POST" onSubmit={submitEditInformationForm} className="flex flex-col items-center space-y-3">
                                             <Label name="Name"></Label>
                                             <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
@@ -102,11 +101,6 @@ export default function GenericDialog(props: DialogProps) {
                                             <Label name="Geschlecht (Optional)"></Label>
                                             <InputAttribute name="gender" handleInput={handleInput} placeholder="Geschlecht (Optional)" value={formData.gender}></InputAttribute>
                                         </form>
-                                    </div>
-
-                                    <div className={props.delete ? "space-y-4" : "hidden"}>
-                                        <span className="pb-4">Soll dieser Account wirklich endgültig gelöscht werden?</span><br />
-                                        <span className="font-bold pb-4">Hinweis: Diese Aktion kann nicht rückgängig gemacht werden.</span>
                                     </div>
 
                                     <div className={props.device ? "flex flex-col space-y-8 w-96" : "hidden"}>
@@ -121,7 +115,7 @@ export default function GenericDialog(props: DialogProps) {
                                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                                             <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>
                                         </div>
-                                        <div className={props.delete ? "DeleteButton bg-red-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-red-700 hover:shadow" : "ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow"}>
+                                        <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
                                             <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">{props.activeButtonLabel}</button>
                                         </div>
                                     </div>

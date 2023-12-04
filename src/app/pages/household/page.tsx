@@ -5,11 +5,11 @@ import Navigation from "../../components/navigation/NavBar";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Link from "next/link";
 import { FormEvent, useEffect, useState } from 'react';
-import GenericDialog from "../../components/GenericDialog";
 import InputAttribute from "@/app/components/input/InputAttribute";
 import Label from "@/app/components/input/Label";
 import SupplierDropdown from "@/app/components/input/SupplierDropdown";
 import PricingPlanDropdown from "@/app/components/input/PricingPlanDropdown";
+import DeleteDialog from "@/app/components/dialogs/DeleteDialog";
 
 
 interface UpdateHousehold {
@@ -80,6 +80,21 @@ export default function Household() {
         }));
     }
 
+    async function deleteAccount() {
+        console.log("delete account called")
+
+        if (displayData.deviceId != "") {
+            await fetch(`http://localhost:8080/household/delete/${displayData.deviceId}`, {
+                method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
+            }).catch((e) => console.log(e));
+        } else {
+            console.log("Account could not be deleted");
+        }
+    }
 
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -130,7 +145,7 @@ export default function Household() {
                     <Label name="Stromtarif"></Label>
                     <DisplayAttribute name={displayData.pricingPlan}></DisplayAttribute>
                 </div>
-                <form method="POST" onSubmit={submitForm} className={editMode ? "flex flex-col items-center space-y-3 border-2 bg-indigo-50 border-black border-solid" : "hidden"}>
+                <form method="POST" onSubmit={submitForm} className={editMode ? "flex flex-col items-center space-y-5 border-2 bg-indigo-50 border-black border-solid p-5" : "hidden"}>
                     <Label name="Zählernummer"></Label>
                     <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId}></InputAttribute>
                     <Label name="Stromanbieter"></Label>
@@ -156,7 +171,7 @@ export default function Household() {
                 <button onClick={() => setIsOpen(true)} className="text-center text-white text-base font-medium leading-normal right grow w-50 h-15 inline-flex justify-center items-center space-x-3 ">Account löschen  <FaTrash className="text-white"></FaTrash> </button>
             </div>
 
-            <GenericDialog title="Account löschen" isOpen={isOpen} activeButtonLabel="Account löschen" setIsOpen={setIsOpen} delete={true} device={false}></GenericDialog>
+            <DeleteDialog isOpen={isOpen} setIsOpen={setIsOpen} deleteAccount={deleteAccount}></DeleteDialog>
         </div >
     )
 }

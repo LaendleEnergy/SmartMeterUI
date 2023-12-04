@@ -3,7 +3,7 @@
 import Navigation from "../../components/navigation/NavBar";
 import DeviceCard from "../../components/cards/DeviceCard";
 import { FaPlusCircle } from "react-icons/fa";
-import GenericDialog from "@/app/components/GenericDialog";
+import GenericDialog from "@/app/components/dialogs/GenericDialog";
 import { useState } from "react";
 
 export default function Devices() {
@@ -21,7 +21,7 @@ export default function Devices() {
                     <FaPlusCircle className="text-white"></FaPlusCircle>
                 </div>
             </div>
-            <GenericDialog title="Neues Gerät hinzufügen" isOpen={isOpen} activeButtonLabel="Hinzufügen" setIsOpen={setIsOpen} delete={false} device={true}></GenericDialog>
+            <GenericDialog title="Neues Gerät hinzufügen" isOpen={isOpen} activeButtonLabel="Hinzufügen" setIsOpen={setIsOpen} device={true}></GenericDialog>
         </div>
     )
 }
