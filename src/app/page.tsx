@@ -53,8 +53,8 @@ export default function Home() {
       const tokenValue = token["token"];
       localStorage.setItem("token", tokenValue);
       localStorage.setItem("email", formData.emailAddress);
-      localStorage.setItem("password", formData.password);
       localStorage.setItem("deviceId", token["deviceId"]);
+      localStorage.setItem("userId", token["userId"]);
       router.push("./pages/energy-consumption");
     } else {
       console.log("Authorization failed")

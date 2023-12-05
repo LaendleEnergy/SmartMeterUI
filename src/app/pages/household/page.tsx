@@ -22,7 +22,7 @@ interface UpdateHousehold {
 
 
 export default function Household() {
-    let [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [render, setRender] = useState(true);
     const [displayData, setDisplayData] = useState<UpdateHousehold>({ deviceId: "Zählernummer", pricingPlan: "Stromtarif", supplier: "Stromanbieter", incentive: "", savingTarget: "" });
     const [editMode, setEditMode] = useState(false);
@@ -81,7 +81,6 @@ export default function Household() {
     }
 
     async function deleteAccount() {
-        console.log("delete account called")
 
         if (displayData.deviceId != "") {
             await fetch(`http://localhost:8080/household/delete/${displayData.deviceId}`, {
@@ -171,7 +170,7 @@ export default function Household() {
                 <button onClick={() => setIsOpen(true)} className="text-center text-white text-base font-medium leading-normal right grow w-50 h-15 inline-flex justify-center items-center space-x-3 ">Account löschen  <FaTrash className="text-white"></FaTrash> </button>
             </div>
 
-            <DeleteDialog isOpen={isOpen} setIsOpen={setIsOpen} deleteAccount={deleteAccount}></DeleteDialog>
+            <DeleteDialog isOpen={isOpen} setIsOpen={setIsOpen} handleDelete={deleteAccount}></DeleteDialog>
         </div >
     )
 }

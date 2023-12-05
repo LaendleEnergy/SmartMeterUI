@@ -2,12 +2,14 @@
 
 import DisplayAttribute from "@/app/components/input/DisplayAttribute";
 import Navigation from "../../components/navigation/NavBar";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { FormEvent, useEffect, useState } from "react";
 import InputAttribute from "@/app/components/input/InputAttribute";
 import Label from "@/app/components/input/Label";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
+import DeleteDialog from "@/app/components/dialogs/DeleteDialog";
+
 
 interface UserInput {
     emailAddress: string;
@@ -27,7 +29,7 @@ interface User {
 }
 
 export default function PersonalInformation() {
-
+    const [isOpen, setIsOpen] = useState(false);
     const [render, setRender] = useState(true);
     const [editMode, setEditMode] = useState(false);
     const [displayData, setDisplayData] = useState<User>({ emailAddress: "E-Mail", name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)", password: "" });
@@ -36,9 +38,9 @@ export default function PersonalInformation() {
     useEffect(() => {
         if (render) {
             const token = localStorage.getItem('token');
-            const currentEmail = localStorage.getItem("email");
+            const userId = localStorage.getItem("userId");
 
-            fetch(`http://localhost:8080/user/get/${currentEmail}`, {
+            fetch(`http://localhost:8080/user/get/${userId}`, {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -86,6 +88,23 @@ export default function PersonalInformation() {
                 ...prevState,
                 "dateOfBirth": date,
             }));
+        }
+    };
+
+    async function deleteUser() {
+
+        const userId = localStorage.getItem("userId");
+
+        if (userId && userId != "") {
+            await fetch(`http://localhost:8080/user/delete/${userId}`, {
+                method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
+            }).catch((e) => console.log(e));
+        } else {
+            console.log("User could not be deleted");
         }
     };
 
@@ -186,6 +205,11 @@ export default function PersonalInformation() {
                     </div>
                 </form>
             </div>
+            <div className="DeleteButton inline-flex fixed bottom-4 right-4 bg-red-600 rounded-full p-3 space-y-10 transition duration-150 ease-in-out hover:bg-red-700 hover:shadow">
+                <button onClick={() => setIsOpen(true)} className="text-center text-white text-base font-medium leading-normal right grow w-50 h-15 inline-flex justify-center items-center space-x-3 ">User löschen  <FaTrash className="text-white"></FaTrash> </button>
+            </div>
+
+            <DeleteDialog isOpen={isOpen} setIsOpen={setIsOpen} handleDelete={deleteUser} deleteUser={true}></DeleteDialog>
         </div>
     )
 }
