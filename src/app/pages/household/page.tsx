@@ -18,6 +18,7 @@ interface UpdateHousehold {
     supplier: string;
     incentive: string;
     savingTarget: string;
+    householdId?: string | null;
 }
 
 
@@ -31,9 +32,9 @@ export default function Household() {
     useEffect(() => {
         if (render) {
             const token = localStorage.getItem('token');
-            const deviceId = localStorage.getItem("deviceId");
+            const householdId = localStorage.getItem("householdId");
 
-            fetch(`http://localhost:8080/household/get/${deviceId}`, {
+            fetch(`http://localhost:8080/household/get/${householdId}`, {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -81,18 +82,16 @@ export default function Household() {
     }
 
     async function deleteAccount() {
+        const householdId = localStorage.getItem("householdId");
 
-        if (displayData.deviceId != "") {
-            await fetch(`http://localhost:8080/household/delete/${displayData.deviceId}`, {
-                method: "DELETE",
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    'Content-Type': 'application/json',
-                },
-            }).catch((e) => console.log(e));
-        } else {
-            console.log("Account could not be deleted");
-        }
+        await fetch(`http://localhost:8080/household/delete/${householdId}`, {
+            method: "DELETE",
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        }).catch((e) => console.log(e));
+
     }
 
     async function submitForm(event: FormEvent<HTMLFormElement>) {
@@ -103,12 +102,9 @@ export default function Household() {
             pricingPlan: formData.pricingPlan,
             supplier: formData.supplier,
             incentive: "",
-            savingTarget: ""
+            savingTarget: "",
+            householdId: localStorage.getItem("householdId"),
         };
-
-        if (household.deviceId) {
-            localStorage.setItem("deviceId", household.deviceId);   
-        }
 
         fetch('http://localhost:8080/household/update', {
             method: "POST",
@@ -119,8 +115,8 @@ export default function Household() {
             },
         }).catch((e) => console.log(e));
 
-        setDisplayData(household);
         setRender(true);
+        setDisplayData(household);
         setEditMode(false);
     }
 

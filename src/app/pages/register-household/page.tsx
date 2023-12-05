@@ -86,13 +86,14 @@ export default function Register() {
       deviceId: formData.deviceId
     };
 
-    await fetch('http://localhost:8080/household/create', {
+    const householdId = await fetch('http://localhost:8080/household/create', {
       method: "POST",
       body: JSON.stringify(household),
       headers: {
         'Content-Type': 'application/json',
       },
-    }).catch((e) => console.log(e));
+    }).then(result => result.json())
+    .catch((e) => console.log(e));
 
     const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
 
@@ -114,7 +115,7 @@ export default function Register() {
       const tokenValue = token["token"];
       localStorage.setItem("token", tokenValue);
       localStorage.setItem("email", formData.emailAddress);
-      localStorage.setItem("deviceId", formData.deviceId);
+      localStorage.setItem("householdId", householdId);
       localStorage.setItem("userId", token["userId"]);
       router.push("../pages/energy-consumption");
     } else {

@@ -5,6 +5,8 @@ import { Dialog, Transition } from '@headlessui/react';
 import InputAttribute from '@/app/components/input/InputAttribute';
 import Dropdown from '../input/Dropdown';
 import Label from '../input/Label';
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css';
 
 
 interface DialogProps {
@@ -15,21 +17,25 @@ interface DialogProps {
     device: boolean;
 }
 
+interface Member {
+    name: string;
+    dateOfBirth: string;
+    gender: string | null;
+    deviceId: string | null;
+}
+
+interface MemberInput {
+    name: string;
+    dateOfBirth: Date;
+    gender: string;
+    deviceId: string | null;
+}
+
+
 export default function GenericDialog(props: DialogProps) {
 
-    const [formData, setFormData] = useState({
-        name: "",
-        dateOfBirth: "",
-        gender: "",
-    });
-
-    const [deviceFormData, setDeviceFormData] = useState({
-        description: "",
-        deviceType: "",
-    });
-
-    const data = new FormData();
-    const formURL = '';
+    const [formData, setFormData] = useState<MemberInput>({name: "", dateOfBirth: new Date(), gender: "", deviceId: ""});
+    const [deviceFormData, setDeviceFormData] = useState({ description: "", deviceType: "" });
 
     const handleInput = (event: any) => {
         const { name, value } = event.currentTarget;
@@ -38,26 +44,35 @@ export default function GenericDialog(props: DialogProps) {
             ...prevState,
             [name]: value,
         }));
-    }
+    };
+
+    const handleDateInput = (date: Date | null) => {
+        if (date != null) {
+            setFormData((prevState) => ({
+                ...prevState,
+                "dateOfBirth": date,
+            }));
+        }
+    };
 
     async function submitEditInformationForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        // Turn formData state into data which can be used with a form submission
-        Object.entries(formData).forEach(([key, value]) => {
-            data.append(key, value);
-        })
-
-        fetch(formURL, {
+        const member: Member = {
+            name: formData.name,
+            dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : "",
+            gender: formData.gender == "" ? null : formData.gender,
+            deviceId: localStorage.getItem("deviceId")
+        };
+        
+        await fetch('http://localhost:8080/member/add', {
             method: "POST",
-            body: data,
-        }).then(() => {
-            setFormData({
-                name: "",
-                dateOfBirth: "",
-                gender: "",
-            })
-        });
+            body: JSON.stringify(member),
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        }).catch((e) => console.log(e));
     }
 
     const handleDeviceInput = (event: any) => {
@@ -97,9 +112,9 @@ export default function GenericDialog(props: DialogProps) {
                                             <Label name="Name"></Label>
                                             <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
                                             <Label name="Geburtsdatum (Optional)"></Label>
-                                            <InputAttribute name="dateOfBirth" type="date" handleInput={handleInput} placeholder="Geburtsdatum (Optional)" value={formData.dateOfBirth}></InputAttribute>
+                                            <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />
                                             <Label name="Geschlecht (Optional)"></Label>
-                                            <InputAttribute name="gender" handleInput={handleInput} placeholder="Geschlecht (Optional)" value={formData.gender}></InputAttribute>
+                                            <InputAttribute name="gender" handleInput={handleInput} placeholder="Geschlecht (Optional)" value={formData.gender} required={false}></InputAttribute>
                                         </form>
                                     </div>
 

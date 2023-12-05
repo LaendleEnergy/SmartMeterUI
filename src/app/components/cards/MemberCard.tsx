@@ -10,7 +10,7 @@ interface MemberProps {
 }
 
 export default function MemberCard({ name, dateOfBirth = "", gender = "" }: MemberProps) {
-    let [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <div className="flex items-center justify-center border-2 border-solid border-black">
