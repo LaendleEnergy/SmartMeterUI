@@ -1,7 +1,7 @@
-import GenericDialog from "@/app/components/dialogs/GenericDialog";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
+import EditMemberDialog from "../dialogs/EditMemberDialog";
 
 interface Member {
     name: string;
@@ -11,32 +11,28 @@ interface Member {
     id: string;
 }
 
+interface MemberInput {
+    name: string;
+    dateOfBirth: Date;
+    gender: string;
+    householdId: string | null;
+    id: string;
+}
+
 export default function MemberCard(member: Member) {
+    const memberInput: MemberInput = {
+        name: member.name,
+        dateOfBirth: new Date(member.dateOfBirth),
+        gender: member.gender,
+        householdId: member.householdId ? member.householdId : "",
+        id: member.id
+    };
+
     const [isOpen, setIsOpen] = useState(false);
-    const [data, setData] = useState({ householdId: "", memberId: "" })
-
-    console.log(member)
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-
-        fetch(`http://localhost:8080/member/get/${member.id}/${member.householdId}`, {
-            method: "GET",
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(async (res) => { return await res.json(); })
-            .then((data) => {
-                setData(data)
-            })
-    });
 
     async function deleteMember() {
-
         if (member.householdId != "" && member.id != "") {
-            await fetch(`http://localhost:8080/member/remove/${member.id}/${member.householdId}`, {
+            await fetch(`http://localhost:8080/member/remove/${member.id}`, {
                 method: "DELETE",
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -73,14 +69,8 @@ export default function MemberCard(member: Member) {
                     </div>
                 </div>
             </div>
-            <GenericDialog title="Haushaltsmitglied bearbeiten" isOpen={isOpen} activeButtonLabel="Bestätigen" setIsOpen={setIsOpen} device={false} memberId={member.id} householdId={member.householdId}></GenericDialog>
+            <EditMemberDialog isOpen={isOpen} setIsOpen={setIsOpen} member={memberInput}></EditMemberDialog>
         </div>
 
     )
 }
-
-
-function setRender(arg0: boolean) {
-    throw new Error("Function not implemented.");
-}
-
