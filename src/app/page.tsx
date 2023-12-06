@@ -7,6 +7,7 @@ import InputAttribute from "@/app/components/input/InputAttribute";
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Label from './components/input/Label';
+import { authenticate } from './components/authentication';
 
 interface AuthRequest {
   emailAddress: string,
@@ -20,7 +21,6 @@ export default function Home() {
   })
 
   const router = useRouter();
-  let token;
 
   const handleInput = (event: any) => {
     const { name, value } = event.currentTarget;
@@ -31,33 +31,13 @@ export default function Home() {
     }));
   };
 
-  async function authenticate(event: FormEvent<HTMLFormElement>) {
+  async function auth(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
 
-    // ToDo: Automatisch erneuern, wenn abgelaufen
-    token = await fetch('http://localhost:8080/user/login', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(authRequest),
-    })
-    .then(async result => {  
-      return await result.json();
-    })
-    .catch(error => console.log(error));
-
-    if (token) {
-      const tokenValue = token["token"];
-      localStorage.setItem("token", tokenValue);
-      localStorage.setItem("email", formData.emailAddress);
-      localStorage.setItem("householdId", token["householdId"]);
-      localStorage.setItem("userId", token["userId"]);
+    if (await authenticate(authRequest)) {
       router.push("./pages/energy-consumption");
-    } else {
-      console.log("Authorization failed")
     }
   };
 
@@ -67,7 +47,7 @@ export default function Home() {
         <Logo h={388} w={740}></Logo>
         <div className="text-4xl font-bold ">Willkommen bei LaendleEnergy!</div>
         <div className="text-lg max-w-[750%]">Registriere dich jetzt, um den Stromverbrauch deines Haushaltes und die damit verbundenen Kosten beobachten und Feedback über die Energieeffizienz deiner Geräte erhalten zu können.</div>
-        <form method="POST" onSubmit={authenticate} className="flex flex-col items-center space-y-3">
+        <form method="POST" onSubmit={auth} className="flex flex-col items-center space-y-3">
           <Label name="E-Mail"></Label>
           <InputAttribute name="emailAddress" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.emailAddress} required={true}></InputAttribute>
           <Label name="Passwort"></Label>

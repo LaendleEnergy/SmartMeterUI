@@ -30,6 +30,7 @@ export default function Household() {
     const [formData, setFormData] = useState<UpdateHousehold>({ deviceId: "", pricingPlan: "", supplier: "", incentive: "", savingTarget: "" });
 
     useEffect(() => {
+
         if (render) {
             const token = localStorage.getItem('token');
             const householdId = localStorage.getItem("householdId");

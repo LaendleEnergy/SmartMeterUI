@@ -8,6 +8,7 @@ import React from 'react';
 import Label from '@/app/components/input/Label';
 import PricingPlanDropdown from '@/app/components/input/PricingPlanDropdown';
 import SupplierDropdown from '@/app/components/input/SupplierDropdown';
+import { authenticate } from '@/app/components/authentication';
 
 interface CreateHousehold {
   emailAddress: string;
@@ -97,29 +98,8 @@ export default function Register() {
 
     const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
 
-    // ToDo: Automatisch erneuern, wenn abgelaufen
-    token = await fetch('http://localhost:8080/user/authenticate', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(authRequest),
-    })
-      .then(async result => {
-        return await result.json();
-      })
-      .catch(error => console.log(error));
-
-
-    if (token) {
-      const tokenValue = token["token"];
-      localStorage.setItem("token", tokenValue);
-      localStorage.setItem("email", formData.emailAddress);
-      localStorage.setItem("householdId", householdId);
-      localStorage.setItem("userId", token["userId"]);
-      router.push("../pages/energy-consumption");
-    } else {
-      console.log("Authorization failed")
+    if (await authenticate(authRequest)) {
+      router.push("./pages/energy-consumption");
     }
   };
 
