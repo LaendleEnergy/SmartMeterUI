@@ -3,12 +3,12 @@ import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import EditMemberDialog from "../dialogs/EditMemberDialog";
 
-interface Member {
+interface MemberSubmit {
     name: string;
     dateOfBirth: string;
     gender: string;
-    householdId: string;
-    id: string;
+    householdId?: string | null;
+    id?: string;
 }
 
 interface MemberInput {
@@ -19,16 +19,9 @@ interface MemberInput {
     id: string;
 }
 
-export default function MemberCard(member: Member) {
-    const memberInput: MemberInput = {
-        name: member.name,
-        dateOfBirth: new Date(member.dateOfBirth),
-        gender: member.gender,
-        householdId: member.householdId ? member.householdId : "",
-        id: member.id
-    };
-
+export default function MemberCard(member: MemberSubmit) {
     const [isOpen, setIsOpen] = useState(false);
+    const [currentMember, setCurrentMember] = useState<MemberSubmit>(member);
 
     async function deleteMember() {
         if (member.householdId != "" && member.id != "") {
@@ -44,12 +37,11 @@ export default function MemberCard(member: Member) {
         }
     };
 
-
     return (
         <div className="flex items-center justify-center border-2 border-solid border-black">
             <div className="grid grid-rows-3 bg-primary-100 p-5 space-y-3">
                 <div className="Wrapper flex justify-center relative">
-                    <div className="font-bold">{member.name}</div>
+                    <div className="font-bold">{currentMember.name}</div>
                     <div className="DeleteButton absolute top-0 right-0">
                         <button onSubmit={deleteMember} className="PrimaryMedium h-7 w-12 rounded-full bg-red-600 inline-flex justify-center items-center">
                             <FaTrash className="text-white"></FaTrash>
@@ -57,8 +49,8 @@ export default function MemberCard(member: Member) {
                     </div>
                 </div>
                 <div className="text-center">
-                    <div>{member.dateOfBirth}</div>
-                    <div>{member.gender}</div>
+                    <div>{currentMember.dateOfBirth}</div>
+                    <div>{currentMember.gender}</div>
                 </div>
                 <div className="flex grow space-x-8 justify-center items-center">
                     <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
@@ -69,7 +61,7 @@ export default function MemberCard(member: Member) {
                     </div>
                 </div>
             </div>
-            <EditMemberDialog isOpen={isOpen} setIsOpen={setIsOpen} member={memberInput}></EditMemberDialog>
+            <EditMemberDialog isOpen={isOpen} setIsOpen={setIsOpen} member={currentMember} setCurrentMember={setCurrentMember}></EditMemberDialog>
         </div>
 
     )

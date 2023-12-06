@@ -1,18 +1,11 @@
 "use client";
 
-import { Fragment, SetStateAction, Dispatch, useState, FormEvent } from 'react';
+import { Fragment, SetStateAction, Dispatch, useState, FormEvent, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import InputAttribute from '@/app/components/input/InputAttribute';
 import Label from '../input/Label';
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
-
-
-interface DialogProps {
-    isOpen: boolean;
-    setIsOpen: Dispatch<SetStateAction<boolean>>;
-    member: Member;
-}
 
 interface Member {
     name: string;
@@ -22,7 +15,6 @@ interface Member {
     id?: string;
 }
 
-
 interface MemberSubmit {
     name: string;
     dateOfBirth: string;
@@ -31,9 +23,19 @@ interface MemberSubmit {
     id?: string;
 }
 
+interface DialogProps {
+    isOpen: boolean;
+    setIsOpen: Dispatch<SetStateAction<boolean>>;
+    member: MemberSubmit;
+    setCurrentMember: Dispatch<SetStateAction<MemberSubmit>>;
+}
+
+
 export default function EditMemberDialog(props: DialogProps) {
     const member = props.member;
-    const [formData, setFormData] = useState<Member>({ name: member.name, dateOfBirth: member.dateOfBirth, gender: member.gender });
+    const [formData, setFormData] = useState<Member>({ name: member.name, dateOfBirth: new Date(member.dateOfBirth), gender: member.gender });
+    
+    useEffect(() => {})
 
     const handleInput = (event: any) => {
         const { name, value } = event.currentTarget;
@@ -63,6 +65,8 @@ export default function EditMemberDialog(props: DialogProps) {
             householdId: localStorage.getItem("householdId"),
             id: formData.id
         };
+
+        props.setCurrentMember(member);
 
         await fetch('http://localhost:8080/member/update', {
             method: "POST",

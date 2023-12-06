@@ -107,7 +107,7 @@ export default function Household() {
             householdId: localStorage.getItem("householdId"),
         };
 
-        fetch('http://localhost:8080/household/update', {
+        await fetch('http://localhost:8080/household/update', {
             method: "POST",
             body: JSON.stringify(household),
             headers: {

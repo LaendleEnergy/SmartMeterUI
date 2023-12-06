@@ -20,7 +20,12 @@ export default function Dropdown({ handleInput, pricingPlanName }: DropdownProps
     const [selected, setSelected] = useState(data[0]);
 
     useEffect(() => {
-        fetch('http://localhost:8080/household/get/pricingPlans')
+        fetch('http://localhost:8080/household/get/pricingPlans', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        })
             .then((res) => res.json())
             .then((data) => {
                 let parsedValues: ElectricityPricingPlan[] = [];
@@ -32,7 +37,7 @@ export default function Dropdown({ handleInput, pricingPlanName }: DropdownProps
                 setData(parsedValues);
 
                 let initialSelected = parsedValues.find((n: ElectricityPricingPlan) => n.name == pricingPlanName);
-                
+
                 if (initialSelected) {
                     setSelected(initialSelected)
                 }

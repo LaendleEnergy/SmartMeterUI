@@ -19,7 +19,6 @@ export default function Members() {
     const [isOpen, setIsOpen] = useState(false);
     const [displayData, setDisplayData] = useState<Member[]>([{ name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)", householdId: "", id: "" }]);
 
-
     useEffect(() => {
         const token = localStorage.getItem('token');
         const householdId = localStorage.getItem("householdId");
