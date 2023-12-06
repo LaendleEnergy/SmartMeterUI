@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, SetStateAction, Dispatch, useState, FormEvent } from 'react';
+import { Fragment, SetStateAction, Dispatch, useState, FormEvent, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import InputAttribute from '@/app/components/input/InputAttribute';
 import Dropdown from '../input/Dropdown';
@@ -15,27 +15,34 @@ interface DialogProps {
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
     device: boolean;
+    memberId?: string;
+    householdId?: string;
 }
 
 interface Member {
     name: string;
     dateOfBirth: string;
-    gender: string | null;
-    deviceId: string | null;
+    gender: string;
+    householdId: string | null;
+    id: string;
 }
 
 interface MemberInput {
     name: string;
     dateOfBirth: Date;
     gender: string;
-    deviceId: string | null;
+    householdId: string | null;
+    id: string;
 }
 
 
 export default function GenericDialog(props: DialogProps) {
-
-    const [formData, setFormData] = useState<MemberInput>({name: "", dateOfBirth: new Date(), gender: "", deviceId: ""});
+    const [formData, setFormData] = useState<MemberInput>({ name: "", dateOfBirth: new Date(), gender: "", householdId: "", id: "" });
     const [deviceFormData, setDeviceFormData] = useState({ description: "", deviceType: "" });
+
+    console.log(props.memberId)
+    console.log(props.householdId)
+
 
     const handleInput = (event: any) => {
         const { name, value } = event.currentTarget;
@@ -61,11 +68,12 @@ export default function GenericDialog(props: DialogProps) {
         const member: Member = {
             name: formData.name,
             dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : "",
-            gender: formData.gender == "" ? null : formData.gender,
-            deviceId: localStorage.getItem("deviceId")
+            gender: formData.gender,
+            householdId: localStorage.getItem("householdId"),
+            id: formData.id
         };
-        
-        await fetch('http://localhost:8080/member/add', {
+
+        fetch('http://localhost:8080/member/update', {
             method: "POST",
             body: JSON.stringify(member),
             headers: {
@@ -107,7 +115,7 @@ export default function GenericDialog(props: DialogProps) {
                                 <Dialog.Title><span className="text-3xl font-bold pb-4">{props.title}</span></Dialog.Title>
 
                                 <div className="flex-col space-y-6">
-                                    <div className={props.device ? "hidden" : "inline-block w-full max-w-md p-6 my-8 space-y-10 text-center justify-center items-center"}>
+                                    <div className={props.device ? "hidden" : "inline-block w-full max-w-md p-6 my-8 space-y-15 text-center justify-center items-center"}>
                                         <form method="POST" onSubmit={submitEditInformationForm} className="flex flex-col items-center space-y-3">
                                             <Label name="Name"></Label>
                                             <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
