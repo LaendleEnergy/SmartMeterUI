@@ -13,7 +13,7 @@ interface AuthResponse {
     iat: number;
     iss: string;
     sub: string;
-    userId: string;
+    memberId: string;
 }
 
 export async function authenticate(props: AuthRequest) {
@@ -44,7 +44,8 @@ export async function authenticate(props: AuthRequest) {
         localStorage.setItem("token", token["token"]);
         localStorage.setItem("email", props.emailAddress);
         localStorage.setItem("householdId", decodedToken.householdId);
-        localStorage.setItem("userId", decodedToken.userId);
+        localStorage.setItem("memberId", decodedToken.memberId);
+        console.log(decodedToken)
         return true;
     } else {
         console.log("Authorization failed");

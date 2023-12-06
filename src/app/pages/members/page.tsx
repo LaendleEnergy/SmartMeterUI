@@ -23,7 +23,7 @@ export default function Members() {
         const token = localStorage.getItem('token');
         const householdId = localStorage.getItem("householdId");
 
-        fetch(`http://localhost:8080/member/get/${householdId}`, {
+        fetch("http://localhost:8080/member/getMember", {
             method: "GET",
             headers: {
                 'Authorization': `Bearer ${token}`,

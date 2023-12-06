@@ -25,7 +25,7 @@ export default function MemberCard(member: MemberSubmit) {
 
     async function deleteMember() {
         if (member.householdId != "" && member.id != "") {
-            await fetch(`http://localhost:8080/member/remove/${member.id}`, {
+            await fetch("http://localhost:8080/member/remove", {
                 method: "DELETE",
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,

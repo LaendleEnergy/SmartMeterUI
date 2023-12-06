@@ -14,7 +14,7 @@ export default function Dropdown({ handleInput, supplierName }: DropdownProps) {
     const [selected, setSelected] = useState(data[0]);
 
     useEffect(() => {
-        fetch('http://localhost:8080/household/get/suppliers', {
+        fetch('http://localhost:8080/household/getSuppliers', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',

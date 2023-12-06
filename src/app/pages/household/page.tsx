@@ -35,7 +35,7 @@ export default function Household() {
             const token = localStorage.getItem('token');
             const householdId = localStorage.getItem("householdId");
 
-            fetch(`http://localhost:8080/household/get/${householdId}`, {
+            fetch("http://localhost:8080/household/get", {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${token}`,

@@ -41,7 +41,7 @@ export default function PersonalInformation() {
             const token = localStorage.getItem('token');
             const userId = localStorage.getItem("userId");
 
-            fetch(`http://localhost:8080/user/get/${userId}`, {
+            fetch("http://localhost:8080/user/get", {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${token}`,

@@ -7,7 +7,7 @@ import InputAttribute from "@/app/components/input/InputAttribute";
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Label from './components/input/Label';
-import { authenticate } from './components/authentication';
+import { authenticate } from './authentication/authentication';
 
 interface AuthRequest {
   emailAddress: string,

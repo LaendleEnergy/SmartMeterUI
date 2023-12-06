@@ -8,7 +8,7 @@ import React from 'react';
 import Label from '@/app/components/input/Label';
 import PricingPlanDropdown from '@/app/components/input/PricingPlanDropdown';
 import SupplierDropdown from '@/app/components/input/SupplierDropdown';
-import { authenticate } from '@/app/components/authentication';
+import { authenticate } from '@/app/authentication/authentication';
 
 interface CreateHousehold {
   emailAddress: string;
