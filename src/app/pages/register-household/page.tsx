@@ -51,11 +51,26 @@ export default function Register() {
 
     if (formData.password == formData.confirmPassword) {
 
-      Object.entries(formData).forEach(([key, value]) => {
-        data.append(key, value);
-      });
+      const validated = await fetch('http://localhost:8080/user/validateEmail', {
+        method: "POST",
+        body: JSON.stringify({email: formData.emailAddress}),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(result => result.json())
+        .catch((e) => console.log(e));
 
-      setStep(step + 1);
+      if (validated) {
+        Object.entries(formData).forEach(([key, value]) => {
+          data.append(key, value);
+        });
+
+        setStep(step + 1);
+      } else {
+        alert("E-Mail Adresse wird bereits verwendet.")
+      }
+
+
     } else {
       alert("Passwörter stimmen nicht überein.");
     }
@@ -80,12 +95,12 @@ export default function Register() {
         'Content-Type': 'application/json',
       },
     }).then(result => result.json())
-    .catch((e) => console.log(e));
+      .catch((e) => console.log(e));
 
     const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
 
     if (await authenticate(authRequest)) {
-      router.push("./pages/energy-consumption");
+      router.push("../pages/energy-consumption");
     }
   };
 
