@@ -10,16 +10,7 @@ import Label from "@/app/components/input/Label";
 import SupplierDropdown from "@/app/components/input/SupplierDropdown";
 import PricingPlanDropdown from "@/app/components/input/PricingPlanDropdown";
 import DeleteDialog from "@/app/components/dialogs/DeleteDialog";
-
-
-interface UpdateHousehold {
-    deviceId: string;
-    pricingPlan: string;
-    supplier: string;
-    incentive: string;
-    savingTarget: string;
-    householdId?: string | null;
-}
+import { UpdateHousehold } from "@/app/models/Household";
 
 
 export default function Household() {
@@ -33,7 +24,6 @@ export default function Household() {
 
         if (render) {
             const token = localStorage.getItem('token');
-            const householdId = localStorage.getItem("householdId");
 
             fetch("http://localhost:8080/household/get", {
                 method: "GET",
@@ -83,9 +73,7 @@ export default function Household() {
     }
 
     async function deleteAccount() {
-        const householdId = localStorage.getItem("householdId");
-
-        await fetch(`http://localhost:8080/household/delete/${householdId}`, {
+        await fetch("http://localhost:8080/household/delete", {
             method: "DELETE",
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -104,7 +92,6 @@ export default function Household() {
             supplier: formData.supplier,
             incentive: "",
             savingTarget: "",
-            householdId: localStorage.getItem("householdId"),
         };
 
         await fetch('http://localhost:8080/household/update', {

@@ -9,21 +9,8 @@ import Label from '@/app/components/input/Label';
 import PricingPlanDropdown from '@/app/components/input/PricingPlanDropdown';
 import SupplierDropdown from '@/app/components/input/SupplierDropdown';
 import { authenticate } from '@/app/authentication/authentication';
-
-interface CreateHousehold {
-  emailAddress: string;
-  password: string;
-  confirmPassword?: string;
-  name: string;
-  pricingPlan: string;
-  supplier: string;
-  deviceId: string;
-}
-
-interface AuthRequest {
-  emailAddress: string,
-  password: string,
-}
+import { CreateHousehold } from '@/app/models/Household';
+import { AuthRequest } from '@/app/models/Authentication';
 
 export default function Register() {
 
@@ -31,7 +18,6 @@ export default function Register() {
   const [formData, setFormData] = useState<CreateHousehold>({ emailAddress: "", name: "", password: "", confirmPassword: "", pricingPlan: "", supplier: "", deviceId: "" });
   const router = useRouter();
   const data = new FormData();
-  let token;
 
   const handleBack = () => {
     setStep(step - 1);
@@ -87,7 +73,7 @@ export default function Register() {
       deviceId: formData.deviceId
     };
 
-    const householdId = await fetch('http://localhost:8080/household/create', {
+    await fetch('http://localhost:8080/household/create', {
       method: "POST",
       body: JSON.stringify(household),
       headers: {

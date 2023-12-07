@@ -38,14 +38,8 @@ export async function authenticate(props: AuthRequest) {
         return decodedToken;
     });*/
 
-
     if (token) {
-        const decodedToken = decode(token["token"]) as unknown as AuthResponse;
         localStorage.setItem("token", token["token"]);
-        localStorage.setItem("email", props.emailAddress);
-        localStorage.setItem("householdId", decodedToken.householdId);
-        localStorage.setItem("memberId", decodedToken.memberId);
-        console.log(decodedToken)
         return true;
     } else {
         console.log("Authorization failed");

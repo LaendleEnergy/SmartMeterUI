@@ -9,37 +9,19 @@ import Label from "@/app/components/input/Label";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import DeleteDialog from "@/app/components/dialogs/DeleteDialog";
+import { User, UserInput } from "@/app/models/User";
 
-
-interface UserInput {
-    emailAddress: string;
-    password: string;
-    confirmPassword: string;
-    name: string;
-    dateOfBirth: Date;
-    gender: string;
-}
-
-interface User {
-    emailAddress: string | null;
-    password: string;
-    name: string;
-    dateOfBirth: string;
-    gender: string | null;
-    householdId: string | null;
-}
 
 export default function PersonalInformation() {
     const [isOpen, setIsOpen] = useState(false);
     const [render, setRender] = useState(true);
     const [editMode, setEditMode] = useState(false);
-    const [displayData, setDisplayData] = useState<User>({ emailAddress: "E-Mail", name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)", password: "", householdId: "" });
+    const [displayData, setDisplayData] = useState<User>({ emailAddress: "E-Mail", name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)", password: "" });
     const [formData, setFormData] = useState<UserInput>({ emailAddress: "", password: "", confirmPassword: "", name: "", dateOfBirth: new Date(), gender: "" });
 
     useEffect(() => {
         if (render) {
             const token = localStorage.getItem('token');
-            const userId = localStorage.getItem("userId");
 
             fetch("http://localhost:8080/user/get", {
                 method: "GET",
@@ -93,20 +75,13 @@ export default function PersonalInformation() {
     };
 
     async function deleteUser() {
-
-        const userId = localStorage.getItem("userId");
-
-        if (userId && userId != "") {
-            await fetch(`http://localhost:8080/user/delete/${userId}`, {
-                method: "DELETE",
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    'Content-Type': 'application/json',
-                },
-            }).catch((e) => console.log(e));
-        } else {
-            console.log("User could not be deleted");
-        }
+        await fetch("http://localhost:8080/user/delete", {
+            method: "DELETE",
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        }).catch((e) => console.log(e));
     };
 
     async function submitForm(event: FormEvent<HTMLFormElement>) {
@@ -123,7 +98,6 @@ export default function PersonalInformation() {
             name: formData.name,
             dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : "",
             gender: formData.gender == "" ? null : formData.gender,
-            householdId: localStorage.getItem("householdId")
         };
 
         await fetch('http://localhost:8080/user/update', {

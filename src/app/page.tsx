@@ -8,11 +8,8 @@ import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Label from './components/input/Label';
 import { authenticate } from './authentication/authentication';
+import { AuthRequest } from './models/Authentication';
 
-interface AuthRequest {
-  emailAddress: string,
-  password: string,
-}
 
 export default function Home() {
   const [formData, setFormData] = useState({

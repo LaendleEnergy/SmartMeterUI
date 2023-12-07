@@ -6,34 +6,19 @@ import InputAttribute from '@/app/components/input/InputAttribute';
 import Label from '../input/Label';
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
-
-interface Member {
-    name: string;
-    dateOfBirth: Date;
-    gender: string;
-    householdId?: string | null;
-    id?: string;
-}
-
-interface MemberSubmit {
-    name: string;
-    dateOfBirth: string;
-    gender: string;
-    householdId?: string | null;
-    id?: string;
-}
+import { Member, MemberInput } from '@/app/models/Member';
 
 interface DialogProps {
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
-    member: MemberSubmit;
-    setCurrentMember: Dispatch<SetStateAction<MemberSubmit>>;
+    member: Member;
+    setCurrentMember: Dispatch<SetStateAction<Member>>;
 }
 
 
 export default function EditMemberDialog(props: DialogProps) {
     const member = props.member;
-    const [formData, setFormData] = useState<Member>({ name: member.name, dateOfBirth: new Date(member.dateOfBirth), gender: member.gender });
+    const [formData, setFormData] = useState<MemberInput>({ name: member.name, dateOfBirth: new Date(member.dateOfBirth), gender: member.gender });
     
     useEffect(() => {})
 
@@ -58,12 +43,10 @@ export default function EditMemberDialog(props: DialogProps) {
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        const member: MemberSubmit = {
+        const member: Member = {
             name: formData.name,
             dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : "",
             gender: formData.gender,
-            householdId: localStorage.getItem("householdId"),
-            id: formData.id
         };
 
         props.setCurrentMember(member);

@@ -3,7 +3,6 @@
 import { Fragment, SetStateAction, Dispatch, useState, FormEvent } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-
 interface DeleteProps {
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;

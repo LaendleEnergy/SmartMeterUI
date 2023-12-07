@@ -11,8 +11,7 @@ import Label from "@/app/components/input/Label";
 export default function Rewards() {
     const [editMode, setEditMode] = useState(false);
     const data = new FormData();
-    const formURL = 'http://localhost:8080/user/updateUser';
-
+    
     const [formData, setFormData] = useState({
         incentive: "",
         deadline: "",
@@ -36,7 +35,7 @@ export default function Rewards() {
             data.append(key, value);
         })
 
-        fetch(formURL, {
+        fetch('http://localhost:8080/user/updateUser', {
             method: "POST",
             body: data,
         }).then(() => {

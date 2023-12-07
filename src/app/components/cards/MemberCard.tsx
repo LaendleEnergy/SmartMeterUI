@@ -2,39 +2,22 @@ import Link from "next/link";
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import EditMemberDialog from "../dialogs/EditMemberDialog";
+import { Member } from "@/app/models/Member";
 
-interface MemberSubmit {
-    name: string;
-    dateOfBirth: string;
-    gender: string;
-    householdId?: string | null;
-    id?: string;
-}
 
-interface MemberInput {
-    name: string;
-    dateOfBirth: Date;
-    gender: string;
-    householdId: string | null;
-    id: string;
-}
-
-export default function MemberCard(member: MemberSubmit) {
+export default function MemberCard(member: Member) {
     const [isOpen, setIsOpen] = useState(false);
-    const [currentMember, setCurrentMember] = useState<MemberSubmit>(member);
+    const [currentMember, setCurrentMember] = useState<Member>(member);
 
     async function deleteMember() {
-        if (member.householdId != "" && member.id != "") {
-            await fetch("http://localhost:8080/member/remove", {
-                method: "DELETE",
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    'Content-Type': 'application/json',
-                },
-            }).catch((e) => console.log(e));
-        } else {
-            console.log("Member could not be deleted");
-        }
+        await fetch("http://localhost:8080/member/remove", {
+            method: "DELETE",
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        }).catch((e) => console.log(e));
+
     };
 
     return (
