@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import EditMemberDialog from "../dialogs/EditMemberDialog";
 import { Member } from "@/app/models/Member";
@@ -9,6 +9,8 @@ export default function MemberCard(member: Member) {
     const [isOpen, setIsOpen] = useState(false);
     const [currentMember, setCurrentMember] = useState<Member>(member);
 
+    useEffect(() => {})
+
     async function deleteMember() {
         await fetch("http://localhost:8080/member/remove", {
             method: "DELETE",
@@ -16,7 +18,8 @@ export default function MemberCard(member: Member) {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
             },
-        }).catch((e) => console.log(e));
+        }).then((res) => console.log("deleted"))
+        .catch((e) => console.log(e));
 
     };
 

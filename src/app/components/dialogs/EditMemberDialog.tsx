@@ -19,8 +19,6 @@ interface DialogProps {
 export default function EditMemberDialog(props: DialogProps) {
     const member = props.member;
     const [formData, setFormData] = useState<MemberInput>({ name: member.name, dateOfBirth: new Date(member.dateOfBirth), gender: member.gender });
-    
-    useEffect(() => {})
 
     const handleInput = (event: any) => {
         const { name, value } = event.currentTarget;
@@ -49,6 +47,7 @@ export default function EditMemberDialog(props: DialogProps) {
             gender: formData.gender,
         };
 
+        console.log(member)
         props.setCurrentMember(member);
 
         await fetch('http://localhost:8080/member/update', {
@@ -59,6 +58,8 @@ export default function EditMemberDialog(props: DialogProps) {
                 'Content-Type': 'application/json',
             },
         }).catch((e) => console.log(e));
+
+        props.setIsOpen(false);
     }
 
     return (
@@ -92,16 +93,15 @@ export default function EditMemberDialog(props: DialogProps) {
                                             <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />
                                             <Label name="Geschlecht (Optional)"></Label>
                                             <InputAttribute name="gender" handleInput={handleInput} placeholder="Geschlecht (Optional)" value={formData.gender} required={false}></InputAttribute>
+                                            <div className="flex grow space-x-8 mt-10 justify-center items-center">
+                                                <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
+                                                    <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>
+                                                </div>
+                                                <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+                                                    <button type="submit" className="text-center text-white text-base font-medium leading-normal"><span className="Text text-center text-white text-base font-medium leading-normal">Änderungen übernehmen</span></button>
+                                                </div>
+                                            </div>
                                         </form>
-                                    </div>
-
-                                    <div className="inline-flex grow space-x-8 justify-center items-center">
-                                        <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
-                                            <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>
-                                        </div>
-                                        <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                                            <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">Änderungen übernehmen</button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

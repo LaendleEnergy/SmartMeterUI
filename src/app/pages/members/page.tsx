@@ -4,7 +4,7 @@ import Navigation from "../../components/navigation/NavBar";
 import { FaPlusCircle } from "react-icons/fa";
 import { useEffect, useState } from 'react';
 import MemberCard from "@/app/components/cards/MemberCard";
-import GenericDialog from "../../components/dialogs/GenericDialog";
+import AddMemberDialog from "../../components/dialogs/AddMemberDialog";
 import { Member } from "@/app/models/Member";
 
 
@@ -28,7 +28,9 @@ export default function Members() {
                     return await res.json();
                 }).then((data) => {
                     setDisplayData(data);
+                    console.log(data)
                 }).catch(e => console.log(e));
+                
             setRender(false);
         }
     }, [render]);
@@ -36,16 +38,17 @@ export default function Members() {
     return (
         <div className="Members">
             <header><Navigation /></header>
-            {displayData.map(m => (
-                <div key={m.name} className="flex-col flex justify-center items-center space-y-8 py-[15%]">
-                    <MemberCard name={m.name} dateOfBirth={m.dateOfBirth} gender={m.gender}></MemberCard>
-                    <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                        <button onClick={() => setIsOpen(true)} className="Default text-white text-base font-medium">Neues Mitglied hinzufügen </button>
-                        <FaPlusCircle className="text-white"></FaPlusCircle>
-                    </div>
-                    <GenericDialog title="Haushaltsmitglied hinzufügen" isOpen={isOpen} activeButtonLabel="Hinzufügen" setIsOpen={setIsOpen} device={false}></GenericDialog>
+            <div className="flex-col flex justify-center items-center space-y-8 py-[15%]">
+                {displayData.map(m => (
+                    <MemberCard key={m.name} name={m.name} dateOfBirth={m.dateOfBirth} gender={m.gender}></MemberCard>
+                ))}
+                <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+                    <button onClick={() => setIsOpen(true)} className="Default text-white text-base font-medium">Neues Mitglied hinzufügen </button>
+                    <FaPlusCircle className="text-white"></FaPlusCircle>
                 </div>
-            ))}
+                <AddMemberDialog isOpen={isOpen} setIsOpen={setIsOpen}></AddMemberDialog>
+            </div>
+
         </div>
     )
 }
