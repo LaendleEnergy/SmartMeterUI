@@ -8,7 +8,7 @@ export interface CreateHousehold {
     deviceId: string;
 }
 
-export interface UpdateHousehold {
+export interface Household {
     deviceId: string;
     pricingPlan: string;
     supplier: string;

@@ -6,12 +6,13 @@ import { useEffect, useState } from 'react';
 import MemberCard from "@/app/components/cards/MemberCard";
 import AddMemberDialog from "../../components/dialogs/AddMemberDialog";
 import { Member } from "@/app/models/Member";
-
+import { useRouter } from 'next/navigation';
 
 export default function Members() {
     const [render, setRender] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
     const [displayData, setDisplayData] = useState<Member[]>([{ name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)" }]);
+    const router = useRouter();
 
     useEffect(() => {
         if (render) {
@@ -23,17 +24,24 @@ export default function Members() {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
-            })
-                .then(async (res) => {
-                    return await res.json();
-                }).then((data) => {
-                    setDisplayData(data);
-                    console.log(data)
-                }).catch(e => console.log(e));
-                
+            }).then(async (res) => {
+                if (res.ok) {
+                    return 200;
+                }
+                return res.status;
+            }).then((status) => {
+                if (status === 404) {
+                    router.push("./not-found");
+                } else if (status != 200) {
+                    router.push("./error");
+                }
+            }).catch((e) => {
+                console.log(e)
+            });
+
             setRender(false);
         }
-    }, [render]);
+    }, [render, router]);
 
     return (
         <div className="Members">

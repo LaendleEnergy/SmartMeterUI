@@ -10,44 +10,49 @@ import Label from "@/app/components/input/Label";
 import SupplierDropdown from "@/app/components/input/SupplierDropdown";
 import PricingPlanDropdown from "@/app/components/input/PricingPlanDropdown";
 import DeleteDialog from "@/app/components/dialogs/DeleteDialog";
-import { UpdateHousehold } from "@/app/models/Household";
-
+import { Household } from "@/app/models/Household";
+import { useRouter } from 'next/navigation';
 
 export default function Household() {
     const [isOpen, setIsOpen] = useState(false);
     const [render, setRender] = useState(true);
-    const [displayData, setDisplayData] = useState<UpdateHousehold>({ deviceId: "Zählernummer", pricingPlan: "Stromtarif", supplier: "Stromanbieter", incentive: "", savingTarget: "" });
+    const [displayData, setDisplayData] = useState<Household>({ deviceId: "Zählernummer", pricingPlan: "Stromtarif", supplier: "Stromanbieter", incentive: "", savingTarget: "" });
     const [editMode, setEditMode] = useState(false);
-    const [formData, setFormData] = useState<UpdateHousehold>({ deviceId: "", pricingPlan: "", supplier: "", incentive: "", savingTarget: "" });
+    const [formData, setFormData] = useState<Household>({ deviceId: "", pricingPlan: "", supplier: "", incentive: "", savingTarget: "" });
+    const router = useRouter();
 
     useEffect(() => {
 
         if (render) {
-            const token = localStorage.getItem('token');
-
             fetch("http://localhost:8080/household/get", {
                 method: "GET",
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json',
                 },
             })
                 .then(async (res) => {
-                    return await res.json();
+                    if (res.ok) {
+                        const data = await res.json();
+                        setDisplayData(data);
+                        setFormData(data);
+                        return 200;
+                    }
+                    return res.status;
                 })
-                .then((data) => {
-                    setDisplayData(data);
+                .then((status) => {
+                    if (status === 404) {
+                        router.push("./not-found");
+                    } else if (status != 200) {
+                        router.push("./error");
+                    }
+                }).catch((e) => {
+                    console.log(e)
 
-                    Object.keys(data).forEach(function (key) {
-                        setFormData((prevState) => ({
-                            ...prevState,
-                            [key]: data[key],
-                        }));
-                    });
                 });
             setRender(false);
         }
-    }, [render]);
+    }, [render, router]);
 
     const handleInput = (event: any) => {
         const { name, value } = event.currentTarget;
@@ -79,14 +84,27 @@ export default function Household() {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
             },
-        }).catch((e) => console.log(e));
+        }).then(async (res) => {
+            if (res.ok) {
+                return 200;
+            }
+            return res.status;
+        }).then((status) => {
+            if (status === 404) {
+                router.push("./not-found");
+            } else if (status != 200) {
+                router.push("./error");
+            }
+        }).catch((e) => {
+            console.log(e)
+        });
 
     }
 
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        const household: UpdateHousehold = {
+        const household: Household = {
             deviceId: formData.deviceId,
             pricingPlan: formData.pricingPlan,
             supplier: formData.supplier,
@@ -101,13 +119,25 @@ export default function Household() {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
             },
-        }).catch((e) => console.log(e));
+        }).then(async (res) => {
+            if (res.ok) {
+                return 200;
+            }
+            return res.status;
+        }).then((status) => {
+            if (status === 404) {
+                router.push("./not-found");
+            } else if (status != 200) {
+                router.push("./error");
+            }
+        }).catch((e) => {
+            console.log(e)
+        });
 
         setRender(true);
         setDisplayData(household);
         setEditMode(false);
     }
-
 
     return (
         <div className="Household">

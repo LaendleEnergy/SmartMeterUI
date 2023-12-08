@@ -53,12 +53,27 @@ export default function Register() {
 
       const validated = await fetch('http://localhost:8080/user/validateEmail', {
         method: "POST",
-        body: JSON.stringify({email: formData.emailAddress}),
+        body: JSON.stringify({ email: formData.emailAddress }),
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then(result => result.json())
-        .catch((e) => console.log(e));
+      }).then(async (res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return res.status;
+      }).then((res) => {
+        if (typeof res == "boolean") {
+          return res;
+        }
+        else if (res === 404) {
+          router.push("./not-found");
+        } else if (res != 200) {
+          router.push("./error");
+        }
+      }).catch((e) => {
+        console.log(e)
+      });
 
       if (validated) {
         Object.entries(formData).forEach(([key, value]) => {
@@ -69,7 +84,6 @@ export default function Register() {
       } else {
         alert("E-Mail Adresse wird bereits verwendet.")
       }
-
 
     } else {
       alert("Passwörter stimmen nicht überein.");
@@ -94,8 +108,23 @@ export default function Register() {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then(result => result.json())
-      .catch((e) => console.log(e));
+    }).then(async (res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return res.status;
+    }).then((res) => {
+      if (typeof res == "boolean") {
+        return res;
+      }
+      else if (res === 404) {
+        router.push("./not-found");
+      } else if (res != 200) {
+        router.push("./error");
+      }
+    }).catch((e) => {
+      console.log(e)
+    });
 
     const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
 

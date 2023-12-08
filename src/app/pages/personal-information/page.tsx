@@ -10,6 +10,7 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import DeleteDialog from "@/app/components/dialogs/DeleteDialog";
 import { User, UserInput } from "@/app/models/User";
+import { useRouter } from 'next/navigation';
 
 
 export default function PersonalInformation() {
@@ -18,43 +19,55 @@ export default function PersonalInformation() {
     const [editMode, setEditMode] = useState(false);
     const [displayData, setDisplayData] = useState<User>({ emailAddress: "E-Mail", name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)", password: "" });
     const [formData, setFormData] = useState<UserInput>({ emailAddress: "", password: "", confirmPassword: "", name: "", dateOfBirth: new Date(), gender: "" });
+    const router = useRouter();
 
     useEffect(() => {
         if (render) {
-            const token = localStorage.getItem('token');
 
             fetch("http://localhost:8080/user/get", {
                 method: "GET",
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json',
                 },
             })
                 .then(async (res) => {
-                    return await res.json();
+                    if (res.ok) {
+                        const data = await res.json();
+                        setDisplayData(data);
+                        Object.keys(data).forEach(function (key) {
+                            let value: string | Date;
+
+                            if (key == "dateOfBirth") {
+                                value = data[key] != "" ? new Date(data[key]) : new Date();
+                            } else {
+                                value = data[key];
+                            }
+
+                            setFormData((prevState) => ({
+                                ...prevState,
+                                [key]: value,
+                                "confirmPassword": data["password"]
+                            }));
+                        });
+                        return 200;
+                    }
+                    return res.status;
                 })
-                .then((data) => {
-                    setDisplayData(data);
+                .then((status) => {
+                    if (status === 404) {
+                        router.push("./not-found");
+                    } else if (status != 200) {
+                        router.push("./error");
+                    }
+                }).catch((e) => {
+                    console.log(e)
 
-                    Object.keys(data).forEach(function (key) {
-                        let value: string | Date;
-
-                        if (key == "dateOfBirth") {
-                            value = data[key] != "" ? new Date(data[key]) : new Date();
-                        } else {
-                            value = data[key];
-                        }
-
-                        setFormData((prevState) => ({
-                            ...prevState,
-                            [key]: value,
-                            "confirmPassword": data["password"]
-                        }));
-                    });
                 });
+
             setRender(false);
         }
-    }, [render]);
+    }, [render, router]);
 
     const handleInput = (event: any) => {
         const { name, value } = event.currentTarget;
@@ -81,7 +94,20 @@ export default function PersonalInformation() {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
             },
-        }).catch((e) => console.log(e));
+        }).then(async (res) => {
+            if (res.ok) {
+                return 200;
+            }
+            return res.status;
+        }).then((status) => {
+            if (status === 404) {
+                router.push("./not-found");
+            } else if (status != 200) {
+                router.push("./error");
+            }
+        }).catch((e) => {
+            console.log(e)
+        });
     };
 
     async function submitForm(event: FormEvent<HTMLFormElement>) {
@@ -107,7 +133,20 @@ export default function PersonalInformation() {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
             },
-        }).catch((e) => console.log(e));
+        }).then(async (res) => {
+            if (res.ok) {
+                return 200;
+            }
+            return res.status;
+        }).then((status) => {
+            if (status === 404) {
+                router.push("./not-found");
+            } else if (status != 200) {
+                router.push("./error");
+            }
+        }).catch((e) => {
+            console.log(e)
+        });
 
         setDisplayData(user);
         setRender(true);
