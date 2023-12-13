@@ -16,24 +16,24 @@ export default function Members() {
 
     useEffect(() => {
         if (render) {
-            const token = localStorage.getItem('token');
-
             fetch("http://localhost:8080/member/get", {
                 method: "GET",
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json',
                 },
             }).then(async (res) => {
                 if (res.ok) {
+                    const data = await res.json();
+                    setDisplayData(data);
                     return 200;
                 }
                 return res.status;
             }).then((status) => {
                 if (status === 404) {
-                    router.push("./not-found");
+                    router.push("./errors/notfound");
                 } else if (status != 200) {
-                    router.push("./error");
+                    router.push("./errors/error");
                 }
             }).catch((e) => {
                 console.log(e)
@@ -54,9 +54,8 @@ export default function Members() {
                     <button onClick={() => setIsOpen(true)} className="Default text-white text-base font-medium">Neues Mitglied hinzufügen </button>
                     <FaPlusCircle className="text-white"></FaPlusCircle>
                 </div>
-                <AddMemberDialog isOpen={isOpen} setIsOpen={setIsOpen}></AddMemberDialog>
+                <AddMemberDialog isOpen={isOpen} setIsOpen={setIsOpen} setRender={setRender}></AddMemberDialog>
             </div>
-
         </div>
     )
 }

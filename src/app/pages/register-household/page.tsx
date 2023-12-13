@@ -67,9 +67,9 @@ export default function Register() {
           return res;
         }
         else if (res === 404) {
-          router.push("./not-found");
+          router.push("./errors/notfound");
         } else if (res != 200) {
-          router.push("./error");
+          router.push("./errors/error");
         }
       }).catch((e) => {
         console.log(e)

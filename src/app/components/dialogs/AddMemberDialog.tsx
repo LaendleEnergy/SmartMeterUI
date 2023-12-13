@@ -12,6 +12,7 @@ import { Member, MemberInput } from '@/app/models/Member';
 interface DialogProps {
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
+    setRender: Dispatch<SetStateAction<boolean>>;
 }
 
 
@@ -40,7 +41,6 @@ export default function AddMemberDialog(props: DialogProps) {
 
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        console.log("submit form")
 
         const member: Member = {
             name: formData.name,
@@ -58,6 +58,7 @@ export default function AddMemberDialog(props: DialogProps) {
         }).then((res) => console.log(res))
             .catch((e) => console.log(e));
 
+        props.setRender(true);
         props.setIsOpen(false)
     }
 

@@ -47,7 +47,6 @@ export default function EditMemberDialog(props: DialogProps) {
             gender: formData.gender,
         };
 
-        console.log(member)
         props.setCurrentMember(member);
 
         await fetch('http://localhost:8080/member/update', {

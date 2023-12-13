@@ -56,9 +56,9 @@ export default function PersonalInformation() {
                 })
                 .then((status) => {
                     if (status === 404) {
-                        router.push("./not-found");
+                        router.push("./errors/notfound");
                     } else if (status != 200) {
-                        router.push("./error");
+                        router.push("./errors/error");
                     }
                 }).catch((e) => {
                     console.log(e)
