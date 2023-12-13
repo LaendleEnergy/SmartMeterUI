@@ -129,7 +129,7 @@ export default function Register() {
     const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
 
     if (await authenticate(authRequest)) {
-      router.push("../pages/energy-consumption");
+      router.push("./energy-consumption");
     }
   };
 
