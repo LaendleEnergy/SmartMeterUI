@@ -1,25 +1,51 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import EditMemberDialog from "../dialogs/EditMemberDialog";
 import { Member } from "@/app/models/Member";
+import { useRouter } from 'next/navigation';
 
+interface MemberCardProps {
+    name: string; 
+    dateOfBirth: string;
+    gender: string;
+    id: string;
+    setRender: Dispatch<SetStateAction<boolean>>;
+}
 
-export default function MemberCard(member: Member) {
+export default function MemberCard(member: MemberCardProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [currentMember, setCurrentMember] = useState<Member>(member);
+    const router = useRouter();
 
-    useEffect(() => {})
+    useEffect(() => { })
 
     async function deleteMember() {
-        await fetch("http://localhost:8080/member/remove", {
+        const currentMemberId = currentMember.id ? currentMember.id : "";
+
+        if (currentMemberId == "") {
+            router.push("../pages/errors/error");
+            return;
+        }
+
+        await fetch(`http://localhost:8080/member/remove/${currentMemberId}`, {
             method: "DELETE",
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
             },
-        }).then((res) => console.log("deleted"))
-        .catch((e) => console.log(e));
+        }).then(async (res) => {
+            member.setRender(true);
+            return res.status;
+        }).then((status) => {
+            if (status === 404) {
+                router.push("../pages/errors/notfound");
+            } else if (status != 200) {
+                router.push("../pages/errors/error");
+            }
+        }).catch((e) => {
+            console.log(e)
+        });
 
     };
 
@@ -29,7 +55,7 @@ export default function MemberCard(member: Member) {
                 <div className="Wrapper flex justify-center relative">
                     <div className="font-bold">{currentMember.name}</div>
                     <div className="DeleteButton absolute top-0 right-0">
-                        <button onSubmit={deleteMember} className="PrimaryMedium h-7 w-12 rounded-full bg-red-600 inline-flex justify-center items-center">
+                        <button onClick={deleteMember} className="PrimaryMedium h-7 w-12 rounded-full bg-red-600 inline-flex justify-center items-center">
                             <FaTrash className="text-white"></FaTrash>
                         </button>
                     </div>
