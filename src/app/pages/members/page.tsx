@@ -46,7 +46,7 @@ export default function Members() {
     return (
         <div className="Members">
             <header><Navigation /></header>
-            <div className="flex-col flex justify-center items-center space-y-8 py-[15%]">
+            <div className="flex-col flex justify-center items-center space-y-8 py-[12%]">
                 {displayData.map(m => (
                     <MemberCard key={m.name} name={m.name} dateOfBirth={m.dateOfBirth} gender={m.gender} id={m.id ? m.id : ""} setRender={setRender}></MemberCard>
                 ))}

@@ -51,7 +51,7 @@ export default function Rewards() {
     return (
         <div className="Rewards">
             <header><Navigation /></header>
-            <div className="flex flex-col justify-center items-center space-y-8 py-[15%]">
+            <div className="flex flex-col justify-center items-center space-y-8 py-[12%]">
                 <div className="text-4xl font-bold">Belohnungen</div>
                 <div className="flex flex-col space-y-5 bg-indigo-50 rounded-sm border-2 border-black p-5">
                     <div className="text-2xl font-bold text-center">Aktuelle Belohnung</div>

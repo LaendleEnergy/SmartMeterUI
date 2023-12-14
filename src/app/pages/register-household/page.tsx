@@ -178,7 +178,7 @@ export default function Register() {
 
   return (
     <div>
-      <div className="flex grow space-x-20 justify-center items-center py-[12%]">
+      <div className="flex grow space-x-20 justify-center items-center pt-[12%] pb-[6%]">
         {steps.map((s, index) => (
           <span key={index} className={index === 0 || step == 2 ? "z-2 font-bold bg-primary-600 rounded-full p-3 text-white" : "z-2 font-normal bg-gray-400 rounded-full p-3 text-white"}>
             {s.title}
