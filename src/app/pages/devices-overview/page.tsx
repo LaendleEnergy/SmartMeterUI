@@ -6,7 +6,7 @@ export default function DeviceOverview() {
     return (
         <div className="DevicesOverview">
             <header><Navigation /></header>
-            <div className="flex-col flex justify-center items-center space-y-8 py-[12%]">
+            <div className="flex-col flex justify-center items-center space-y-8 ">
                 <div className="w-32 h-10 text-4xl font-bold">Geräte</div>
                 <div className="DeviceOverview inline-flex space-x-5">
                     <div className="w-96 h-36 border-2 bg-indigo-50 border-black border-solid text-center">

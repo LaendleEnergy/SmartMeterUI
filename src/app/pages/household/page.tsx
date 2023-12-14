@@ -142,7 +142,7 @@ export default function Household() {
     return (
         <div className="Household">
             <header><Navigation /></header>
-            <div className="flex-col flex justify-center items-center space-y-8 py-[12%]">
+            <div className="flex-col flex justify-center items-center space-y-8 ">
                 <div className="space-y-2">
                     <div className="text-4xl font-bold">Dein Haushalt</div>
                     <button className={editMode ? "hidden" : "Edit justify-center items-center inline-flex space-x-3 bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow"} onClick={() => setEditMode(true)}>

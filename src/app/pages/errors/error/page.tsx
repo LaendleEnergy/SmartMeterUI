@@ -9,7 +9,7 @@ export default function Error() {
   return (
     <div>
       <header><Navigation /></header>
-      <div className="flex-col flex justify-center items-center space-y-8 py-[12%]">
+      <div className="flex-col flex justify-center items-center space-y-8 ">
         <FaSadCry className="text-4xl text-gray-400" />
         <h1 className="text-center text-xl">Etwas ist schiefgelaufen</h1>
         <Link

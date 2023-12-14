@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <div>
       <header><Navigation /></header>
-      <div className="flex-col flex justify-center items-center space-y-8 py-[12%]">
+      <div className="flex-col flex justify-center items-center space-y-8 ">
         <FaSadCry className="text-4xl text-gray-400" />
         <h2 className="text-xl font-semibold">404 Not Found</h2>
         <p>Die angefragte Ressource konnte nicht gefunden werden.</p>

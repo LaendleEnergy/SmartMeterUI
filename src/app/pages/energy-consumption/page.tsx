@@ -36,7 +36,7 @@ export default function EnergyConsumption() {
     return (
         <div className="EnergyConsumption">
             <header><Navigation /></header>
-            <div className="flex flex-col justify-center items-center space-y-10 py-[12%]">
+            <div className="flex flex-col justify-center items-center space-y-10">
                 <div className="text-4xl font-bold">Stromverbrauch</div>
                 <EnergyConsumptionDiagram data1={data}/>
                 <div className="w-96 h-52 bg-indigo-50 rounded-lg border-2 border-zinc-400">

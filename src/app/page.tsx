@@ -41,7 +41,7 @@ export default function Home() {
   return (
     <div className="Welcome p-[5%]">
       <div className="RegisterOrLogin flex-col justify-center items-center space-y-8 inline-flex">
-        <Logo h={388} w={740}></Logo>
+        <Logo h={129} w={246}></Logo>
         <div className="text-4xl font-bold ">Willkommen bei LaendleEnergy!</div>
         <div className="text-lg max-w-[75%]">Registriere dich jetzt, um den Stromverbrauch deines Haushaltes und die damit verbundenen Kosten beobachten und Feedback über die Energieeffizienz deiner Geräte erhalten zu können.</div>
         <form method="POST" onSubmit={auth} className="flex flex-col items-center space-y-3">
