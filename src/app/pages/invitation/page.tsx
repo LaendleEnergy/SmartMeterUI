@@ -1,7 +1,9 @@
 "use client";
 
+import { authenticate } from "@/app/authentication/authentication";
 import InputAttribute from "@/app/components/input/InputAttribute";
 import NavBar from "@/app/components/navigation/NavBar";
+import { AuthRequest } from "@/app/models/Authentication";
 import { User, UserInput } from "@/app/models/User";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
@@ -76,7 +78,12 @@ export default function AcceptInvitation() {
                     console.log(e)
                 });
 
-                router.push("./energy-consumption");
+                const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
+                
+                if (await authenticate(authRequest)) {
+                    router.push("./energy-consumption");
+                    console.log(localStorage.getItem("token"))
+                }
             } else {
                 alert("E-Mail Adresse wird bereits verwendet.")
             }

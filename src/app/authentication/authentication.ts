@@ -4,7 +4,6 @@ interface AuthRequest {
 }
 
 export async function authenticate(props: AuthRequest) {
-    // ToDo: Automatisch erneuern, wenn abgelaufen?
     const token = await fetch('http://localhost:8080/user/authenticate', {
         method: "POST",
         headers: {
