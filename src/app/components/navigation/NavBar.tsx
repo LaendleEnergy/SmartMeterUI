@@ -3,14 +3,25 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import Logo from "../Logo";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { MdLogout } from "react-icons/md";
 
-const NavBar = ({showTabs = true}) => {
+const NavBar = ({ showTabs = true }) => {
+
+  const router = useRouter();
 
   // render navbar when the page changes
   useEffect(() => {
 
   });
+
+  function logout(event: any) {
+    event.preventDefault();
+
+    router.push("./logout");
+
+    localStorage.clear();
+  }
 
   return (
     <div className="bg-indigo-50 fixed top-0 w-full shadow-md mb-10 z-20">
@@ -26,6 +37,10 @@ const NavBar = ({showTabs = true}) => {
             <NavLink href="/pages/devices-overview" text="Geräte" />
             <NavLink href="/pages/personal-information" text="Persönliche Daten" />
             <NavLink href="/pages/household" text="Haushalt" />
+            <button onClick={logout} className="inline-flex justify-center items-center space-x-2">
+              <span>Logout</span>
+              <MdLogout></MdLogout>
+            </button>
           </div>
         </div>
       </nav>
