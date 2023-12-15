@@ -53,7 +53,7 @@ export default function Members() {
             </div>
             <div className="flex justify-center items-center">
                 <div className="ActiveButton mt-8 inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                    <button onClick={() => setIsOpen(true)} className="Default text-white text-sm md:text-base font-medium">Neues Mitglied hinzufügen </button>
+                    <button onClick={() => setIsOpen(true)} className="Default text-white text-sm md:text-base">Neues Mitglied hinzufügen </button>
                     <FaPlusCircle className="text-white"></FaPlusCircle>
                 </div>
             </div>

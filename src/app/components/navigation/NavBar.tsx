@@ -29,21 +29,21 @@ const NavBar = ({ showTabs = true }) => {
             <div className="Logo inline-flex justify-start items-start">
               <Logo h={96} w={160}></Logo>
             </div>
-            <div className="md:hidden fixed right-3 inline-flex items-end justify-end">
+            <div className={`${showTabs ? "md:hidden fixed right-3 inline-flex items-end justify-end" : "hidden"}`}>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="text-xl focus:outline-none">
                 <MdOutlineMenu />
               </button>
             </div>
-            <div className={`${showTabs ? "md:inline-flex md:space-x-12 md:items-end hidden" : "hidden"}`}>
+            <div className={`${showTabs ? "md:inline-flex lg:space-x-6 xl:space-x-12 md:items-end hidden" : "hidden"}`}>
               <NavLink href="/pages/energy-consumption" text="Stromverbrauch" />
               <NavLink href="/pages/energy-saving" text="Stromsparen" />
               <NavLink href="/pages/rewards" text="Belohnungen" />
               <NavLink href="/pages/devices-overview" text="Geräte" />
               <NavLink href="/pages/personal-information" text="Persönliche Daten" />
               <NavLink href="/pages/household" text="Haushalt" />
-              <div className="px-4 py-2 justify-center items-center text-sm lg:text-base font-medium leading-normal">
+              <div className="px-4 py-2 justify-center items-center text-sm md:text-base">
                 <button
                   onClick={logout}
                   className="inline-flex justify-center items-center space-x-2"
@@ -85,7 +85,7 @@ function NavLink({ href, text }: NavLinkProps) {
 
   return (
     <Link href={href}>
-      <a className={`${isActive ? "bg-primary-600 rounded-full text-white" : "text-neutral-800"} max-w-42 min-w-10 px-4 py-2 justify-center items-center flex text-sm lg:text-base font-medium leading-normal`}>{text}</a>
+      <a className={`${isActive ? "bg-primary-600 rounded-full text-white" : "text-neutral-800"} max-w-42 min-w-10 px-4 py-2 justify-center items-center flex text-sm md:text-base`}>{text}</a>
     </Link>
   );
 }

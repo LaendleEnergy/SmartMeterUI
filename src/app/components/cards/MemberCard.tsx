@@ -66,7 +66,7 @@ export default function MemberCard(member: MemberCardProps) {
                 </div>
                 <div className="flex grow space-x-8 justify-center items-center">
                     <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                        <Link href="./invitation" className="text-center text-white text-sm md:text-base md:font-medium leading-normal"><span className="Text text-center text-white text-sm md:text-base md:font-medium leading-normal">Email hinzufügen</span></Link>
+                        <Link href="./invitation"><span className="Text text-center text-white text-sm md:text-base">Email hinzufügen</span></Link>
                     </div>
                     <div className="ActiveButton inline-block bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow grow">
                         <button onClick={() => setIsOpen(true)} className="Default text-sm md:text-base md:font-medium text-white">Bearbeiten</button>

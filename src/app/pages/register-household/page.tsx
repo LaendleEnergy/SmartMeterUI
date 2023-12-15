@@ -136,7 +136,7 @@ export default function Register() {
   const steps = [
     {
       title: 'Account', content:
-        <form method="POST" onSubmit={submitAccountForm} className="flex flex-col items-center space-y-3 p-5 border-2 bg-indigo-50 border-black border-solid">
+        <form method="POST" onSubmit={submitAccountForm} className="flex flex-col items-center mb-5 space-y-2 p-2 md:p-4 border-2 bg-indigo-50 border-black border-solid">
           <Label name="E-Mail"></Label>
           <InputAttribute name="emailAddress" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.emailAddress}></InputAttribute>
           <Label name="Name"></Label>
@@ -145,19 +145,19 @@ export default function Register() {
           <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password}></InputAttribute>
           <Label name="Passwort wiederholen"></Label>
           <InputAttribute name="confirmPassword" type="password" handleInput={handleInput} placeholder="Passwort wiederholen" value={formData.confirmPassword ? formData.confirmPassword : ""}></InputAttribute>
-          <div className="flex grow space-x-8 mt-10 justify-center items-center">
+          <div className="flex grow space-x-4 md:space-x-8 mt-10 justify-center items-center">
             <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
-              <button onClick={() => router.back()} className="text-center text-white text-base font-medium leading-normal">Zurück</button>
+              <button onClick={() => router.back()} className="text-center text-white text-sm md:text-base font-medium leading-normal">Zurück</button>
             </div>
             <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-              <button type="submit" className="text-center text-white text-base font-medium leading-normal"><span className="Text text-center text-white text-base font-medium leading-normal">Weiter</span></button>
+              <button type="submit" className="Text text-center text-white text-sm md:text-base font-medium">Weiter</button>
             </div>
           </div>
         </form>
     },
     {
       title: 'Haushalt', content:
-        <form method="POST" onSubmit={submitHouseholdForm} className="flex flex-col items-center space-y-3 border-2 bg-indigo-50 border-black border-solid">
+        <form method="POST" onSubmit={submitHouseholdForm} className="flex flex-col items-center mb-5 space-y-2 border-2 bg-indigo-50 border-black border-solid">
           <Label name="Stromanbieter"></Label>
           <SupplierDropdown handleInput={handleSupplierInput} supplierName={formData.supplier}></SupplierDropdown>
           <Label name="Stromtarif"></Label>
@@ -166,10 +166,10 @@ export default function Register() {
           <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId}></InputAttribute>
           <div className="flex grow space-x-8 mt-10 justify-center items-center">
             <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
-              <button onClick={handleBack} className="text-center text-white text-base font-medium leading-normal">Zurück</button>
+              <button onClick={handleBack} className="text-center text-white text-sm md:text-base font-medium">Zurück</button>
             </div>
             <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-              <button type="submit" className="text-center text-white text-base font-medium leading-normal">Registrieren</button>
+              <button type="submit" className="text-center text-white text-sm md:text-base font-medium">Registrieren</button>
             </div>
           </div>
         </form>
@@ -178,20 +178,18 @@ export default function Register() {
 
   return (
     <div>
-      <div className="flex grow space-x-20 justify-center items-center pt-[12%] pb-[6%]">
+      <header><NavBar showTabs={false}></NavBar></header>
+      <div className="flex grow space-x-20 justify-center items-center pb-10">
         {steps.map((s, index) => (
-          <span key={index} className={index === 0 || step == 2 ? "z-2 font-bold bg-primary-600 rounded-full p-3 text-white" : "z-2 font-normal bg-gray-400 rounded-full p-3 text-white"}>
+          <span key={index} className={index === 0 || step == 2 ? "z-2 font-bold bg-primary-600 rounded-full p-3 text-white" : "z-2 text-sm md:text-base font-normal bg-gray-400 rounded-full p-3 text-white"}>
             {s.title}
           </span>
         ))}
       </div>
 
-      <div>
-        <div className="flex-col flex justify-center items-center">
-          <NavBar showTabs={false}></NavBar>
-          <div className="text-4xl font-bold pb-10">Haushalt registrieren</div>
-          <p>{steps[step - 1].content}</p>
-        </div>
+      <div className="flex-col flex justify-center items-center">
+        <div className="text-xl md:text-4xl font-bold pb-10">Haushalt registrieren</div>
+        <p>{steps[step - 1].content}</p>
       </div>
     </div>
   );

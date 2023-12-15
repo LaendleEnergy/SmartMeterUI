@@ -158,9 +158,9 @@ export default function PersonalInformation() {
             <header><Navigation /></header>
             <div className="flex-col flex justify-center items-center space-y-8 ">
                 <div className="space-y-2">
-                    <div className="text-4xl font-bold">Persönliche Daten</div>
+                    <div className="text-xl sm:text-2xl md:text-4xl font-bold">Persönliche Daten</div>
                     <button className={editMode ? "hidden" : "Edit justify-center items-center inline-flex space-x-3 bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow"} onClick={() => setEditMode(true)}>
-                        <div className="Bearbeiten text-lg text-white">Bearbeiten</div>
+                        <div className="Bearbeiten text-sm md:text-base font-medium text-white">Bearbeiten</div>
                         <FaEdit class="text-white"></FaEdit>
                     </button>
                 </div>
@@ -174,7 +174,7 @@ export default function PersonalInformation() {
                     <Label name="Geschlecht (Optional)"></Label>
                     <DisplayAttribute name={displayData.gender ? displayData.gender : ""}></DisplayAttribute>
                 </div>
-                <form method="POST" onSubmit={submitForm} className={editMode ? "PersonalInformation flex flex-col items-center space-y-5 border-2 bg-indigo-50 border-black border-solid p-5" : "hidden"}>
+                <form method="POST" onSubmit={submitForm} className={editMode ? "PersonalInformation flex flex-col items-center space-y-2 md:space-y-4 border-2 bg-indigo-50 border-black border-solid p-2 md:p-5" : "hidden"}>
                     <Label name="Name"></Label>
                     <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
                     <Label name="E-Mail"></Label>
@@ -189,16 +189,16 @@ export default function PersonalInformation() {
                     <InputAttribute name="gender" handleInput={handleInput} placeholder="Geschlecht (Optional)" value={formData.gender} required={false}></InputAttribute>
                     <div className="flex grow space-x-8 mt-10 justify-center items-center">
                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
-                            <button onClick={() => setEditMode(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>
+                            <button onClick={() => setEditMode(false)} className="text-center text-white font-medium text-sm md:text-base">Abbrechen</button>
                         </div>
                         <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                            <button type="submit" className="text-center text-white text-base font-medium leading-normal"><span className="Text text-center text-white text-base font-medium leading-normal">Änderungen übernehmen</span></button>
+                            <button type="submit"><span className="Text text-center text-white text-sm md:text-base font-medium">Änderungen übernehmen</span></button>
                         </div>
                     </div>
                 </form>
             </div>
-            <div className="DeleteButton inline-flex fixed bottom-4 right-4 bg-red-600 rounded-full p-3 space-y-10 transition duration-150 ease-in-out hover:bg-red-700 hover:shadow">
-                <button onClick={() => setIsOpen(true)} className="text-center text-white text-base font-medium leading-normal right grow w-50 h-15 inline-flex justify-center items-center space-x-3 ">User löschen  <FaTrash className="text-white"></FaTrash> </button>
+            <div className={`${editMode ? "hidden" : "inline-flex fixed bottom-4 right-4 bg-red-600 rounded-full p-3 space-y-10 transition duration-150 ease-in-out hover:bg-red-700 hover:shadow"}`}>
+                <button onClick={() => setIsOpen(true)} className="text-center text-white font-medium text-sm md:text-base right grow w-50 h-15 inline-flex justify-center items-center space-x-3 ">User löschen  <FaTrash className="text-white"></FaTrash> </button>
             </div>
 
             <DeleteDialog isOpen={isOpen} setIsOpen={setIsOpen} handleDelete={deleteUser} deleteUser={true}></DeleteDialog>
