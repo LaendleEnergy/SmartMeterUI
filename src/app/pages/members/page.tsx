@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 export default function Members() {
     const [render, setRender] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
-    const [displayData, setDisplayData] = useState<Member[]>([{ name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)", id:"" }]);
+    const [displayData, setDisplayData] = useState<Member[]>([{ name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)", id: "" }]);
     const router = useRouter();
 
     useEffect(() => {
@@ -46,16 +46,18 @@ export default function Members() {
     return (
         <div className="Members">
             <header><Navigation /></header>
-            <div className="flex-col flex justify-center items-center space-y-8 ">
+            <div className="flex-col flex md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8 ">
                 {displayData.map(m => (
                     <MemberCard key={m.name} name={m.name} dateOfBirth={m.dateOfBirth} gender={m.gender} id={m.id ? m.id : ""} setRender={setRender}></MemberCard>
                 ))}
-                <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                    <button onClick={() => setIsOpen(true)} className="Default text-white text-base font-medium">Neues Mitglied hinzufügen </button>
+            </div>
+            <div className="flex justify-center items-center">
+                <div className="ActiveButton mt-8 inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+                    <button onClick={() => setIsOpen(true)} className="Default text-white text-sm md:text-base font-medium">Neues Mitglied hinzufügen </button>
                     <FaPlusCircle className="text-white"></FaPlusCircle>
                 </div>
-                <AddMemberDialog isOpen={isOpen} setIsOpen={setIsOpen} setRender={setRender}></AddMemberDialog>
             </div>
+            <AddMemberDialog isOpen={isOpen} setIsOpen={setIsOpen} setRender={setRender}></AddMemberDialog>
         </div>
     )
 }
