@@ -67,7 +67,7 @@ export default function AddMemberDialog(props: DialogProps) {
             <Transition appear show={props.isOpen} as={Fragment}>
                 <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" open={props.isOpen} onClose={() => props.setIsOpen(false)}
                 >
-                    <div className="min-h-screen px-4 text-center">
+                    <div className="min-h-[50%] max-h-[75%] px-4 text-center">
                         <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0"
                             enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
                             <Dialog.Overlay className="fixed inset-0" />
@@ -81,11 +81,11 @@ export default function AddMemberDialog(props: DialogProps) {
                             enterTo="opacity-100 scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95">
                             <div
-                                className="inline-block w-full max-w-md p-6 my-8 space-y-10 overflow-hidden text-center align-middle transition-all transform bg-indigo-50 shadow-xl rounded-lg justify-center items-center border-2 border-solid border-black">
-                                <Dialog.Title><span className="text-3xl font-bold pb-4">Haushaltsmitglied hinzufügen</span></Dialog.Title>
+                                className="inline-block w-full max-w-md p-4 my-4 space-y-4 md:space-y-8 overflow-hidden text-center align-middle transition-all transform bg-indigo-50 shadow-xl rounded-lg justify-center items-center border-2 border-solid border-black">
+                                <Dialog.Title><span className="text-xl sm:text-3xl font-bold pb-4">Haushaltsmitglied hinzufügen</span></Dialog.Title>
 
                                 <div className="flex-col space-y-6">
-                                    <div className="inline-block w-full max-w-md p-6 my-8 space-y-15 text-center justify-center items-center">
+                                    <div className="inline-block w-full max-w-md p-6 text-center justify-center items-center">
                                         <form method="POST" onSubmit={submitForm} className="flex flex-col items-center space-y-3">
                                             <Label name="Name"></Label>
                                             <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
@@ -98,7 +98,7 @@ export default function AddMemberDialog(props: DialogProps) {
                                                     <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>
                                                 </div>
                                                 <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                                                    <button type="submit" className="text-center text-white text-base font-medium leading-normal"><span className="Text text-center text-white text-base font-medium leading-normal">Hinzufügen</span></button>
+                                                    <button type="submit" className="text-center text-white text-base font-medium leading-normal"><span className="text-center text-white text-base font-medium leading-normal">Hinzufügen</span></button>
                                                 </div>
                                             </div>
                                         </form>

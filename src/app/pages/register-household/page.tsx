@@ -113,24 +113,24 @@ export default function Register() {
         return res.json();
       }
       return res.status;
-    }).then((res) => {
+    }).then(async (res) => {
       if (typeof res == "boolean") {
         return res;
       }
       else if (res === 404) {
-        router.push("./errors/not-found");
+        router.push("./errors/notfound");
       } else if (res != 200) {
         router.push("./errors/error");
+      } else {
+        const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
+
+        if (await authenticate(authRequest)) {
+          router.push("./energy-consumption");
+        }
       }
     }).catch((e) => {
       console.log(e)
     });
-
-    const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
-
-    if (await authenticate(authRequest)) {
-      router.push("./energy-consumption");
-    }
   };
 
   const steps = [

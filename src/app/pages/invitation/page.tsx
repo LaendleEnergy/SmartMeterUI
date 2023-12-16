@@ -98,15 +98,15 @@ export default function AcceptInvitation() {
         <div className="Invitation">
             <NavBar showTabs={false}></NavBar>
             <div className="flex-col flex justify-center items-center space-y-8 ">
-                <div className="text-4xl font-bold ">Haushalt beitreten</div>
-                <div className="text-lg max-w-[75%]">Nimm deine Einladung, deinem Haushalt beizutreten an, indem du hier deine gewünschten Login-Daten angibst.</div>
+                <div className="text-xl sm:text-2xl md:text-4xl font-bold ">Haushalt beitreten</div>
+                <div className="text-sm sm:text-base max-w-[75%]">Nimm deine Einladung, deinem Haushalt beizutreten an, indem du hier deine gewünschten Login-Daten angibst.</div>
                 <form method="POST" onSubmit={submitRegistrationForm} className="flex flex-col space-y-5 justify-center items-center">
                     <InputAttribute name="emailAddress" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.emailAddress}></InputAttribute>
                     <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
                     <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password}></InputAttribute>
                     <InputAttribute name="confirmPassword" type="password" handleInput={handleInput} placeholder="Passwort wiederholen" value={formData.confirmPassword}></InputAttribute>
                     <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full px-8 py-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                        <button><span className="Text text-center text-white text-base font-medium leading-normal">Haushalt beitreten</span></button>
+                        <button><span className="Text text-center text-white text-sm sm:text-base font-medium leading-normal">Haushalt beitreten</span></button>
                     </div>
                 </form>
             </div>
