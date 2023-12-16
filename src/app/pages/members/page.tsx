@@ -46,14 +46,14 @@ export default function Members() {
     return (
         <div className="Members">
             <header><Navigation /></header>
-            <div className="flex-col flex md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8 ">
+            <div className="flex-col flex md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8 mb-5">
                 {displayData.map(m => (
                     <MemberCard key={m.name} name={m.name} dateOfBirth={m.dateOfBirth} gender={m.gender} id={m.id ? m.id : ""} setRender={setRender}></MemberCard>
                 ))}
             </div>
             <div className="flex justify-center items-center">
                 <div className="ActiveButton mt-8 inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                    <button onClick={() => setIsOpen(true)} className="Default text-white text-sm md:text-base">Neues Mitglied hinzufügen </button>
+                    <button onClick={() => setIsOpen(true)} className="Default text-white text-sm sm:text-base">Neues Mitglied hinzufügen </button>
                     <FaPlusCircle className="text-white"></FaPlusCircle>
                 </div>
             </div>

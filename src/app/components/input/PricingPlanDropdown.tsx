@@ -22,7 +22,6 @@ export default function Dropdown({ handleInput, pricingPlanName }: DropdownProps
     useEffect(() => {
         fetch('http://localhost:8080/household/getPricingPlans', {
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
             },
         })
@@ -63,7 +62,7 @@ export default function Dropdown({ handleInput, pricingPlanName }: DropdownProps
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <Listbox.Options className="absolute mt-1 w-72 lg:w-96 max-h-60 overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none text-sm sm:text-base">
+                    <Listbox.Options className="absolute mt-1 w-72 sm:w-96 lg:w-96 max-h-60 overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none text-sm sm:text-base">
                         {data.map(item => (
                             <Listbox.Option
                                 key={item.name}
