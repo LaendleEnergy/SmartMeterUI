@@ -39,16 +39,16 @@ export default function DeleteDialog({ isOpen, setIsOpen, handleDelete, deleteUs
                                 <div className="flex-col space-y-6">
 
                                     <div className="space-y-4">
-                                        <span className="pb-4">Soll dieser {subject} wirklich endgültig gelöscht werden?</span><br />
-                                        <span className="font-bold pb-4">Hinweis: Diese Aktion kann nicht rückgängig gemacht werden.</span>
+                                        <span className="text-sm sm:text-base pb-4">Soll dieser {subject} wirklich endgültig gelöscht werden?</span><br />
+                                        <span className="text-sm sm:text-base font-bold pb-4">Hinweis: Diese Aktion kann nicht rückgängig gemacht werden.</span>
                                     </div>
 
                                     <div className="inline-flex grow space-x-8 justify-center items-center">
                                         <div className="bg-red-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-red-700 hover:shadow">
-                                            <button onClick={() => handleDelete(true)} className="text-center text-white text-base font-medium leading-normal">{subject}  löschen</button>
+                                            <button onClick={() => handleDelete(true)} className="text-sm sm:text-base text-center text-white font-medium leading-normal">{subject}  löschen</button>
                                         </div>
                                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
-                                            <button onClick={() => setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>
+                                            <button onClick={() => setIsOpen(false)} className="text-sm sm:text-base text-center text-white font-medium leading-normal">Abbrechen</button>
                                         </div>
                                     </div>
                                 </div>
