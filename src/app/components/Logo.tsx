@@ -6,7 +6,6 @@ interface LogoProps {
     w: number;
   }
   
-
 export default function Logo({h, w} : LogoProps) {
     return (<Image alt="Logo" src={logo} height={h} width={w} className="img-responsive"></Image>)
 }
