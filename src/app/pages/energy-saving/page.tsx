@@ -6,13 +6,13 @@ import { FaEdit } from "react-icons/fa";
 import Dropdown from "@/app/components/input/Dropdown";
 import {useState} from "react";
 
-export default function Home() {
+export default function EnergySaving() {
   const [enabled, setEnabled] = useState(true);
   return (
     <div className="EnergySaving">
       <header><Navigation /></header>
       <div className="flex-col flex justify-center items-center space-y-8 ">
-        <div className="text-4xl font-bold">Stromsparen</div>
+        <div className="text-xl sm:text-2xl md:text-4xl font-bold">Stromsparen</div>
         <div className="space-y-6 fixed top-[15%] right-[5%]">
           <div className="inline-flex items-center fixed top-[15%] right-[5%] space-x-2">
             <span className="text-xl font-bold">Bericht erhalten ja/nein</span>

@@ -33,15 +33,6 @@ export default function DeviceDialog(props: DialogProps) {
         }));
     };
 
-    const handleDateInput = (date: Date | null) => {
-        if (date != null) {
-            setFormData((prevState) => ({
-                ...prevState,
-                "dateOfBirth": date,
-            }));
-        }
-    };
-
     const handleDeviceInput = (event: any) => {
         const { name, value } = event.currentTarget;
 
@@ -56,7 +47,7 @@ export default function DeviceDialog(props: DialogProps) {
             <Transition appear show={props.isOpen} as={Fragment}>
                 <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" open={props.isOpen} onClose={() => props.setIsOpen(false)}
                 >
-                    <div className="min-h-screen px-4 text-center">
+                    <div className="min-h-[50%] max-h-[75%] px-4 text-center">
                         <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0"
                             enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
                             <Dialog.Overlay className="fixed inset-0" />
@@ -71,9 +62,9 @@ export default function DeviceDialog(props: DialogProps) {
                             leaveTo="opacity-0 scale-95">
                             <div
                                 className="inline-block w-full max-w-md p-6 my-8 space-y-10 overflow-hidden text-center align-middle transition-all transform bg-indigo-50 shadow-xl rounded-lg justify-center items-center border-2 border-solid border-black">
-                                <Dialog.Title><span className="text-3xl font-bold pb-4">{props.title}</span></Dialog.Title>
+                                <Dialog.Title><span className="text-xl sm:text-3xl font-bold pb-4">{props.title}</span></Dialog.Title>
 
-                                <div className="flex-col space-y-6">
+                                <div className="flex-col space-y-6 justify-center items-center">
                                     <div className={props.device ? "flex flex-col space-y-8 w-96" : "hidden"}>
                                         <form method="POST" className="flex flex-col items-center space-y-3">
                                             <Label name="Bezeichnung"></Label>
@@ -84,10 +75,10 @@ export default function DeviceDialog(props: DialogProps) {
 
                                     <div className="inline-flex grow space-x-8 justify-center items-center">
                                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
-                                            <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>
+                                            <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-sm sm:text-base font-medium leading-normal">Abbrechen</button>
                                         </div>
                                         <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                                            <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">{props.activeButtonLabel}</button>
+                                            <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-sm sm:text-base font-medium leading-normal">{props.activeButtonLabel}</button>
                                         </div>
                                     </div>
                                 </div>

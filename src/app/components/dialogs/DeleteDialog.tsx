@@ -48,7 +48,7 @@ export default function DeleteDialog({ isOpen, setIsOpen, handleDelete, deleteUs
                                             <button onClick={() => handleDelete(true)} className="text-sm sm:text-base text-center text-white font-medium leading-normal">{subject}  löschen</button>
                                         </div>
                                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
-                                            <button onClick={() => setIsOpen(false)} className="text-sm sm:text-base text-center text-white font-medium leading-normal">Abbrechen</button>
+                                            <button onClick={() => setIsOpen(false)} className="text-sm sm:text-basetext-center text-white font-medium leading-normal">Abbrechen</button>
                                         </div>
                                     </div>
                                 </div>

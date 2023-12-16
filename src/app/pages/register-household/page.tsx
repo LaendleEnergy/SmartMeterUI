@@ -188,7 +188,7 @@ export default function Register() {
       </div>
 
       <div className="flex-col flex justify-center items-center">
-        <div className="text-xl md:text-4xl font-bold pb-10">Haushalt registrieren</div>
+        <div className="text-xl sm:text-2xl md:text-4xl font-bold pb-10">Haushalt registrieren</div>
         <p>{steps[step - 1].content}</p>
       </div>
     </div>
