@@ -4,7 +4,7 @@ interface Label {
 
 export default function InputAttribute({ name }: Label) {
     return (
-        <label className="font-bold p-3">{name}</label>
+        <label className="text-sm sm:text-base font-bold p-3">{name}</label>
     )
 }
 

@@ -43,7 +43,7 @@ const NavBar = ({ showTabs = true }) => {
               <NavLink href="/pages/devices-overview" text="Geräte" />
               <NavLink href="/pages/personal-information" text="Persönliche Daten" />
               <NavLink href="/pages/household" text="Haushalt" />
-              <div className="px-4 py-2 justify-center items-center text-sm md:text-base">
+              <div className="px-4 py-2 justify-center items-center text-sm lg:text-base">
                 <button
                   onClick={logout}
                   className="inline-flex justify-center items-center space-x-2"
@@ -85,7 +85,7 @@ function NavLink({ href, text }: NavLinkProps) {
 
   return (
     <Link href={href}>
-      <a className={`${isActive ? "bg-primary-600 rounded-full text-white" : "text-neutral-800"} max-w-42 min-w-10 px-4 py-2 justify-center items-center flex text-sm md:text-base`}>{text}</a>
+      <a className={`${isActive ? "bg-primary-600 rounded-full text-white" : "text-neutral-800"} max-w-42 min-w-10 px-4 py-2 justify-center items-center flex text-sm lg:text-base`}>{text}</a>
     </Link>
   );
 }

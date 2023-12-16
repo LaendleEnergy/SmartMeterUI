@@ -142,11 +142,11 @@ export default function Household() {
     return (
         <div className="Household">
             <header><Navigation /></header>
-            <div className="flex-col flex justify-center items-center space-y-8 ">
+            <div className="flex-col flex justify-center items-center space-y-8 mb-5">
                 <div className="space-y-2">
                     <div className="text-xl sm:text-2xl md:text-4xl font-bold">Dein Haushalt</div>
                     <button className={editMode ? "hidden" : "Edit justify-center items-center inline-flex space-x-3 bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow"} onClick={() => setEditMode(true)}>
-                        <span className="Bearbeiten text-sm md:text-base font-medium text-white">Bearbeiten</span>
+                        <span className="Bearbeiten text-sm sm:text-base font-medium text-white">Bearbeiten</span>
                         <FaEdit class="text-white"></FaEdit>
                     </button>
                 </div>
@@ -168,20 +168,20 @@ export default function Household() {
 
                     <div className="flex grow space-x-8 mt-10 justify-center items-center">
                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
-                            <button onClick={() => setEditMode(false)} className="text-center text-white font-medium text-sm md:text-base">Abbrechen</button>
+                            <button onClick={() => setEditMode(false)} className="text-center text-white font-medium text-sm sm:text-base">Abbrechen</button>
                         </div>
                         <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                            <button type="submit"><span className="Text text-center text-white font-medium text-sm md:text-base">Änderungen übernehmen</span></button>
+                            <button type="submit"><span className="Text text-center text-white font-medium text-sm sm:text-base">Änderungen übernehmen</span></button>
                         </div>
                     </div>
                 </form>
                 <div className="ActiveButton inline-flex flex-col justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                    <Link href="../pages/members"><span className="Text text-center text-white font-medium text-sm md:text-base">Haushaltsmitglieder verwalten</span></Link>
+                    <Link href="../pages/members"><span className="Text text-center text-white font-medium text-sm sm:text-base">Haushaltsmitglieder verwalten</span></Link>
                 </div>
             </div>
 
             <div className="DeleteButton inline-flex fixed bottom-4 right-4 bg-red-600 rounded-full p-3 space-y-10 transition duration-150 ease-in-out hover:bg-red-700 hover:shadow">
-                <button onClick={() => setIsOpen(true)} className="text-center text-white text-sm md:text-base right grow w-50 h-15 inline-flex justify-center items-center space-x-3 ">Account löschen  <FaTrash className="text-white"></FaTrash> </button>
+                <button onClick={() => setIsOpen(true)} className="text-center text-white text-sm sm:text-base right grow w-50 h-15 inline-flex justify-center items-center space-x-3 ">Account löschen  <FaTrash className="text-white"></FaTrash> </button>
             </div>
 
             <DeleteDialog isOpen={isOpen} setIsOpen={setIsOpen} handleDelete={deleteAccount}></DeleteDialog>

@@ -42,7 +42,7 @@ export default function Dropdown({ handleInput, supplierName }: DropdownProps) {
     return (
         <Listbox value={selected} onChange={arg => { handleInput(arg); setSelected(arg); }} name="supplier">
             <div className="relative mt-1 p-3">
-                <Listbox.Button className="z-20 text-white w-72 lg:w-96 h-14 relative cursor-default rounded bg-blue-500 hover:bg-primary-700 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-white focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:text-sm">
+                <Listbox.Button className="z-20 text-white w-72 sm:w-96 h-14 relative cursor-default rounded bg-blue-500 hover:bg-primary-700 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-white focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-white text-sm sm:text-base">
                     <span className="block truncate">{selected}</span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                         <FaChevronDown
@@ -57,7 +57,7 @@ export default function Dropdown({ handleInput, supplierName }: DropdownProps) {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <Listbox.Options className="absolute mt-1 w-72 lg:w-96 max-h-60 overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none text-sm">
+                    <Listbox.Options className="absolute mt-1 w-72 lg:w-96 max-h-60 overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none text-sm sm:text-base">
                         {data.map(item => (
                             <Listbox.Option
                                 key={item}
