@@ -14,8 +14,8 @@ export default function EnergySaving() {
       <header><Navigation /></header>
       <div className="flex-col flex justify-center items-center space-y-8">
         <div className="text-xl sm:text-2xl md:text-4xl font-bold">Stromsparen</div>
-        <div className="flex-col space-y-6 xl:fixed xl:top-[15%] xl:right-[5%] justify-center items-center w-72 sm:w-96 h-28 mb-6">
-          <div className="justify-end items-start p-4 border-2 bg-indigo-50 border-black border-solid">
+        <div className="flex-col justify-end items-start border-2 bg-indigo-50 border-black border-solid p-4 xl:fixed xl:top-[15%] xl:right-[5%]">
+          <div className="p-2 w-72 xl:w-96 h-60 xl:h-54 justify-center items-center">
             <div className="inline-flex space-x-2">
               <span className="text-base sm:text-lg font-bold">Bericht erhalten ja/nein</span>
               <Toggle setEnabled={setEnabled} enabled={enabled}></Toggle>
@@ -33,10 +33,10 @@ export default function EnergySaving() {
         </div>
         <div className="SavingGoal">
           <div className="flex-col justify-end items-start border-2 bg-indigo-50 border-black border-solid p-4">
-            <div className="Edit w-72 sm:w-96 h-28 justify-center items-center">
+            <div className="w-72 sm:w-96 h-28 justify-center items-center">
               <div className="space-y-2">
                 <div className="text-base sm:text-lg font-bold">Dein Stromsparziel</div>
-                <span className="text-sm sm:text-base space-y-2">Einsparung von 10% im Vergleich zum Vormonat</span>
+                <span className="text-sm sm:text-base">Einsparung von 10% im Vergleich zum Vormonat</span>
               </div>
             </div>
           </div>
