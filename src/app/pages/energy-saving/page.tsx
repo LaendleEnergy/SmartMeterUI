@@ -2,7 +2,6 @@
 
 import Toggle from "@/app/components/input/Toggle";
 import Navigation from "../../components/navigation/NavBar";
-import { FaEdit } from "react-icons/fa";
 import Dropdown from "@/app/components/input/Dropdown";
 import { useState } from "react";
 
