@@ -108,21 +108,18 @@ export default function Register() {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then(async (res) => {
-      if (res.ok) {
-        return res.json();
-      }
+    }).then((res) => {
       return res.status;
     }).then(async (res) => {
-      if (typeof res == "boolean") {
-        return res;
-      }
-      else if (res === 404) {
+      if (res === 404) {
         router.push("./errors/notfound");
       } else if (res != 200) {
         router.push("./errors/error");
       } else {
         const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
+
+        console.log(authRequest.emailAddress)
+        console.log(authRequest.password)
 
         if (await authenticate(authRequest)) {
           router.push("./energy-consumption");
