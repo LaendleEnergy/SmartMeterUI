@@ -14,7 +14,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 export default function Rewards() {
     const [editMode, setEditMode] = useState(false);
-    const [displayData, setDisplayData] = useState<Incentive>({description: "", endDate: ""});
     const [formData, setFormData] = useState<IncentiveInput>({ description: "", endDate: new Date() });
     const [render, setRender] = useState(true);
     const router = useRouter();
@@ -33,7 +32,6 @@ export default function Rewards() {
                 .then(async (res) => {
                     if (res.ok) {
                         const data = await res.json();
-                        setDisplayData(data);
 
                         Object.keys(data).forEach(function (key) {
                             let value: string | Date;
@@ -121,7 +119,6 @@ export default function Rewards() {
 
         setRender(true);
         setEditMode(false);
-        setRender(true);
     }
 
     return (

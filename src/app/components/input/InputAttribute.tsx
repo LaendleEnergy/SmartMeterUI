@@ -3,7 +3,7 @@ interface Input {
     type?: string;
     handleInput: any;
     placeholder: string;
-    value: string;
+    value: string | number;
     required?: boolean;
 }
 

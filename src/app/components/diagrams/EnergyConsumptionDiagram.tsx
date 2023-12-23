@@ -20,7 +20,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 type ValuePiece = Date | string | null;
 
-import Dropdown from "../input/Dropdown";
+import Dropdown from "../input/TimeframeDropdown";
 import Toggle from "@/app/components/input/Toggle";
 
 
