@@ -130,8 +130,8 @@ export default function EnergyConsumptionDiagram({data1}: EnergyConsumptionDiagr
                 </BarChart>
             </div>) }
             <div style={{margin: "10px"}}>
-                <Dropdown title={"Eigene Bezeichnung"} values={["Waschmaschine 1", "Waschmaschine 2", "Toaster", "Label hinzufügen"]}/>
-                <Dropdown title={"Gerätetyp"} values={["Waschmaschine", "Toaster", "Gerätetyp hinzufügen"]}/>
+                <Dropdown value={"Eigene Bezeichnung"} values={["Waschmaschine 1", "Waschmaschine 2", "Toaster", "Label hinzufügen"]}/>
+                <Dropdown value={"Gerätetyp"} values={["Waschmaschine", "Toaster", "Gerätetyp hinzufügen"]}/>
             </div>
             <div style={{margin: "10px"}} className="ConfirmButton bg-primary-600 border-2 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
                 <button className="Default text-sm font-medium text-white">Bezeichnung(en) hinzufügen</button>

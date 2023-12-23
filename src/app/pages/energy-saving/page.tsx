@@ -117,7 +117,7 @@ export default function EnergySaving() {
         <div className="Trend flex-col justify-end items-start p-4 border-2 bg-indigo-50 border-black border-solid w-80 sm:w-96 h-28">
           <div className="inline-flex space-x-2">
             <span className="text-base sm:text-lg font-bold">Trend positiv/ negativ</span>
-            <TimeframeDropdown title="Zeitraum wählen" values={["Tag", "Monat", "Jahr"]} name="timeframe"></TimeframeDropdown>
+            <TimeframeDropdown value="Zeitraum wählen" values={["Tag", "Monat", "Jahr"]} name="timeframe"></TimeframeDropdown>
           </div>
         </div>
         <div className="SavingGoal flex flex-col space-y-5 bg-indigo-50 rounded-sm border-2 border-black p-5">
@@ -133,7 +133,7 @@ export default function EnergySaving() {
             <Label name="Gewünschte Einsparung in Prozent"></Label>
             <InputAttribute name="percentage" type="number" handleInput={handleInput} placeholder="Einsparung" value={formData.percentage} required={false}></InputAttribute>
             <Label name="Einsparung im Vergleich zum"></Label>
-            <TimeframeDropdown title={formData.timeframe != "" ? formData.timeframe : "Zeitraum wählen"} handleInput={handleTimeframeInput} values={["Vorjahr", "Vormonat"]} name="timeframe"></TimeframeDropdown>
+            <TimeframeDropdown value={formData.timeframe != "" ? formData.timeframe : "Zeitraum wählen"} handleInput={handleTimeframeInput} values={["Vorjahr", "Vormonat"]} name="timeframe"></TimeframeDropdown>
             <div className="flex grow space-x-4 md:space-x-8 mt-10 justify-center items-center">
               <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                 <button onClick={() => setEditMode(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>

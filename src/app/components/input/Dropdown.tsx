@@ -5,16 +5,22 @@ import { Listbox, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useState } from 'react'
 
 interface DropdownProps {
-  title: string | null;
+  value: string | null;
   name?: string;
   values: string[];
   handleInput?: any;
 }
 
 export default function Dropdown(props: DropdownProps) {
-  const [selected, setSelected] = useState(props.title ? props.title : "");
+  const [selected, setSelected] = useState<string>("");
 
-  useEffect(() => {});
+  useEffect(() => {
+    let initialSelected = props.values.find((v) => v == props.value);
+
+    if (initialSelected) {
+      setSelected(initialSelected)
+    }
+  }, [props.values, props.value, setSelected]);
 
   return (
     <Listbox value={selected} onChange={arg => { props.handleInput(arg); setSelected(arg); }} name={props.name ? props.name : ""}>

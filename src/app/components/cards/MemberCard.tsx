@@ -7,17 +7,14 @@ import { useRouter } from 'next/navigation';
 import DeleteDialog from "../dialogs/DeleteDialog";
 
 interface MemberCardProps {
-    name: string; 
-    dateOfBirth: string;
-    gender: string;
-    id: string;
+    member: Member;
     setRender: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function MemberCard(member: MemberCardProps) {
+export default function MemberCard(props: MemberCardProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [deleteIsOpen, deleteSetIsOpen] = useState(false);
-    const [currentMember, setCurrentMember] = useState<Member>(member);
+    const [currentMember, setCurrentMember] = useState<Member>(props.member);
     const router = useRouter();
 
     useEffect(() => { })
@@ -37,7 +34,7 @@ export default function MemberCard(member: MemberCardProps) {
                 'Content-Type': 'application/json',
             },
         }).then(async (res) => {
-            member.setRender(true);
+            props.setRender(true);
             return res.status;
         }).then((status) => {
             if (status === 404) {

@@ -5,9 +5,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import InputAttribute from '@/app/components/input/InputAttribute';
 import Dropdown from '../input/Dropdown';
 import Label from '../input/Label';
-import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
-import { Member, MemberInput } from '@/app/models/Member';
 
 
 interface DialogProps {
@@ -20,18 +18,7 @@ interface DialogProps {
 
 
 export default function DeviceDialog(props: DialogProps) {
-    const [formData, setFormData] = useState<MemberInput>({ name: "", dateOfBirth: new Date(), gender: ""});
     const [deviceFormData, setDeviceFormData] = useState({ description: "", deviceType: "" });
-
-
-    const handleInput = (event: any) => {
-        const { name, value } = event.currentTarget;
-
-        setFormData((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
 
     const handleDeviceInput = (event: any) => {
         const { name, value } = event.currentTarget;
@@ -69,7 +56,7 @@ export default function DeviceDialog(props: DialogProps) {
                                         <form method="POST" className="flex flex-col items-center space-y-3">
                                             <Label name="Bezeichnung"></Label>
                                             <InputAttribute name="description" handleInput={handleDeviceInput} placeholder="Bezeichnung" value={deviceFormData.description} required={true}></InputAttribute>
-                                            <Dropdown title="Gerätetyp auswählen" values={["Kühlschrank", "Haarföhn", "Waschmaschine"]}></Dropdown>
+                                            <Dropdown value="Gerätetyp auswählen" values={["Kühlschrank", "Haarföhn", "Waschmaschine"]}></Dropdown>
                                         </form>
                                     </div>
 

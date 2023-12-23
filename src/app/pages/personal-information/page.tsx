@@ -135,9 +135,6 @@ export default function PersonalInformation() {
             gender: formData.gender == "" ? null : formData.gender,
         };
 
-        console.log(user.gender)
-        console.log(formData.gender)
-
         await fetch('http://localhost:8080/user/update', {
             method: "POST",
             body: JSON.stringify(user),
@@ -198,7 +195,7 @@ export default function PersonalInformation() {
                     <Label name="Geburtsdatum (Optional)"></Label>
                     <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />
                     <Label name="Geschlecht (Optional)"></Label>
-                    <Dropdown handleInput={handleGenderInput} values={Gender} name="gender" title={formData.gender}></Dropdown>
+                    <Dropdown handleInput={handleGenderInput} values={Gender} name="gender" value={formData.gender}></Dropdown>
                     <div className="flex grow space-x-8 mt-10 justify-center items-center">
                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                             <button onClick={() => setEditMode(false)} className="text-center text-white text-sm sm:text-base">Abbrechen</button>

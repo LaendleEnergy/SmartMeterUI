@@ -48,7 +48,7 @@ export default function Members() {
             <header><Navigation /></header>
             <div className="flex-col flex md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8 mb-5">
                 {displayData.map(m => (
-                    <MemberCard key={m.name} name={m.name} dateOfBirth={m.dateOfBirth} gender={m.gender ? m.gender : ""} id={m.id ? m.id : ""} setRender={setRender}></MemberCard>
+                    <MemberCard key={m.name} member={m} setRender={setRender}></MemberCard>
                 ))}
             </div>
             <div className="flex justify-center items-center">

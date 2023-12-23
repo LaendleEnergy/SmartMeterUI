@@ -6,7 +6,7 @@ import InputAttribute from '@/app/components/input/InputAttribute';
 import Label from '../input/Label';
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
-import { Member, MemberInput } from '@/app/models/Member';
+import { Member, AddMember } from '@/app/models/Member';
 import Dropdown from '../input/Dropdown';
 import { Gender } from '@/app/models/User';
 
@@ -19,7 +19,7 @@ interface DialogProps {
 
 
 export default function AddMemberDialog(props: DialogProps) {
-    const [formData, setFormData] = useState<MemberInput>({ name: "", dateOfBirth: new Date(), gender: "" });
+    const [formData, setFormData] = useState<AddMember>({ name: "", dateOfBirth: new Date(), gender: "" });
 
     useEffect(() => { })
 
@@ -101,7 +101,7 @@ export default function AddMemberDialog(props: DialogProps) {
                                             <Label name="Geburtsdatum (Optional)"></Label>
                                             <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />
                                             <Label name="Geschlecht (Optional)"></Label>
-                                            <Dropdown handleInput={handleGenderInput} values={Gender} name="gender" title={formData.gender}></Dropdown>
+                                            <Dropdown handleInput={handleGenderInput} values={Gender} name="gender" value={formData.gender}></Dropdown>
                                             <div className="flex grow space-x-8 mt-10 justify-center items-center">
                                                 <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                                                     <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>

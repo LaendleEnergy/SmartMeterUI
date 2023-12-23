@@ -6,7 +6,14 @@ export interface Member {
     id?: string;
 }
 
-export interface MemberInput {
+export interface EditMember {
+    name: string;
+    dateOfBirth: Date;
+    gender: string | null;
+    id: string;
+}
+
+export interface AddMember {
     name: string;
     dateOfBirth: Date;
     gender: string | null;
