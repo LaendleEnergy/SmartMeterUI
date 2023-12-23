@@ -9,8 +9,9 @@ import Label from "@/app/components/input/Label";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import DeleteDialog from "@/app/components/dialogs/DeleteDialog";
-import { User, UserInput } from "@/app/models/User";
+import { Gender, User, UserInput } from "@/app/models/User";
 import { useRouter } from 'next/navigation';
+import Dropdown from "@/app/components/input/Dropdown";
 
 
 export default function PersonalInformation() {
@@ -49,6 +50,7 @@ export default function PersonalInformation() {
                                 [key]: value,
                                 "confirmPassword": data["password"]
                             }));
+
                         });
                         return 200;
                     }
@@ -85,6 +87,13 @@ export default function PersonalInformation() {
                 "dateOfBirth": date,
             }));
         }
+    };
+
+    const handleGenderInput = (selectedValue: any) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            ["gender"]: selectedValue,
+        }));
     };
 
     async function deleteUser() {
@@ -125,6 +134,9 @@ export default function PersonalInformation() {
             dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : "",
             gender: formData.gender == "" ? null : formData.gender,
         };
+
+        console.log(user.gender)
+        console.log(formData.gender)
 
         await fetch('http://localhost:8080/user/update', {
             method: "POST",
@@ -186,7 +198,7 @@ export default function PersonalInformation() {
                     <Label name="Geburtsdatum (Optional)"></Label>
                     <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />
                     <Label name="Geschlecht (Optional)"></Label>
-                    <InputAttribute name="gender" handleInput={handleInput} placeholder="Geschlecht (Optional)" value={formData.gender} required={false}></InputAttribute>
+                    <Dropdown handleInput={handleGenderInput} values={Gender} name="gender" title={formData.gender}></Dropdown>
                     <div className="flex grow space-x-8 mt-10 justify-center items-center">
                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                             <button onClick={() => setEditMode(false)} className="text-center text-white text-sm sm:text-base">Abbrechen</button>

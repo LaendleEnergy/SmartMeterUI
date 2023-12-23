@@ -7,6 +7,8 @@ import Label from '../input/Label';
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import { Member, MemberInput } from '@/app/models/Member';
+import Dropdown from '../input/Dropdown';
+import { Gender } from '@/app/models/User';
 
 interface DialogProps {
     isOpen: boolean;
@@ -38,13 +40,20 @@ export default function EditMemberDialog(props: DialogProps) {
         }
     };
 
+    const handleGenderInput = (selectedValue: any) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            ["gender"]: selectedValue,
+        }));
+    };
+    
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         const member: Member = {
             name: formData.name,
             dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : "",
-            gender: formData.gender,
+            gender: formData.gender == "" ? null : formData.gender,
         };
 
         props.setCurrentMember(member);
@@ -91,7 +100,7 @@ export default function EditMemberDialog(props: DialogProps) {
                                             <Label name="Geburtsdatum (Optional)"></Label>
                                             <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />
                                             <Label name="Geschlecht (Optional)"></Label>
-                                            <InputAttribute name="gender" handleInput={handleInput} placeholder="Geschlecht (Optional)" value={formData.gender} required={false}></InputAttribute>
+                                            <Dropdown handleInput={handleGenderInput} values={Gender} name="gender" title={formData.gender != null ? formData.gender : "Geschlecht auswählen"}></Dropdown>
                                             <div className="flex grow space-x-8 mt-10 justify-center items-center">
                                                 <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                                                     <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>

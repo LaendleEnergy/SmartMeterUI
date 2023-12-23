@@ -5,18 +5,19 @@ import { Listbox, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useState } from 'react'
 
 interface DropdownProps {
-  title: string;
+  title: string | null;
+  name?: string;
   values: string[];
   handleInput?: any;
 }
 
 export default function Dropdown(props: DropdownProps) {
-  const [selected, setSelected] = useState(props.title);
+  const [selected, setSelected] = useState(props.title ? props.title : "");
 
   useEffect(() => {});
 
   return (
-    <Listbox value={selected} onChange={arg => { props.handleInput(arg); setSelected(arg); }} name="timeframe">
+    <Listbox value={selected} onChange={arg => { props.handleInput(arg); setSelected(arg); }} name={props.name ? props.name : ""}>
       <div className="relative mt-1 p-3">
         <Listbox.Button className="z-20 text-white w-56 sm:w-72 h-14 relative cursor-default rounded bg-blue-500 hover:bg-primary-700 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-white focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-white text-sm sm:text-base">
           <span className="block truncate">{selected}</span>

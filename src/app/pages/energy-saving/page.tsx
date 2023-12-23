@@ -1,7 +1,7 @@
 "use client";
 
 import Navigation from "../../components/navigation/NavBar";
-import TimeframeDropdown from "@/app/components/input/TimeframeDropdown";
+import TimeframeDropdown from "@/app/components/input/Dropdown";
 import { SavingTarget } from "@/app/models/SavingTarget";
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
@@ -14,8 +14,11 @@ export default function EnergySaving() {
   const [formData, setFormData] = useState<SavingTarget>({ percentage: 0, timeframe: "" });
   const [render, setRender] = useState(true);
   const router = useRouter();
+  const [errors, setErrors] = useState({}); 
+  const [isFormValid, setIsFormValid] = useState(false); 
 
   useEffect(() => {
+    validateForm(); 
 
     if (render) {
       fetch("http://localhost:8081/saving/getCurrentSavingTarget", {
@@ -45,7 +48,7 @@ export default function EnergySaving() {
         });
       setRender(false);
     }
-  }, [render, router]);
+  }, [render, router, formData]);
 
 
   const handleInput = (event: any) => {
@@ -64,6 +67,13 @@ export default function EnergySaving() {
       ["timeframe"]: selectedValue,
     }));
   }
+
+  const validateForm = () => { 
+    let errors = {}; 
+
+    setErrors(errors); 
+    setIsFormValid(Object.keys(errors).length === 0); 
+}; 
 
   async function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -107,7 +117,7 @@ export default function EnergySaving() {
         <div className="Trend flex-col justify-end items-start p-4 border-2 bg-indigo-50 border-black border-solid w-80 sm:w-96 h-28">
           <div className="inline-flex space-x-2">
             <span className="text-base sm:text-lg font-bold">Trend positiv/ negativ</span>
-            <TimeframeDropdown title="Zeitraum wählen" values={["Tag", "Monat", "Jahr"]}></TimeframeDropdown>
+            <TimeframeDropdown title="Zeitraum wählen" values={["Tag", "Monat", "Jahr"]} name="timeframe"></TimeframeDropdown>
           </div>
         </div>
         <div className="SavingGoal flex flex-col space-y-5 bg-indigo-50 rounded-sm border-2 border-black p-5">
@@ -123,7 +133,7 @@ export default function EnergySaving() {
             <Label name="Gewünschte Einsparung in Prozent"></Label>
             <InputAttribute name="percentage" type="number" handleInput={handleInput} placeholder="Einsparung" value={formData.percentage} required={false}></InputAttribute>
             <Label name="Einsparung im Vergleich zum"></Label>
-            <TimeframeDropdown title={formData.timeframe != "" ? formData.timeframe : "Zeitraum wählen"} handleInput={handleTimeframeInput} values={["Vorjahr", "Vormonat"]}></TimeframeDropdown>
+            <TimeframeDropdown title={formData.timeframe != "" ? formData.timeframe : "Zeitraum wählen"} handleInput={handleTimeframeInput} values={["Vorjahr", "Vormonat"]} name="timeframe"></TimeframeDropdown>
             <div className="flex grow space-x-4 md:space-x-8 mt-10 justify-center items-center">
               <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                 <button onClick={() => setEditMode(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>

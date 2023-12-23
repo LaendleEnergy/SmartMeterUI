@@ -1,3 +1,4 @@
+export const Gender = ["männlich","weiblich", "divers"];
 
 export interface User {
     emailAddress: string | null;

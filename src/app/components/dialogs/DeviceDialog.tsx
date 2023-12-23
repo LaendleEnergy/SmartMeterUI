@@ -3,7 +3,7 @@
 import { Fragment, SetStateAction, Dispatch, useState, FormEvent, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import InputAttribute from '@/app/components/input/InputAttribute';
-import Dropdown from '../input/TimeframeDropdown';
+import Dropdown from '../input/Dropdown';
 import Label from '../input/Label';
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';

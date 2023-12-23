@@ -12,7 +12,7 @@ import { AuthRequest } from './models/Authentication';
 
 
 export default function Home() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<AuthRequest>({
     emailAddress: "",
     password: "",
   })

@@ -12,6 +12,4 @@ export interface Household {
     deviceId: string;
     pricingPlan: string;
     supplier: string;
-    incentive: string;
-    savingTarget: string;
 }

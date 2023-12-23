@@ -16,9 +16,9 @@ import { useRouter } from 'next/navigation';
 export default function Household() {
     const [isOpen, setIsOpen] = useState(false);
     const [render, setRender] = useState(true);
-    const [displayData, setDisplayData] = useState<Household>({ deviceId: "Zählernummer", pricingPlan: "Stromtarif", supplier: "Stromanbieter", incentive: "", savingTarget: "" });
+    const [displayData, setDisplayData] = useState<Household>({ deviceId: "Zählernummer", pricingPlan: "Stromtarif", supplier: "Stromanbieter" });
     const [editMode, setEditMode] = useState(false);
-    const [formData, setFormData] = useState<Household>({ deviceId: "", pricingPlan: "", supplier: "", incentive: "", savingTarget: "" });
+    const [formData, setFormData] = useState<Household>({ deviceId: "", pricingPlan: "", supplier: ""});
     const router = useRouter();
 
     useEffect(() => {
@@ -108,8 +108,6 @@ export default function Household() {
             deviceId: formData.deviceId,
             pricingPlan: formData.pricingPlan,
             supplier: formData.supplier,
-            incentive: "",
-            savingTarget: "",
         };
 
         await fetch('http://localhost:8080/household/update', {
