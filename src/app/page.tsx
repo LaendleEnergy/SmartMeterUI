@@ -12,11 +12,7 @@ import { AuthRequest } from './models/Authentication';
 
 
 export default function Home() {
-  const [formData, setFormData] = useState<AuthRequest>({
-    emailAddress: "",
-    password: "",
-  })
-
+  const [formData, setFormData] = useState<AuthRequest>({emailAddress: "", password: ""})
   const router = useRouter();
 
   const handleInput = (event: any) => {

@@ -14,12 +14,9 @@ export default function EnergySaving() {
   const [formData, setFormData] = useState<SavingTarget>({ percentage: 0, timeframe: "" });
   const [render, setRender] = useState(true);
   const router = useRouter();
-  const [errors, setErrors] = useState({}); 
-  const [isFormValid, setIsFormValid] = useState(false); 
+  const [errors, setErrors] = useState("");
 
   useEffect(() => {
-    validateForm(); 
-
     if (render) {
       fetch("http://localhost:8081/saving/getCurrentSavingTarget", {
         method: "GET",
@@ -60,23 +57,30 @@ export default function EnergySaving() {
     }));
   };
 
-
   const handleTimeframeInput = (selectedValue: any) => {
     setFormData((prevState) => ({
       ...prevState,
       ["timeframe"]: selectedValue,
     }));
-  }
+  };
 
-  const validateForm = () => { 
-    let errors = {}; 
+  async function validateForm() {
+    if ((formData.percentage && !formData.timeframe) || (!formData.percentage && formData.timeframe)) {
+      setErrors("Bitte beide Felder ausfüllen.");
+    } else {
+      setErrors("");
+    }
 
-    setErrors(errors); 
-    setIsFormValid(Object.keys(errors).length === 0); 
-}; 
+    return errors.length == 0;
+  };
 
   async function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (!await validateForm()) {
+      setErrors("Bitte prüfen Sie Ihre Eingaben.");
+      return null;
+    }
 
     const savingTarget: SavingTarget = {
       percentage: formData.percentage,
@@ -128,12 +132,14 @@ export default function EnergySaving() {
               <FaEdit class="text-white"></FaEdit>
             </button>
           </div>
-          <span className={editMode ? "hidden" : "text-sm sm:text-base"}>Einsparung von {formData.percentage}% im Vergleich zum {formData.timeframe}</span>
+          <span className={!editMode && !formData.percentage && !formData.timeframe ? "text-sm sm:text-base" : "hidden"}>Es wurde noch kein Stromsparziel gesetzt.</span>
+          <span className={editMode || (!formData.percentage && !formData.timeframe) ? "hidden" : "text-sm sm:text-base"}>Einsparung von {formData.percentage}% im Vergleich zum {formData.timeframe}</span>
           <form method="POST" onSubmit={submitForm} className={editMode ? "flex flex-col items-center space-y-3" : "hidden"}>
             <Label name="Gewünschte Einsparung in Prozent"></Label>
             <InputAttribute name="percentage" type="number" handleInput={handleInput} placeholder="Einsparung" value={formData.percentage} required={false}></InputAttribute>
             <Label name="Einsparung im Vergleich zum"></Label>
             <TimeframeDropdown value={formData.timeframe != "" ? formData.timeframe : "Zeitraum wählen"} handleInput={handleTimeframeInput} values={["Vorjahr", "Vormonat"]} name="timeframe"></TimeframeDropdown>
+            {errors && <p className="text-red-600 text-sm sm:text-base">{errors}</p>}
             <div className="flex grow space-x-4 md:space-x-8 mt-10 justify-center items-center">
               <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                 <button onClick={() => setEditMode(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>
