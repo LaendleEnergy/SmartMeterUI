@@ -15,6 +15,7 @@ export default function EnergySaving() {
   const [render, setRender] = useState(true);
   const router = useRouter();
   const [errors, setErrors] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
     if (render) {
@@ -41,8 +42,8 @@ export default function EnergySaving() {
           }
         }).catch((e) => {
           console.log(e)
-
         });
+        
       setRender(false);
     }
   }, [render, router, formData]);
@@ -71,13 +72,15 @@ export default function EnergySaving() {
       setErrors("");
     }
 
-    return errors.length == 0;
+    setIsFormValid(errors.length == 0);
   };
 
   async function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!await validateForm()) {
+    await validateForm();
+
+    if (!isFormValid) {
       setErrors("Bitte prüfen Sie Ihre Eingaben.");
       return null;
     }

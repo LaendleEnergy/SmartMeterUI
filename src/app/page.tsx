@@ -14,6 +14,7 @@ import { AuthRequest } from './models/Authentication';
 export default function Home() {
   const [formData, setFormData] = useState<AuthRequest>({emailAddress: "", password: ""})
   const router = useRouter();
+  const [error, setError] = useState(false);
 
   const handleInput = (event: any) => {
     const { name, value } = event.currentTarget;
@@ -31,6 +32,8 @@ export default function Home() {
 
     if (await authenticate(authRequest)) {
       router.push("./pages/energy-consumption");
+    } else {
+      setError(true);
     }
   };
 
@@ -45,6 +48,7 @@ export default function Home() {
           <InputAttribute name="emailAddress" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.emailAddress} required={true}></InputAttribute>
           <Label name="Passwort"></Label>
           <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password} required={true}></InputAttribute>
+          {error == true && <p className="text-red-600 text-sm sm:text-base">Authentifizierung fehlgeschlagen.</p>}
           <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full px-8 py-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
             <button type="submit"><span className="Text text-center text-white text-sm sm:text-base font-medium leading-normal">Log In</span></button>
           </div>

@@ -14,7 +14,7 @@ export async function authenticate(props: AuthRequest) {
         .then(async result => {
             return await result.json();
         })
-        .catch(error => console.log(error));
+        .catch(() => { return false; });
 
     if (token) {
         localStorage.setItem("token", token["token"]);

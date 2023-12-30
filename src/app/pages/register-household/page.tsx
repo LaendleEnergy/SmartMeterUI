@@ -18,6 +18,7 @@ export default function Register() {
   const [formData, setFormData] = useState<CreateHousehold>({ emailAddress: "", name: "", password: "", confirmPassword: "", pricingPlan: "", supplier: "", deviceId: "" });
   const router = useRouter();
   const data = new FormData();
+  const [errors, setErrors] = useState({ accountForm: "", householdForm: "" });
 
   const handleBack = () => {
     setStep(step - 1);
@@ -30,26 +31,62 @@ export default function Register() {
       ...prevState,
       [name]: value,
     }));
-  }
+  };
 
   const handlePricingPlanInput = (selectedValue: any) => {
     setFormData((prevState) => ({
       ...prevState,
       ["pricingPlan"]: selectedValue.name,
     }));
-  }
+  };
 
   const handleSupplierInput = (selectedValue: any) => {
     setFormData((prevState) => ({
       ...prevState,
       ["supplier"]: selectedValue,
     }));
-  }
+  };
+
+  async function validateAccountForm() {
+    if (!(formData.password == formData.confirmPassword)) {
+      setErrors((prevState) => ({
+        ...prevState,
+        accountForm: "Passwörter stimmen nicht überein.",
+      }));
+      return false;
+    };
+
+    if (!formData.password.match(/^(?=.*[a-zA-Z])(?=.*\d).{8,}$/)) {
+      setErrors((prevState) => ({
+        ...prevState,
+        accountForm: "Das Passwort muss mindestens 8 Zeichen lang sein und mindestens eine Ziffer und einen Kleinbuchstaben enthalten.",
+      }));
+      return false;
+    };
+
+    return true;
+  };
+
+  async function validateHouseholdForm() {
+    if (!formData.pricingPlan || !formData.supplier) {
+      setErrors((prevState) => ({
+        ...prevState,
+        householdForm: "Bitte alle Felder ausfüllen.",
+      }));
+      return false;
+    };
+
+    return true;
+  };
+
 
   async function submitAccountForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (formData.password == formData.confirmPassword) {
+    const formIsValid = await validateAccountForm();
+
+    if (formIsValid) {
+      setErrors({ accountForm: "", householdForm: "" });
 
       const validated = await fetch('http://localhost:8080/user/validateEmail', {
         method: "POST",
@@ -71,9 +108,7 @@ export default function Register() {
         } else if (res != 200) {
           router.push("./errors/error");
         }
-      }).catch((e) => {
-        console.log(e)
-      });
+      }).catch();
 
       if (validated) {
         Object.entries(formData).forEach(([key, value]) => {
@@ -82,52 +117,60 @@ export default function Register() {
 
         setStep(step + 1);
       } else {
-        alert("E-Mail Adresse wird bereits verwendet.")
-      }
-
-    } else {
-      alert("Passwörter stimmen nicht überein.");
+        setErrors((prevState) => ({
+          ...prevState,
+          accountForm: "E-Mail Adresse wird bereits verwendet.",
+        }));
+      };
     }
-  }
+  };
 
   async function submitHouseholdForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const household: CreateHousehold = {
-      emailAddress: formData.emailAddress,
-      password: formData.password,
-      name: formData.name,
-      pricingPlan: formData.pricingPlan,
-      supplier: formData.supplier,
-      deviceId: formData.deviceId
-    };
+    const isFormValid = await validateHouseholdForm();
 
-    await fetch('http://localhost:8080/household/create', {
-      method: "POST",
-      body: JSON.stringify(household),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((res) => {
-      return res.status;
-    }).then(async (res) => {
-      if (res === 404) {
-        router.push("./errors/notfound");
-      } else if (res != 200) {
-        router.push("./errors/error");
-      } else {
-        const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
+    if (isFormValid) {
+      setErrors({ accountForm: "", householdForm: "" });
 
-        console.log(authRequest.emailAddress)
-        console.log(authRequest.password)
+      const household: CreateHousehold = {
+        emailAddress: formData.emailAddress,
+        password: formData.password,
+        name: formData.name,
+        pricingPlan: formData.pricingPlan,
+        supplier: formData.supplier,
+        deviceId: formData.deviceId
+      };
 
-        if (await authenticate(authRequest)) {
-          router.push("./energy-consumption");
+      await fetch('http://localhost:8080/household/create', {
+        method: "POST",
+        body: JSON.stringify(household),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => {
+        return res.status;
+      }).then(async (res) => {
+        if (res === 404) {
+          router.push("./errors/notfound");
+        } else if (res != 200) {
+          router.push("./errors/error");
+        } else {
+          const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
+
+          if (await authenticate(authRequest)) {
+            router.push("./energy-consumption");
+          } else {
+            setErrors((prevState) => ({
+              ...prevState,
+              householdForm: "Authentifizierung fehlgeschlagen.",
+            }));
+          }
         }
-      }
-    }).catch((e) => {
-      console.log(e)
-    });
+      }).catch((e) => {
+        console.log(e)
+      });
+    }
   };
 
   const steps = [
@@ -142,6 +185,7 @@ export default function Register() {
           <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password}></InputAttribute>
           <Label name="Passwort wiederholen"></Label>
           <InputAttribute name="confirmPassword" type="password" handleInput={handleInput} placeholder="Passwort wiederholen" value={formData.confirmPassword ? formData.confirmPassword : ""}></InputAttribute>
+          {errors.accountForm && <p className="text-red-600 text-sm sm:text-base">{errors.accountForm}</p>}
           <div className="flex grow space-x-4 md:space-x-8 mt-10 justify-center items-center">
             <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
               <button onClick={() => router.back()} className="text-center text-white text-sm sm:text-base font-medium leading-normal">Zurück</button>
@@ -161,6 +205,7 @@ export default function Register() {
           <PricingPlanDropdown handleInput={handlePricingPlanInput} pricingPlanName={formData.pricingPlan}></PricingPlanDropdown>
           <Label name="Zählernummer"></Label>
           <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId}></InputAttribute>
+          {errors.householdForm && <p className="text-red-600 text-sm sm:text-base">{errors.householdForm}</p>}
           <div className="flex grow space-x-4 md:space-x-8 mt-10 justify-center items-center">
             <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
               <button onClick={handleBack} className="text-center text-white text-sm sm:text-base font-medium">Zurück</button>
