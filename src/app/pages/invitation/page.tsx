@@ -2,6 +2,7 @@
 
 import { authenticate } from "@/app/authentication/authentication";
 import InputAttribute from "@/app/components/input/InputAttribute";
+import { PasswordValidation, validatePassword } from "@/app/components/input/Validation";
 import NavBar from "@/app/components/navigation/NavBar";
 import { AuthRequest } from "@/app/models/Authentication";
 import { User, UserInput } from "@/app/models/User";
@@ -11,6 +12,7 @@ import { FormEvent, useState } from "react";
 export default function AcceptInvitation() {
     const [formData, setFormData] = useState<UserInput>({ emailAddress: "", password: "", confirmPassword: "", name: "", dateOfBirth: new Date(), gender: "" });
     const router = useRouter();
+    const [errors, setErrors] = useState({ password: "", email: "" });
 
     const handleInput = (event: any) => {
         const { name, value } = event.currentTarget;
@@ -24,7 +26,11 @@ export default function AcceptInvitation() {
     async function submitRegistrationForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        if (formData.password == formData.confirmPassword) {
+        const passwordValidation: PasswordValidation = { password: formData.password, confirmPassword: formData.confirmPassword, setErrors: setErrors }
+        const formIsValid = await validatePassword(passwordValidation);
+
+        if (formIsValid) {
+            setErrors({ password: "", email: "" });
 
             const validated = await fetch('http://localhost:8080/user/validateEmail', {
                 method: "POST",
@@ -79,19 +85,18 @@ export default function AcceptInvitation() {
                 });
 
                 const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
-                
+
                 if (await authenticate(authRequest)) {
                     router.push("./energy-consumption");
-                    console.log(localStorage.getItem("token"))
                 }
             } else {
-                alert("E-Mail Adresse wird bereits verwendet.")
-            }
-
-        } else {
-            alert("Passwörter stimmen nicht überein.");
-        }
-    }
+                setErrors((prevState) => ({
+                    ...prevState,
+                    email: "E-Mail Adresse wird bereits verwendet.",
+                }));
+            };
+        };
+    };
 
 
     return (
@@ -105,6 +110,7 @@ export default function AcceptInvitation() {
                     <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
                     <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password}></InputAttribute>
                     <InputAttribute name="confirmPassword" type="password" handleInput={handleInput} placeholder="Passwort wiederholen" value={formData.confirmPassword}></InputAttribute>
+                    {errors.password && <p className="text-red-600 text-sm sm:text-base">{errors.password}</p>}
                     <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full px-8 py-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
                         <button><span className="Text text-center text-white text-sm sm:text-base font-medium leading-normal">Haushalt beitreten</span></button>
                     </div>

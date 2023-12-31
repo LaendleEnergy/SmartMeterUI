@@ -12,7 +12,7 @@ import DeleteDialog from "@/app/components/dialogs/DeleteDialog";
 import { Gender, User, UserInput } from "@/app/models/User";
 import { useRouter } from 'next/navigation';
 import Dropdown from "@/app/components/input/Dropdown";
-
+import { PasswordValidation, validatePassword } from "@/app/components/input/Validation";
 
 export default function PersonalInformation() {
     const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +21,7 @@ export default function PersonalInformation() {
     const [displayData, setDisplayData] = useState<User>({ emailAddress: "E-Mail", name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)", password: "" });
     const [formData, setFormData] = useState<UserInput>({ emailAddress: "", password: "", confirmPassword: "", name: "", dateOfBirth: new Date(), gender: "" });
     const router = useRouter();
+    const [errors, setErrors] = useState({ password: "" });
 
     useEffect(() => {
         if (render) {
@@ -96,6 +97,7 @@ export default function PersonalInformation() {
         }));
     };
 
+
     async function deleteUser() {
         await fetch("http://localhost:8080/user/delete", {
             method: "DELETE",
@@ -122,45 +124,47 @@ export default function PersonalInformation() {
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        if (formData.password != formData.confirmPassword) {
-            alert("Passwörter stimmen nicht überein.");
-            return;
-        }
+        const passwordValidation: PasswordValidation = {password: formData.password, confirmPassword: formData.confirmPassword, setErrors: setErrors}
+        const formIsValid = await validatePassword(passwordValidation);
 
-        const user: User = {
-            emailAddress: formData.emailAddress,
-            password: formData.password,
-            name: formData.name,
-            dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : "",
-            gender: formData.gender == "" ? null : formData.gender,
+        if (formIsValid) {
+            setErrors({ password: "" });
+
+            const user: User = {
+                emailAddress: formData.emailAddress,
+                password: formData.password,
+                name: formData.name,
+                dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : "",
+                gender: formData.gender == "" ? null : formData.gender,
+            };
+
+            await fetch('http://localhost:8080/user/update', {
+                method: "POST",
+                body: JSON.stringify(user),
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
+            }).then(async (res) => {
+                if (res.ok) {
+                    return 200;
+                }
+                return res.status;
+            }).then((status) => {
+                if (status === 404) {
+                    router.push("./not-found");
+                } else if (status != 200) {
+                    router.push("./error");
+                }
+            }).catch((e) => {
+                console.log(e)
+            });
+
+            setDisplayData(user);
+            setRender(true);
+            setEditMode(false);
         };
-
-        await fetch('http://localhost:8080/user/update', {
-            method: "POST",
-            body: JSON.stringify(user),
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json',
-            },
-        }).then(async (res) => {
-            if (res.ok) {
-                return 200;
-            }
-            return res.status;
-        }).then((status) => {
-            if (status === 404) {
-                router.push("./not-found");
-            } else if (status != 200) {
-                router.push("./error");
-            }
-        }).catch((e) => {
-            console.log(e)
-        });
-
-        setDisplayData(user);
-        setRender(true);
-        setEditMode(false);
-    }
+    };
 
     return (
         <div className="PersonalInformation">
@@ -191,6 +195,7 @@ export default function PersonalInformation() {
                     <Label name="Passwort"></Label>
                     <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password}></InputAttribute>
                     <Label name="Passwort wiederholen"></Label>
+                    {errors.password && <p className="text-red-600 text-sm sm:text-base">{errors.password}</p>}
                     <InputAttribute name="confirmPassword" type="password" handleInput={handleInput} placeholder="Passwort wiederholen" value={formData.confirmPassword ? formData.confirmPassword : ""}></InputAttribute>
                     <Label name="Geburtsdatum (Optional)"></Label>
                     <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />

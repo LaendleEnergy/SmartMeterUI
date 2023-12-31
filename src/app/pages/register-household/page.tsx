@@ -11,6 +11,7 @@ import SupplierDropdown from '@/app/components/input/SupplierDropdown';
 import { authenticate } from '@/app/authentication/authentication';
 import { CreateHousehold } from '@/app/models/Household';
 import { AuthRequest } from '@/app/models/Authentication';
+import { PasswordValidation, validatePassword } from '@/app/components/input/Validation';
 
 export default function Register() {
 
@@ -18,7 +19,7 @@ export default function Register() {
   const [formData, setFormData] = useState<CreateHousehold>({ emailAddress: "", name: "", password: "", confirmPassword: "", pricingPlan: "", supplier: "", deviceId: "" });
   const router = useRouter();
   const data = new FormData();
-  const [errors, setErrors] = useState({ accountForm: "", householdForm: "" });
+  const [errors, setErrors] = useState({ password: "", householdForm: "" });
 
   const handleBack = () => {
     setStep(step - 1);
@@ -47,26 +48,6 @@ export default function Register() {
     }));
   };
 
-  async function validateAccountForm() {
-    if (!(formData.password == formData.confirmPassword)) {
-      setErrors((prevState) => ({
-        ...prevState,
-        accountForm: "Passwörter stimmen nicht überein.",
-      }));
-      return false;
-    };
-
-    if (!formData.password.match(/^(?=.*[a-zA-Z])(?=.*\d).{8,}$/)) {
-      setErrors((prevState) => ({
-        ...prevState,
-        accountForm: "Das Passwort muss mindestens 8 Zeichen lang sein und mindestens eine Ziffer und einen Kleinbuchstaben enthalten.",
-      }));
-      return false;
-    };
-
-    return true;
-  };
-
   async function validateHouseholdForm() {
     if (!formData.pricingPlan || !formData.supplier) {
       setErrors((prevState) => ({
@@ -83,10 +64,11 @@ export default function Register() {
   async function submitAccountForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const formIsValid = await validateAccountForm();
+    const passwordValidation: PasswordValidation = {password: formData.password, confirmPassword: formData.confirmPassword || "", setErrors: setErrors}
+    const formIsValid = await validatePassword(passwordValidation);
 
     if (formIsValid) {
-      setErrors({ accountForm: "", householdForm: "" });
+      setErrors({ password: "", householdForm: "" });
 
       const validated = await fetch('http://localhost:8080/user/validateEmail', {
         method: "POST",
@@ -131,7 +113,7 @@ export default function Register() {
     const isFormValid = await validateHouseholdForm();
 
     if (isFormValid) {
-      setErrors({ accountForm: "", householdForm: "" });
+      setErrors({ password: "", householdForm: "" });
 
       const household: CreateHousehold = {
         emailAddress: formData.emailAddress,
@@ -185,7 +167,7 @@ export default function Register() {
           <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password}></InputAttribute>
           <Label name="Passwort wiederholen"></Label>
           <InputAttribute name="confirmPassword" type="password" handleInput={handleInput} placeholder="Passwort wiederholen" value={formData.confirmPassword ? formData.confirmPassword : ""}></InputAttribute>
-          {errors.accountForm && <p className="text-red-600 text-sm sm:text-base">{errors.accountForm}</p>}
+          {errors.password && <p className="text-red-600 text-sm sm:text-base">{errors.password}</p>}
           <div className="flex grow space-x-4 md:space-x-8 mt-10 justify-center items-center">
             <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
               <button onClick={() => router.back()} className="text-center text-white text-sm sm:text-base font-medium leading-normal">Zurück</button>
