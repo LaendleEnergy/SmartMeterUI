@@ -12,7 +12,7 @@ import DeleteDialog from "@/app/components/dialogs/DeleteDialog";
 import { Gender, User, UserInput } from "@/app/models/User";
 import { useRouter } from 'next/navigation';
 import Dropdown from "@/app/components/input/Dropdown";
-import { PasswordValidation, validatePassword } from "@/app/components/input/Validation";
+import { DateOfBirthValidation, PasswordValidation, validateDateOfBirth, validatePassword } from "@/app/components/input/Validation";
 
 export default function PersonalInformation() {
     const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +21,7 @@ export default function PersonalInformation() {
     const [displayData, setDisplayData] = useState<User>({ emailAddress: "E-Mail", name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)", password: "" });
     const [formData, setFormData] = useState<UserInput>({ emailAddress: "", password: "", confirmPassword: "", name: "", dateOfBirth: new Date(), gender: "" });
     const router = useRouter();
-    const [errors, setErrors] = useState({ password: "" });
+    const [errors, setErrors] = useState({ password: "", dateOfBirth: "" });
 
     useEffect(() => {
         if (render) {
@@ -124,11 +124,15 @@ export default function PersonalInformation() {
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        const passwordValidation: PasswordValidation = {password: formData.password, confirmPassword: formData.confirmPassword, setErrors: setErrors}
-        const formIsValid = await validatePassword(passwordValidation);
+        const passwordValidation: PasswordValidation = {password: formData.password, confirmPassword: formData.confirmPassword, setErrors: setErrors};
+        const dateOfBirthValidation: DateOfBirthValidation = {dateOfBirth: formData.dateOfBirth, setErrors: setErrors};
 
-        if (formIsValid) {
-            setErrors({ password: "" });
+        if (await validatePassword(passwordValidation)) {
+            setErrors({ password: "", dateOfBirth: "" });
+
+            if (formData.dateOfBirth && !await validateDateOfBirth(dateOfBirthValidation)) {
+                return;
+            }
 
             const user: User = {
                 emailAddress: formData.emailAddress,
@@ -199,6 +203,7 @@ export default function PersonalInformation() {
                     <InputAttribute name="confirmPassword" type="password" handleInput={handleInput} placeholder="Passwort wiederholen" value={formData.confirmPassword ? formData.confirmPassword : ""}></InputAttribute>
                     <Label name="Geburtsdatum (Optional)"></Label>
                     <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />
+                    {errors.dateOfBirth && <p className="text-red-600 text-sm sm:text-base">{errors.dateOfBirth}</p>}
                     <Label name="Geschlecht (Optional)"></Label>
                     <Dropdown handleInput={handleGenderInput} values={Gender} name="gender" value={formData.gender}></Dropdown>
                     <div className="flex grow space-x-8 mt-10 justify-center items-center">

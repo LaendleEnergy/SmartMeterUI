@@ -11,7 +11,7 @@ import SupplierDropdown from '@/app/components/input/SupplierDropdown';
 import { authenticate } from '@/app/authentication/authentication';
 import { CreateHousehold } from '@/app/models/Household';
 import { AuthRequest } from '@/app/models/Authentication';
-import { PasswordValidation, validatePassword } from '@/app/components/input/Validation';
+import { PasswordValidation, PricingPlanAndSupplierValidation, validatePassword, validatePricingPlanAndSupplier } from '@/app/components/input/Validation';
 
 export default function Register() {
 
@@ -19,7 +19,7 @@ export default function Register() {
   const [formData, setFormData] = useState<CreateHousehold>({ emailAddress: "", name: "", password: "", confirmPassword: "", pricingPlan: "", supplier: "", deviceId: "" });
   const router = useRouter();
   const data = new FormData();
-  const [errors, setErrors] = useState({ password: "", householdForm: "" });
+  const [errors, setErrors] = useState({ password: "", supplier: "", pricingPlan: "", authentication: ""});
 
   const handleBack = () => {
     setStep(step - 1);
@@ -48,27 +48,13 @@ export default function Register() {
     }));
   };
 
-  async function validateHouseholdForm() {
-    if (!formData.pricingPlan || !formData.supplier) {
-      setErrors((prevState) => ({
-        ...prevState,
-        householdForm: "Bitte alle Felder ausfüllen.",
-      }));
-      return false;
-    };
-
-    return true;
-  };
-
-
   async function submitAccountForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const passwordValidation: PasswordValidation = {password: formData.password, confirmPassword: formData.confirmPassword || "", setErrors: setErrors}
-    const formIsValid = await validatePassword(passwordValidation);
 
-    if (formIsValid) {
-      setErrors({ password: "", householdForm: "" });
+    if (await validatePassword(passwordValidation)) {
+      setErrors({ password: "", supplier: "", pricingPlan: "", authentication: "" });
 
       const validated = await fetch('http://localhost:8080/user/validateEmail', {
         method: "POST",
@@ -110,10 +96,10 @@ export default function Register() {
   async function submitHouseholdForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const isFormValid = await validateHouseholdForm();
+    const pricingPlanAndSupplierValidation: PricingPlanAndSupplierValidation = {supplier: formData.supplier, pricingPlan: formData.pricingPlan, setErrors: setErrors};
 
-    if (isFormValid) {
-      setErrors({ password: "", householdForm: "" });
+    if (await validatePricingPlanAndSupplier(pricingPlanAndSupplierValidation)) {
+      setErrors({ password: "", supplier: "", pricingPlan: "", authentication: "" });
 
       const household: CreateHousehold = {
         emailAddress: formData.emailAddress,
@@ -145,7 +131,7 @@ export default function Register() {
           } else {
             setErrors((prevState) => ({
               ...prevState,
-              householdForm: "Authentifizierung fehlgeschlagen.",
+              authentication: "Authentifizierung fehlgeschlagen.",
             }));
           }
         }
@@ -183,11 +169,13 @@ export default function Register() {
         <form method="POST" onSubmit={submitHouseholdForm} className="flex flex-col items-center mb-5 space-y-2 p-2 md:p-4 border-2 bg-indigo-50 border-black border-solid">
           <Label name="Stromanbieter"></Label>
           <SupplierDropdown handleInput={handleSupplierInput} supplierName={formData.supplier}></SupplierDropdown>
+          {errors.supplier && <p className="text-red-600 text-sm sm:text-base">{errors.supplier}</p>}
           <Label name="Stromtarif"></Label>
           <PricingPlanDropdown handleInput={handlePricingPlanInput} pricingPlanName={formData.pricingPlan}></PricingPlanDropdown>
+          {errors.pricingPlan && <p className="text-red-600 text-sm sm:text-base">{errors.pricingPlan}</p>}
           <Label name="Zählernummer"></Label>
           <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId}></InputAttribute>
-          {errors.householdForm && <p className="text-red-600 text-sm sm:text-base">{errors.householdForm}</p>}
+          {errors.authentication && <p className="text-red-600 text-sm sm:text-base">{errors.authentication}</p>}
           <div className="flex grow space-x-4 md:space-x-8 mt-10 justify-center items-center">
             <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
               <button onClick={handleBack} className="text-center text-white text-sm sm:text-base font-medium">Zurück</button>

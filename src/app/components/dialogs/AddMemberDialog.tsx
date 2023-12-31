@@ -9,6 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Member, AddMember } from '@/app/models/Member';
 import Dropdown from '../input/Dropdown';
 import { Gender } from '@/app/models/User';
+import { DateOfBirthValidation, validateDateOfBirth } from '../input/Validation';
 
 
 interface DialogProps {
@@ -20,6 +21,7 @@ interface DialogProps {
 
 export default function AddMemberDialog(props: DialogProps) {
     const [formData, setFormData] = useState<AddMember>({ name: "", dateOfBirth: new Date(), gender: "" });
+    const [errors, setErrors] = useState({ dateOfBirth: "" });
 
     useEffect(() => { })
 
@@ -50,7 +52,15 @@ export default function AddMemberDialog(props: DialogProps) {
 
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        
+        const dateOfBirthValidation: DateOfBirthValidation = { dateOfBirth: formData.dateOfBirth, setErrors: setErrors };
 
+        if (formData.dateOfBirth && !await validateDateOfBirth(dateOfBirthValidation)) {
+            return;
+        };
+
+        setErrors({ dateOfBirth: "" });
+        
         const member: Member = {
             name: formData.name,
             dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : "",
@@ -100,6 +110,7 @@ export default function AddMemberDialog(props: DialogProps) {
                                             <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
                                             <Label name="Geburtsdatum (Optional)"></Label>
                                             <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />
+                                            {errors.dateOfBirth && <p className="text-red-600 text-sm sm:text-base">{errors.dateOfBirth}</p>}
                                             <Label name="Geschlecht (Optional)"></Label>
                                             <Dropdown handleInput={handleGenderInput} values={Gender} name="gender" value={formData.gender}></Dropdown>
                                             <div className="flex grow space-x-8 mt-10 justify-center items-center">

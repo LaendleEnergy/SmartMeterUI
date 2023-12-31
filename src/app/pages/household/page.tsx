@@ -12,13 +12,15 @@ import PricingPlanDropdown from "@/app/components/input/PricingPlanDropdown";
 import DeleteDialog from "@/app/components/dialogs/DeleteDialog";
 import { Household } from "@/app/models/Household";
 import { useRouter } from 'next/navigation';
+import { PricingPlanAndSupplierValidation, validatePricingPlanAndSupplier } from "@/app/components/input/Validation";
 
 export default function Household() {
     const [isOpen, setIsOpen] = useState(false);
     const [render, setRender] = useState(true);
     const [displayData, setDisplayData] = useState<Household>({ deviceId: "Zählernummer", pricingPlan: "Stromtarif", supplier: "Stromanbieter" });
     const [editMode, setEditMode] = useState(false);
-    const [formData, setFormData] = useState<Household>({ deviceId: "", pricingPlan: "", supplier: ""});
+    const [formData, setFormData] = useState<Household>({ deviceId: "", pricingPlan: "", supplier: "" });
+    const [errors, setErrors] = useState({ supplier: "", pricingPlan: "" });
     const router = useRouter();
 
     useEffect(() => {
@@ -104,37 +106,43 @@ export default function Household() {
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        const household: Household = {
-            deviceId: formData.deviceId,
-            pricingPlan: formData.pricingPlan,
-            supplier: formData.supplier,
-        };
+        const pricingPlanAndSupplierValidation: PricingPlanAndSupplierValidation = { supplier: formData.supplier, pricingPlan: formData.pricingPlan, setErrors: setErrors };
 
-        await fetch('http://localhost:8080/household/update', {
-            method: "POST",
-            body: JSON.stringify(household),
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json',
-            },
-        }).then(async (res) => {
-            if (res.ok) {
-                return 200;
-            }
-            return res.status;
-        }).then((status) => {
-            if (status === 404) {
-                router.push("./not-found");
-            } else if (status != 200) {
-                router.push("./error");
-            }
-        }).catch((e) => {
-            console.log(e)
-        });
+        if (await validatePricingPlanAndSupplier(pricingPlanAndSupplierValidation)) {
+            setErrors({ supplier: "", pricingPlan: "" });
 
-        setRender(true);
-        setDisplayData(household);
-        setEditMode(false);
+            const household: Household = {
+                deviceId: formData.deviceId,
+                pricingPlan: formData.pricingPlan,
+                supplier: formData.supplier,
+            };
+
+            await fetch('http://localhost:8080/household/update', {
+                method: "POST",
+                body: JSON.stringify(household),
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
+            }).then(async (res) => {
+                if (res.ok) {
+                    return 200;
+                }
+                return res.status;
+            }).then((status) => {
+                if (status === 404) {
+                    router.push("./not-found");
+                } else if (status != 200) {
+                    router.push("./error");
+                }
+            }).catch((e) => {
+                console.log(e)
+            });
+
+            setRender(true);
+            setDisplayData(household);
+            setEditMode(false);
+        }
     }
 
     return (
@@ -149,20 +157,22 @@ export default function Household() {
                     </button>
                 </div>
                 <div className={editMode ? "hidden" : "HouseholdInformation flex-col items-center gap-3 inline-flex"}>
-                    <Label name="Zählernummer"></Label>
-                    <DisplayAttribute name={displayData.deviceId}></DisplayAttribute>
                     <Label name="Stromanbieter"></Label>
                     <DisplayAttribute name={displayData.supplier}></DisplayAttribute>
                     <Label name="Stromtarif"></Label>
                     <DisplayAttribute name={displayData.pricingPlan}></DisplayAttribute>
+                    <Label name="Zählernummer"></Label>
+                    <DisplayAttribute name={displayData.deviceId}></DisplayAttribute>
                 </div>
                 <form method="POST" onSubmit={submitForm} className={editMode ? "flex flex-col items-center space-y-2 md:space-y-4 border-2 bg-indigo-50 border-black border-solid p-2 md:p-5" : "hidden"}>
-                    <Label name="Zählernummer"></Label>
-                    <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId}></InputAttribute>
                     <Label name="Stromanbieter"></Label>
                     <SupplierDropdown handleInput={handleSupplierInput} supplierName={formData.supplier}></SupplierDropdown>
+                    {errors.supplier && <p className="text-red-600 text-sm sm:text-base">{errors.supplier}</p>}
                     <Label name="Stromtarif"></Label>
                     <PricingPlanDropdown handleInput={handlePricingPlanInput} pricingPlanName={formData.pricingPlan}></PricingPlanDropdown>
+                    {errors.pricingPlan && <p className="text-red-600 text-sm sm:text-base">{errors.pricingPlan}</p>}
+                    <Label name="Zählernummer"></Label>
+                    <InputAttribute name="deviceId" handleInput={handleInput} placeholder="Zählernummer" value={formData.deviceId}></InputAttribute>
 
                     <div className="flex grow space-x-8 mt-10 justify-center items-center">
                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
