@@ -5,6 +5,7 @@ import Link from "next/link";
 import Logo from "../Logo";
 import { usePathname, useRouter } from "next/navigation";
 import { MdLogout, MdOutlineMenu } from "react-icons/md";
+import { AuthenticatedView } from "../AuthenticatedView/AuthenticatedView";
 
 const NavBar = ({ showTabs = true }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -42,7 +43,9 @@ const NavBar = ({ showTabs = true }) => {
               <NavLink href="/pages/rewards" text="Belohnungen" />
               <NavLink href="/pages/devices-overview" text="Geräte" />
               <NavLink href="/pages/personal-information" text="Persönliche Daten" />
-              <NavLink href="/pages/household" text="Haushalt" />
+              <AuthenticatedView role="Admin">
+                <NavLink href="/pages/household" text="Haushalt" />
+              </AuthenticatedView>
               <div className="px-4 py-2 justify-center items-center text-sm lg:text-base">
                 <button
                   onClick={logout}
