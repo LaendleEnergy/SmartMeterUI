@@ -3,7 +3,7 @@
 import Navigation from "../../components/navigation/NavBar";
 import React, {PureComponent} from 'react';
 import EnergyConsumptionDiagram from "../../components/diagrams/EnergyConsumptionDiagram";
-import { AverageEnergyConsumptionDiagram } from "@/app/components/diagrams/AverageEnergyConsumptionDiagram";
+import AverageEnergyConsumptionDiagram from "@/app/components/diagrams/AverageEnergyConsumptionDiagram";
 
 
 const data = [

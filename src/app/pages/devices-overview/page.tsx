@@ -43,6 +43,6 @@ export default function DeviceOverview() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
