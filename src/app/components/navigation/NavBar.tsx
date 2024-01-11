@@ -43,8 +43,10 @@ function NavLink({ href, text }: NavLinkProps) {
   const isActive = usePathname() === href;
 
   return (
-    <Link href={href}>
-      <a className={isActive ? "ActiveButton w-42 px-4 py-2 bg-primary-600 rounded-full justify-center items-center flex font-medium leading-normal text-white" : "text-neutral-800 font-medium leading-normal"}>{text}</a>
+    <Link
+      href={href}
+      className={isActive ? "ActiveButton w-42 px-4 py-2 bg-primary-600 rounded-full justify-center items-center flex font-medium leading-normal text-white" : "text-neutral-800 font-medium leading-normal"}>
+      {text}
     </Link>
   );
 }

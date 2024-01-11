@@ -5,7 +5,7 @@ export default function AddLabelDialog() {
         <div className="AddLabelDialog w-96 h-96 relative">
             <div className="Rectangle1 w-96 h-96 left-0 top-0   bg-indigo-50 border-2 border-black" />
             <div className="ConfirmButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                    <Link href="../pages/energy-consumption">
+                    <Link href="../pages/energy-consumption" legacyBehavior>
                         <span className="Default text-center text-white text-xl font-medium leading-normal">Bestätigen</span>
                     </Link>
                 </div>
@@ -33,5 +33,5 @@ export default function AddLabelDialog() {
                 <div className="IconsMediumChevron2 w-6 h-6 relative" />
             </div>
         </div>
-    )
+    );
 }

@@ -26,10 +26,13 @@ export default function DeviceOverview() {
                 </div>
                 <div className="Fazit border-2 bg-indigo-50 border-black border-solid p-2"><span className="text-lg font-bold">Fazit:<br /></span><span className="text-lg">Dein Gerät verbraucht 200 kWh (Jahr) mehr als vergleichbare Geräte.</span></div>
                 <div className="inline-block bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                    <Link href="./devices" className="Default text-center text-white text-base font-medium leading-normal"><span className="Text text-center text-white text-base font-medium leading-normal">Geräte verwalten</span></Link>
+                    <Link
+                        href="./devices"
+                        className="Default text-center text-white text-base font-medium leading-normal"
+                        legacyBehavior><span className="Text text-center text-white text-base font-medium leading-normal">Geräte verwalten</span></Link>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 

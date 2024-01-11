@@ -103,7 +103,7 @@ export default function Household() {
                     </div>
                 </form>
                 <div className="ActiveButton inline-flex flex-col justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                    <Link href="../pages/members"><span className="Text text-center text-white text-base font-medium leading-normal">Haushaltsmitglieder verwalten</span></Link>
+                    <Link href="../pages/members" legacyBehavior><span className="Text text-center text-white text-base font-medium leading-normal">Haushaltsmitglieder verwalten</span></Link>
                 </div>
             </div>
 
@@ -113,7 +113,7 @@ export default function Household() {
 
             <GenericDialog title="Account löschen" isOpen={isOpen} activeButtonLabel="Account löschen" setIsOpen={setIsOpen} delete={true} device={false}></GenericDialog>
         </div >
-    )
+    );
 }
 
 

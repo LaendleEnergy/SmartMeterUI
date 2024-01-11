@@ -3,6 +3,7 @@
 import Navigation from "../../components/navigation/NavBar";
 import React, {PureComponent} from 'react';
 import EnergyConsumptionDiagram from "../../components/diagrams/EnergyConsumptionDiagram";
+import EnergyCostsDiagram from "@/app/components/diagrams/EnergyCostsDiagram";
 
 
 const data = [
@@ -28,6 +29,8 @@ const data = [
     { name: "2023-11-15T21:20:45", "Leistung in Watt": 1125 }
 ];
 
+const data1 = [   { name: "2023-11-15T21:19:10", "Leistung in Watt": 1591 },]
+
 
 export default function EnergyConsumption() {
     //const [value1, onChange1] = useState<Value>(new Date());
@@ -43,7 +46,9 @@ export default function EnergyConsumption() {
                 <div className="text-2xl font-bold">Durchschnittswerte</div>
                 <div className="w-96 h-52 bg-indigo-50 rounded-lg border-2 border-zinc-400" />
                 <div className="text-2xl font-bold">Stromkosten</div>
-                <div className="w-96 h-52 bg-indigo-50 rounded-lg border-2 border-zinc-400" />
+                <div className="w-96 h-52 bg-indigo-50 rounded-lg border-2 border-zinc-400">
+                <EnergyCostsDiagram data1={data1}></EnergyCostsDiagram>
+                </div>
             </div>
         </div>
     )

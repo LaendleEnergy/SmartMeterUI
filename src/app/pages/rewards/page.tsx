@@ -84,11 +84,11 @@ export default function Rewards() {
                     <DisplayAttribute name="Name 3 - Anzahl der Labels"></DisplayAttribute>
                 </div>
                 <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                    <Link href="../pages/energy-consumption">
+                    <Link href="../pages/energy-consumption" legacyBehavior>
                         <span className="Default text-center text-white text-xl font-medium leading-normal">Jetzt Verbrauch zuordnen</span>
                     </Link>
                 </div>
             </div>
         </div>
-    )
+    );
 }
