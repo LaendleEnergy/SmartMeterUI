@@ -1,0 +1,27 @@
+{
+    "name": "LaendleEnergy",
+    "description": "Smart meter demo project",
+    "start_url": "/",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "/pwa-icon.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        }
+    ],
+    "screenshots": [
+        {
+          "src": "/screenshot.png",
+          "type": "image/png",
+          "sizes": "1852x955",
+          "form_factor": "wide"
+        },
+        {
+            "src": "/screenshot.png",
+            "type": "image/png",
+            "sizes": "1852x955",
+            "form_factor": "narrow"
+          }
+      ]
+}

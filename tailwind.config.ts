@@ -9,6 +9,15 @@ const config: Config = {
     "./node_modules/flowbite/**/*.js",
   ],
   theme: {
+    exports: {
+      theme: {
+        screens: {
+          'sm': '576px',
+          'md': '850px',
+          'lg': '1300px',
+        },
+      }
+    },
     extend: {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],

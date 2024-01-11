@@ -1,55 +1,164 @@
 "use client";
 
-import Toggle from "@/app/components/input/Toggle";
 import Navigation from "../../components/navigation/NavBar";
+import TimeframeDropdown from "@/app/components/input/Dropdown";
+import { SavingTarget } from "@/app/models/SavingTarget";
+import { FormEvent, useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 import { FaEdit } from "react-icons/fa";
-import Dropdown from "@/app/components/input/Dropdown";
-import {useState} from "react";
+import Label from "@/app/components/input/Label";
+import InputAttribute from "@/app/components/input/InputAttribute";
 
-export default function Home() {
-  const [enabled, setEnabled] = useState(true);
+export default function EnergySaving() {
+  const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState<SavingTarget>({ percentage: 0, timeframe: "" });
+  const [render, setRender] = useState(true);
+  const router = useRouter();
+  const [errors, setErrors] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    if (render) {
+      fetch("http://localhost:8081/saving/getCurrentSavingTarget", {
+        method: "GET",
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(async (res) => {
+          if (res.ok) {
+            const data = await res.json();
+            setFormData(data);
+            return 200;
+          }
+          return res.status;
+        })
+        .then((status) => {
+          if (status === 404) {
+            router.push("./errors/notfound");
+          } else if (status != 200) {
+            router.push("./errors/error");
+          }
+        }).catch((e) => {
+          console.log(e)
+        });
+        
+      setRender(false);
+    }
+  }, [render, router, formData]);
+
+
+  const handleInput = (event: any) => {
+    const { name, value } = event.currentTarget;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleTimeframeInput = (selectedValue: any) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      ["timeframe"]: selectedValue,
+    }));
+  };
+
+  async function validateForm() {
+    if ((formData.percentage && !formData.timeframe) || (!formData.percentage && formData.timeframe)) {
+      setErrors("Bitte beide Felder ausfüllen.");
+    } else {
+      setErrors("");
+    }
+
+    setIsFormValid(errors.length == 0);
+  };
+
+  async function submitForm(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    await validateForm();
+
+    if (!isFormValid) {
+      setErrors("Bitte prüfen Sie Ihre Eingaben.");
+      return null;
+    }
+
+    const savingTarget: SavingTarget = {
+      percentage: formData.percentage,
+      timeframe: formData.timeframe,
+    };
+
+    await fetch('http://localhost:8081/saving/updateSavingTarget', {
+      method: "POST",
+      body: JSON.stringify(savingTarget),
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+    }).then(async (res) => {
+      if (res.ok) {
+        return 200;
+      }
+      return res.status;
+    }).then((status) => {
+      if (status === 404) {
+        router.push("./not-found");
+      } else if (status != 200) {
+        router.push("./error");
+      }
+    }).catch((e) => {
+      console.log(e)
+    });
+
+    setRender(true);
+    setEditMode(false);
+  }
+
   return (
     <div className="EnergySaving">
       <header><Navigation /></header>
-      <div className="flex-col flex justify-center items-center space-y-8 py-[10%]">
-        <div className="text-4xl font-bold">Stromsparen</div>
-        <div className="space-y-6 fixed top-[15%] right-[5%]">
-          <div className="inline-flex items-center fixed top-[15%] right-[5%] space-x-2">
-            <span className="text-xl font-bold">Bericht erhalten ja/nein</span>
-            <Toggle setEnabled={setEnabled} enabled={enabled}></Toggle>
-          </div>
-          <div className="w-96 h-28 border-black border-solid border-2 bg-gray-100 right-[5%] p-3">
-            <span>Der Bericht beinhaltet eine Zusammenfassung von verschiedenen Informationen über den Stromverbrauch und das Stromsparen. Solch ein Bericht wird monatlich erstellt.</span>
+      <div className="flex-col flex justify-center items-center space-y-8">
+        <div className="text-xl sm:text-2xl md:text-4xl font-bold">Stromsparen</div>
+        <div className="Trend flex-col justify-end items-start p-4 border-2 bg-indigo-50 border-black border-solid w-80 sm:w-96 h-28">
+          <div className="inline-flex space-x-2">
+            <span className="text-base sm:text-lg font-bold">Trend positiv/ negativ</span>
+            <TimeframeDropdown value="Zeitraum wählen" values={["Tag", "Monat", "Jahr"]} name="timeframe"></TimeframeDropdown>
           </div>
         </div>
-        <div className="Trend">
-          <div className="flex-col justify-end items-start border-2 bg-indigo-50 border-black border-solid p-4">
-            <div className="text-xl font-bold justify-center items-center inline-flex space-x-4 space-y-3">
-              <span>Trend positiv/ negativ</span>
-              <Dropdown title="Zeitraum wählen" values={["Tag", "Monat", "Jahr"]}></Dropdown>
-            </div>
+        <div className="SavingGoal flex flex-col space-y-5 bg-indigo-50 rounded-sm border-2 border-black p-5">
+          <div className="inline-flex space-x-2">
+            <span className="text-base sm:text-lg font-bold">Dein Stromsparziel</span>
+            <button className={editMode ? "hidden" : "Edit justify-center items-center inline-flex space-x-3 bg-primary-600 rounded-full p-2 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow"} onClick={() => setEditMode(true)}>
+              <div className="Bearbeiten text-sm sm:text-base text-white">Bearbeiten</div>
+              <FaEdit class="text-white"></FaEdit>
+            </button>
           </div>
-        </div>
-        <div className="SavingGoal">
-          <div className="flex-col justify-end items-start border-2 bg-indigo-50 border-black border-solid p-4">
-            <div className="Edit w-96 h-28 justify-center items-center">
-              <div className="space-y-1 inline-flex space-x-5">
-                <div className="Stromsparziel text-2xl font-bold">Stromsparziel</div>
-                <div className="Edit justify-center items-center inline-flex space-x-3">
-                  <div className="Bearbeiten text-lg">Bearbeiten</div>
-                  <FaEdit></FaEdit>
-                </div>
-              </div><br />
-              <span className="space-y-2">Einsparung von 10% im Vergleich zum Vormonat</span>
+          <span className={!editMode && !formData.percentage && !formData.timeframe ? "text-sm sm:text-base" : "hidden"}>Es wurde noch kein Stromsparziel gesetzt.</span>
+          <span className={editMode || (!formData.percentage && !formData.timeframe) ? "hidden" : "text-sm sm:text-base"}>Einsparung von {formData.percentage}% im Vergleich zum {formData.timeframe}</span>
+          <form method="POST" onSubmit={submitForm} className={editMode ? "flex flex-col items-center space-y-3" : "hidden"}>
+            <Label name="Gewünschte Einsparung in Prozent"></Label>
+            <InputAttribute name="percentage" type="number" handleInput={handleInput} placeholder="Einsparung" value={formData.percentage} required={false}></InputAttribute>
+            <Label name="Einsparung im Vergleich zum"></Label>
+            <TimeframeDropdown value={formData.timeframe != "" ? formData.timeframe : "Zeitraum wählen"} handleInput={handleTimeframeInput} values={["Vorjahr", "Vormonat"]} name="timeframe"></TimeframeDropdown>
+            {errors && <p className="text-red-600 text-sm sm:text-base">{errors}</p>}
+            <div className="flex grow space-x-4 md:space-x-8 mt-10 justify-center items-center">
+              <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
+                <button onClick={() => setEditMode(false)} className="text-center text-white text-base font-medium leading-normal">Abbrechen</button>
+              </div>
+              <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+                <button type="submit"><span className="text-center text-white text-sm sm:text-base font-medium leading-normal">Änderungen übernehmen</span></button>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
         <div className="Recommendation">
-          <div className="flex-col justify-end items-start p-4 inline-flex border-2 bg-indigo-50 border-black border-solid">
-            <div className="Tarifempfehlung text-2xl font-bold">Tarifempfehlung</div>
-            <div className="Beschreibung w-96 h-20">
-              <span>Basierend auf Ihrem Verbrauch, wird folgender Tarif empfohlen: </span>
-              <span className="text-lg font-bold">VKW StromTagNacht</span>
+          <div className="flex-col justify-end items-start p-4 border-2 bg-indigo-50 border-black border-solid">
+            <div className="Tarifempfehlung text-base sm:text-lg font-bold">Tarifempfehlung</div>
+            <div className="Beschreibung w-72 sm:w-96 h-28 justify-center items-center">
+              <span className="text-sm sm:text-base">Basierend auf Ihrem Verbrauch, wird folgender Tarif empfohlen: </span>
+              <span className="text-base sm:text-lg font-bold">VKW StromTagNacht</span>
             </div>
           </div>
         </div>

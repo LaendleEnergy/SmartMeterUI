@@ -2,24 +2,62 @@
 
 import Navigation from "../../components/navigation/NavBar";
 import { FaPlusCircle } from "react-icons/fa";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MemberCard from "@/app/components/cards/MemberCard";
-import GenericDialog from "../../components/GenericDialog";
+import AddMemberDialog from "../../components/dialogs/AddMemberDialog";
+import { Member } from "@/app/models/Member";
+import { useRouter } from 'next/navigation';
 
 export default function Members() {
-    let [isOpen, setIsOpen] = useState(false);
+    const [render, setRender] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
+    const [displayData, setDisplayData] = useState<Member[]>([{ name: "Name", dateOfBirth: "Geburtsdatum (Optional)", gender: "Geschlecht (Optional)", id: "" }]);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (render) {
+            fetch("http://localhost:8080/member/get", {
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
+            }).then(async (res) => {
+                if (res.ok) {
+                    const data = await res.json();
+                    setDisplayData(data);
+                    return 200;
+                }
+                return res.status;
+            }).then((status) => {
+                if (status === 404) {
+                    router.push("./errors/notfound");
+                } else if (status != 200) {
+                    router.push("./errors/error");
+                }
+            }).catch((e) => {
+                console.log(e)
+            });
+
+            setRender(false);
+        }
+    }, [render, router]);
 
     return (
         <div className="Members">
             <header><Navigation /></header>
-            <div className="flex-col flex justify-center items-center space-y-8 py-[10%]">
-                <MemberCard name="Testname1" dateOfBirth="01.01.2000" gender="neutral"></MemberCard>
-                <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                    <button onClick={() => setIsOpen(true)} className="Default text-white text-base font-medium">Neues Mitglied hinzufügen </button>
+            <div className="flex-col flex md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8 mb-5">
+                {displayData.map(m => (
+                    <MemberCard key={m.name} member={m} setRender={setRender}></MemberCard>
+                ))}
+            </div>
+            <div className="flex justify-center items-center">
+                <div className="ActiveButton mt-8 inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+                    <button onClick={() => setIsOpen(true)} className="Default text-white text-sm sm:text-base">Neues Mitglied hinzufügen </button>
                     <FaPlusCircle className="text-white"></FaPlusCircle>
                 </div>
             </div>
-            <GenericDialog title="Haushaltsmitglied hinzufügen" isOpen={isOpen} activeButtonLabel="Hinzufügen" setIsOpen={setIsOpen} delete={false} device={false}></GenericDialog>
+            <AddMemberDialog isOpen={isOpen} setIsOpen={setIsOpen} setRender={setRender}></AddMemberDialog>
         </div>
     )
 }
