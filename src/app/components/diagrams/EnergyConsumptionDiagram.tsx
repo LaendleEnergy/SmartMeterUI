@@ -19,7 +19,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 type ValuePiece = Date | string | null;
 
-import Dropdown from "../input/Dropdown";
+
 import Toggle from "@/app/components/input/Toggle";
 import Creatable from "react-select/creatable";
 import Select from "react-select";
@@ -32,11 +32,9 @@ import {PacmanLoader} from "react-spinners";
 
 
 
-interface EnergyConsumptionDiagramProps {
-    data1: any;
-}
 
-export default function EnergyConsumptionDiagram({data1}: EnergyConsumptionDiagramProps) {
+
+export default function EnergyConsumptionDiagram() {
 
     // Initial data state
     const [barChartData, setBarChartData] = useState([
@@ -100,7 +98,6 @@ export default function EnergyConsumptionDiagram({data1}: EnergyConsumptionDiagr
 
     const handleBrushChange = (data: any) => {
         setBrushDateRange({startIndex: data.startIndex, endIndex: data.endIndex});
-
     };
 
     function handleCheckboxChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -220,15 +217,13 @@ export default function EnergyConsumptionDiagram({data1}: EnergyConsumptionDiagr
         return (
             <div>
                 {!isLoading && (
-                <div style={{textAlignLast: "center"}}>
+                <div style={{textAlignLast: "center", margin: "1vw"}}>
                     <div style={{textAlignLast: "center"}}>
                         <span className="text-xl font-bold"> Aktiviere Leistungshistorie für Annotierung (ja/nein): </span>
                         <br/>
                         <Toggle enabled={barChartIsActivated} setEnabled={setBarChartIsActivated}></Toggle>
                     </div>
-                    <br/>
-                    <br/>
-                    <div style={{width: "100%", display: "inline-block"}}>
+                    <div style={{width: "100%", display: "inline-block", margin: "1vw"}}>
                         <div style={{width: "50%", display: "inline-block"}}>
                             <DatePicker
                                 showTimeSelect

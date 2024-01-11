@@ -25,16 +25,14 @@ import {AccumulatedMeasurementDTO} from "@/app/dto/AccumulatedMeasurementDTO";
 
 
 
-interface EnergyCostDiagramProps {
-    data1: any;
-}
 
-export default function EnergyCostsDiagram({data1}: EnergyCostDiagramProps) {
+
+export default function EnergyCostsDiagram() {
 
     // Initial data state
     const [barChartData, setBarChartData] = useState([
-        {name: "", "Akkumulierter Preis in Euro": 0},
-        {name: "", "Akkumulierter Preis in Euro": 0}
+        {name: "", "Akkumulierte Kosten in Euro": 0},
+        {name: "", "Akkumulierte Kosten in Euro": 0}
     ]);
 
     const [isInitialized, setIsInitialized] = useState(false);
@@ -61,7 +59,7 @@ export default function EnergyCostsDiagram({data1}: EnergyCostDiagramProps) {
 
     const currentDate = new Date();
     const getMeasurementAccumulatedUrl = "http://localhost:9000/measurements/accumulated/?"
-    const [selectedInterval, setLabel] = useState<string>("day");
+    const [selectedInterval, setInterval] = useState<string>("day");
 
 
 
@@ -77,7 +75,7 @@ export default function EnergyCostsDiagram({data1}: EnergyCostDiagramProps) {
                         name: (measurement.timeStart + " - " + measurement.timeEnd).replace(
                             new RegExp("T", "g"), " "
                         ),
-                        "Akkumulierter Preis in Euro": measurement.energyConsumedPriceEuro
+                        "Akkumulierte Kosten in Euro": measurement.energyConsumedPriceEuro
                     }
                 ));
         }).then((data) => {
@@ -100,72 +98,98 @@ export default function EnergyCostsDiagram({data1}: EnergyCostDiagramProps) {
     }
 
         return (
-            <div>
+            <div style={{textAlign: 'center', alignItems: "center", alignContent: "center"}}>
                 {!isLoading && (
                 <div>
-                    <Dropdown title={"Tag"} values={["Tag", "Woche", "Monat", "Jahr"]}></Dropdown>
-                    <div style={{width: "100%", display: "inline-block"}}>
-                        <div style={{width: "50%", display: "inline-block"}}>
-                            <DatePicker
-                                showTimeSelect
-                                selected={startDate}
-                                selectsStart
-                                startDate={startDate}
-                                endDate={endDate}
-                                onChange={date => {
-                                    if (date != null) {
-                                        setStartDate(date);
-                                        if (!isAlreadyFetching) {
-                                            setIsAlreadyFetching(true);
-                                            fetchMeasurementData(startDate, endDate);
+                    <div style={{margin: "1vw"}}>
+                        <label><b>Ausgewaehlter Zeitraum:</b></label>
+                        <div style={{width: "100%", display: "inline-block", margin: "1vw"}}>
+                            <div style={{width: "50%", display: "inline-block"}}>
+                                <DatePicker
+                                    showTimeSelect
+                                    selected={startDate}
+                                    selectsStart
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    onChange={date => {
+                                        if (date != null) {
+                                            setStartDate(date);
+                                            if (!isAlreadyFetching) {
+                                                setIsAlreadyFetching(true);
+                                                fetchMeasurementData(startDate, endDate);
+                                            }
                                         }
                                     }
-                                }
-                                }
-                            />
-                        </div>
-                        <div style={{width: "50%", display: "inline-block"}}>
-                            <DatePicker
-                                showTimeSelect
-                                selected={endDate}
-                                selectsEnd
-                                startDate={startDate}
-                                endDate={endDate}
-                                minDate={startDate}
-                                onChange={date => {
-                                    if (date != null) {
-                                        setEndDate(date)
-                                        fetchMeasurementData(startDate, endDate);
-                                    } else {
-                                        console.log("date is null");
                                     }
-                                }
-                                }
-                            />
+                                />
+                            </div>
+                            <div style={{width: "50%", display: "inline-block"}}>
+                                <DatePicker
+                                    showTimeSelect
+                                    selected={endDate}
+                                    selectsEnd
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    minDate={startDate}
+                                    onChange={date => {
+                                        if (date != null) {
+                                            setEndDate(date)
+                                            fetchMeasurementData(startDate, endDate);
+                                        } else {
+                                            console.log("date is null");
+                                        }
+                                    }
+                                    }
+                                />
+                            </div>
                         </div>
                     </div>
-                    <BarChart
-                        width={600}
-                        height={300}
-                        data={barChartData}
-                        margin={{top: 5, right: 30, left: 20, bottom: 5}}
-                    >
-                        <CartesianGrid strokeDasharray="3 3"/>
-                        <XAxis dataKey="name" height={50} tick={false} allowDataOverflow={true}>
-                            <Label value="Zeit" dy={8}>
-                                Zeit
-                            </Label>
-                        </XAxis>
-                        <YAxis>
-                            <Label angle={270} position="left" style={{textAnchor: "middle"}}>
-                                Akkumulierter Preis in Euro
-                            </Label>
-                        </YAxis>
-                        <Tooltip/>
-                        <Legend verticalAlign="top" wrapperStyle={{lineHeight: "40px"}}/>
-                        <ReferenceLine y={0} stroke="#000"/>
-                        <Bar dataKey="Akkumulierter Preis in Euro" fill="#007aff"/>
-                    </BarChart>
+                    <div style={{margin: "1vw"}}>
+                        <label><b>Ausgewaehltes Interval:</b></label>
+                        <Dropdown handleInput={(input: string) => {
+                            switch (input) {
+                                case 'Tag':
+                                    setInterval("day");
+                                    break;
+                                case 'Woche':
+                                    setInterval("week");
+                                    break;
+                                case 'Monat':
+                                    setInterval("month");
+                                    break;
+                                case 'Jahr':
+                                    setInterval("year");
+                                    break;
+                                default:
+                                    setInterval("week");
+                                    break;
+                            }
+                        }} value="Woche" values={["Tag", "Woche", "Monat", "Jahr"]}></Dropdown>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <BarChart
+                            width={600}
+                            height={300}
+                            data={barChartData}
+                            margin={{top: 5, right: 30, left: 20, bottom: 5}}
+                        >
+                            <CartesianGrid strokeDasharray="3 3"/>
+                            <XAxis dataKey="name" height={50} tick={false} allowDataOverflow={true}>
+                                <Label value="Zeit" dy={8}>
+                                    Zeit
+                                </Label>
+                            </XAxis>
+                            <YAxis>
+                                <Label angle={270} position="left" style={{textAnchor: "middle"}}>
+                                    Akkumulierte Kosten in Euro
+                                </Label>
+                            </YAxis>
+                            <Tooltip/>
+                            <Legend verticalAlign="top" wrapperStyle={{lineHeight: "40px"}}/>
+                            <ReferenceLine y={0} stroke="#000"/>
+                            <Bar dataKey="Akkumulierte Kosten in Euro" fill="#007aff"/>
+                        </BarChart>
+                    </div>
                 </div>)}
                 {isLoading && (
                     <div id="pacManLoader" style={{textAlign: "center"}}>
