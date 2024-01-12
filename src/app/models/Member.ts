@@ -18,3 +18,9 @@ export interface AddMember {
     dateOfBirth: Date;
     gender: string | null;
 }
+
+export interface LeaderboardMember {
+    name: string;
+    numberOfCreatedTags: number;
+    id: string;
+}
