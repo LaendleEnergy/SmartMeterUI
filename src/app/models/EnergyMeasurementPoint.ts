@@ -4,6 +4,7 @@ export class EnergyMeasurementPoint {
     public averageEnergyForPeriod_ws: number;
     readonly untilDayAsNumber: string;
     readonly untilDayShortName: string;
+    readonly untilMonthShortName: string;
 
     constructor(measurementResolution: MeasurementPeriod, until: Date, averageEnergyForPeriod_ws: number) {
         this.measurementPeriod = measurementResolution;
@@ -11,6 +12,7 @@ export class EnergyMeasurementPoint {
         this.averageEnergyForPeriod_ws = averageEnergyForPeriod_ws
         this.untilDayAsNumber = this.until.getDay().toString();
         this.untilDayShortName = this.until.toLocaleString('de-de', {  weekday: 'short' })
+        this.untilMonthShortName = this.until.toLocaleString('de-de', {  month: 'short' })
     }
 }
 

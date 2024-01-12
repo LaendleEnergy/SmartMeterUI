@@ -194,7 +194,7 @@ export default function Household() {
 
             <DeleteDialog isOpen={isOpen} setIsOpen={setIsOpen} handleDelete={deleteAccount}></DeleteDialog>
         </div >
-    )
+    );
 }
 
 

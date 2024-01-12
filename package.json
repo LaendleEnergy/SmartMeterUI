@@ -14,6 +14,7 @@
     "bootstrap-daterangepicker": "^2.1.30",
     "flowbite": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
+    "json-mapper-object": "^0.1.2",
     "next": "13.5.6",
     "next-pwa": "^5.6.0",
     "performance-now": "^2.1.0",
@@ -22,6 +23,8 @@
     "react-dom": "^18",
     "react-form-stepper": "^2.0.3",
     "react-icons": "^4.11.0",
+    "react-select": "^5.8.0",
+    "react-spinners": "^0.13.8",
     "recharts": "^2.0.10",
     "sharp": "^0.32.6"
   },
