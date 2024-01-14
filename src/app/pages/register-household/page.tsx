@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { FormEvent, useState } from 'react';
 import InputAttribute from '@/app/components/input/InputAttribute';
@@ -14,12 +14,11 @@ import { AuthRequest } from '@/app/models/Authentication';
 import { PasswordValidation, PricingPlanAndSupplierValidation, validatePassword, validatePricingPlanAndSupplier } from '@/app/components/input/Validation';
 
 export default function Register() {
-
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState<CreateHousehold>({ emailAddress: "", name: "", password: "", confirmPassword: "", pricingPlan: "", supplier: "", deviceId: "" });
+  const [formData, setFormData] = useState<CreateHousehold>({ emailAddress: '', name: '', password: '', confirmPassword: '', pricingPlan: '', supplier: '', deviceId: '' });
   const router = useRouter();
   const data = new FormData();
-  const [errors, setErrors] = useState({ password: "", supplier: "", pricingPlan: "", authentication: ""});
+  const [errors, setErrors] = useState({ password: '', supplier: '', pricingPlan: '', authentication: '' });
 
   const handleBack = () => {
     setStep(step - 1);
@@ -37,46 +36,48 @@ export default function Register() {
   const handlePricingPlanInput = (selectedValue: any) => {
     setFormData((prevState) => ({
       ...prevState,
-      ["pricingPlan"]: selectedValue.name,
+      ['pricingPlan']: selectedValue.name,
     }));
   };
 
   const handleSupplierInput = (selectedValue: any) => {
     setFormData((prevState) => ({
       ...prevState,
-      ["supplier"]: selectedValue,
+      ['supplier']: selectedValue,
     }));
   };
 
   async function submitAccountForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const passwordValidation: PasswordValidation = {password: formData.password, confirmPassword: formData.confirmPassword || "", setErrors: setErrors}
+    const passwordValidation: PasswordValidation = { password: formData.password, confirmPassword: formData.confirmPassword || '', setErrors: setErrors };
 
-    if (await validatePassword(passwordValidation)) {
-      setErrors({ password: "", supplier: "", pricingPlan: "", authentication: "" });
+    if (validatePassword(passwordValidation)) {
+      setErrors({ password: '', supplier: '', pricingPlan: '', authentication: '' });
 
       const validated = await fetch('http://localhost:8080/user/validateEmail', {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify({ email: formData.emailAddress }),
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then(async (res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return res.status;
-      }).then((res) => {
-        if (typeof res == "boolean") {
-          return res;
-        }
-        else if (res === 404) {
-          router.push("./errors/notfound");
-        } else if (res != 200) {
-          router.push("./errors/error");
-        }
-      }).catch();
+      })
+        .then(async (res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          return res.status;
+        })
+        .then((res) => {
+          if (typeof res == 'boolean') {
+            return res;
+          } else if (!res.ok) {
+            res.status === 404 ? router.push('./errors/notfound') : router.push('./errors/error');
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
 
       if (validated) {
         Object.entries(formData).forEach(([key, value]) => {
@@ -87,19 +88,19 @@ export default function Register() {
       } else {
         setErrors((prevState) => ({
           ...prevState,
-          accountForm: "E-Mail Adresse wird bereits verwendet.",
+          accountForm: 'E-Mail Adresse wird bereits verwendet.',
         }));
-      };
+      }
     }
-  };
+  }
 
   async function submitHouseholdForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const pricingPlanAndSupplierValidation: PricingPlanAndSupplierValidation = {supplier: formData.supplier, pricingPlan: formData.pricingPlan, setErrors: setErrors};
+    const pricingPlanAndSupplierValidation: PricingPlanAndSupplierValidation = { supplier: formData.supplier, pricingPlan: formData.pricingPlan, setErrors: setErrors };
 
-    if (await validatePricingPlanAndSupplier(pricingPlanAndSupplierValidation)) {
-      setErrors({ password: "", supplier: "", pricingPlan: "", authentication: "" });
+    if (validatePricingPlanAndSupplier(pricingPlanAndSupplierValidation)) {
+      setErrors({ password: '', supplier: '', pricingPlan: '', authentication: '' });
 
       const household: CreateHousehold = {
         emailAddress: formData.emailAddress,
@@ -107,43 +108,42 @@ export default function Register() {
         name: formData.name,
         pricingPlan: formData.pricingPlan,
         supplier: formData.supplier,
-        deviceId: formData.deviceId
+        deviceId: formData.deviceId,
       };
 
       await fetch('http://localhost:8080/household/create', {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify(household),
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then((res) => {
-        return res.status;
-      }).then(async (res) => {
-        if (res === 404) {
-          router.push("./errors/notfound");
-        } else if (res != 200) {
-          router.push("./errors/error");
-        } else {
-          const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
-
-          if (await authenticate(authRequest)) {
-            router.push("./energy-consumption");
+      })
+        .then(async (res) => {
+          if (!res.ok) {
+            res.status === 404 ? router.push('./errors/notfound') : router.push('./errors/error');
           } else {
-            setErrors((prevState) => ({
-              ...prevState,
-              authentication: "Authentifizierung fehlgeschlagen.",
-            }));
+            const authRequest: AuthRequest = { emailAddress: formData.emailAddress, password: formData.password };
+
+            if (await authenticate(authRequest)) {
+              router.push('./energy-consumption');
+            } else {
+              setErrors((prevState) => ({
+                ...prevState,
+                authentication: 'Authentifizierung fehlgeschlagen.',
+              }));
+            }
           }
-        }
-      }).catch((e) => {
-        console.log(e)
-      });
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     }
-  };
+  }
 
   const steps = [
     {
-      title: 'Account', content:
+      title: 'Account',
+      content: (
         <form method="POST" onSubmit={submitAccountForm} className="flex flex-col items-center mb-5 space-y-2 p-2 md:p-4 border-2 bg-indigo-50 border-black border-solid">
           <Label name="E-Mail"></Label>
           <InputAttribute name="emailAddress" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.emailAddress}></InputAttribute>
@@ -152,20 +152,32 @@ export default function Register() {
           <Label name="Passwort"></Label>
           <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password}></InputAttribute>
           <Label name="Passwort wiederholen"></Label>
-          <InputAttribute name="confirmPassword" type="password" handleInput={handleInput} placeholder="Passwort wiederholen" value={formData.confirmPassword ? formData.confirmPassword : ""}></InputAttribute>
+          <InputAttribute
+            name="confirmPassword"
+            type="password"
+            handleInput={handleInput}
+            placeholder="Passwort wiederholen"
+            value={formData.confirmPassword ? formData.confirmPassword : ''}
+          ></InputAttribute>
           {errors.password && <p className="text-red-600 text-sm sm:text-base">{errors.password}</p>}
           <div className="flex grow space-x-4 md:space-x-8 mt-10 justify-center items-center">
             <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
-              <button onClick={() => router.back()} className="text-center text-white text-sm sm:text-base font-medium leading-normal">Zurück</button>
+              <button onClick={() => router.back()} className="text-center text-white text-sm sm:text-base font-medium leading-normal">
+                Zurück
+              </button>
             </div>
             <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-              <button type="submit" className="text-center text-white text-sm sm:text-base font-medium">Weiter</button>
+              <button type="submit" className="text-center text-white text-sm sm:text-base font-medium">
+                Weiter
+              </button>
             </div>
           </div>
         </form>
+      ),
     },
     {
-      title: 'Haushalt', content:
+      title: 'Haushalt',
+      content: (
         <form method="POST" onSubmit={submitHouseholdForm} className="flex flex-col items-center mb-5 space-y-2 p-2 md:p-4 border-2 bg-indigo-50 border-black border-solid">
           <Label name="Stromanbieter"></Label>
           <SupplierDropdown handleInput={handleSupplierInput} supplierName={formData.supplier}></SupplierDropdown>
@@ -178,22 +190,32 @@ export default function Register() {
           {errors.authentication && <p className="text-red-600 text-sm sm:text-base">{errors.authentication}</p>}
           <div className="flex grow space-x-4 md:space-x-8 mt-10 justify-center items-center">
             <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
-              <button onClick={handleBack} className="text-center text-white text-sm sm:text-base font-medium">Zurück</button>
+              <button onClick={handleBack} className="text-center text-white text-sm sm:text-base font-medium">
+                Zurück
+              </button>
             </div>
             <div className="ConfirmButton bg-primary-600 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-              <button type="submit" className="text-center text-white text-sm sm:text-base font-medium">Registrieren</button>
+              <button type="submit" className="text-center text-white text-sm sm:text-base font-medium">
+                Registrieren
+              </button>
             </div>
           </div>
         </form>
+      ),
     },
   ];
 
   return (
     <div>
-      <header><NavBar showTabs={false}></NavBar></header>
+      <header>
+        <NavBar showTabs={false}></NavBar>
+      </header>
       <div className="flex grow space-x-20 justify-center items-center pb-10">
         {steps.map((s, index) => (
-          <span key={index} className={index === 0 || step == 2 ? "z-2 font-bold bg-primary-600 rounded-full p-3 text-white" : "z-2 text-sm sm:text-base font-normal bg-gray-400 rounded-full p-3 text-white"}>
+          <span
+            key={index}
+            className={index === 0 || step == 2 ? 'z-2 font-bold bg-primary-600 rounded-full p-3 text-white' : 'z-2 text-sm sm:text-base font-normal bg-gray-400 rounded-full p-3 text-white'}
+          >
             {s.title}
           </span>
         ))}
@@ -205,6 +227,4 @@ export default function Register() {
       </div>
     </div>
   );
-};
-
-
+}
