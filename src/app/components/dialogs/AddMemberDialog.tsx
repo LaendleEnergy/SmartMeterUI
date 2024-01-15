@@ -76,6 +76,8 @@ export default function AddMemberDialog(props: DialogProps) {
       },
     })
       .then(async (res) => {
+        props.setRender(true);
+
         if (!res.ok) {
           res.status === 404 ? router.push('./errors/notfound') : router.push('./errors/error');
         }
