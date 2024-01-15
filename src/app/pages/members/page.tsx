@@ -60,7 +60,11 @@ export default function Members() {
       <header>
         <Navigation />
       </header>
-      <div className="flex-col flex md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8 mb-5">
+      <div
+        className={
+          displayData.length > 2 ? 'flex-col flex justify-center items-center space-y-8 mb-5' : 'flex-col flex md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8 mb-5'
+        }
+      >
         {displayData.map((m) => (
           <MemberCard key={m.name} member={m} setRender={setRender}></MemberCard>
         ))}

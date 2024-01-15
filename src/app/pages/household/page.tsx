@@ -122,7 +122,7 @@ export default function Household() {
         supplier: formData.supplier,
       };
 
-      fetch('http://localhost:8080/household/update', {
+      await fetch('http://localhost:8080/household/update', {
         method: 'POST',
         body: JSON.stringify(household),
         headers: {
