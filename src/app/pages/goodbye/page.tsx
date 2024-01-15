@@ -3,8 +3,14 @@
 import 'tailwindcss/tailwind.css';
 import NavBar from '@/app/components/navigation/NavBar';
 import { MdWavingHand } from 'react-icons/md';
+import { useEffect } from 'react';
+import { disableGoingBack } from '@/app/models/Authentication';
 
 export default function Goodbye() {
+  useEffect(() => {
+    disableGoingBack('./goodbye');
+  });
+
   return (
     <div>
       <header>
