@@ -39,8 +39,12 @@ const NavBar = ({ showTabs = true }) => {
             </div>
             <div className={`${showTabs ? "md:inline-flex lg:space-x-6 xl:space-x-12 md:items-end hidden" : "hidden"}`}>
               <NavLink href="/pages/energy-consumption" text="Stromverbrauch" />
-              <NavLink href="/pages/energy-saving" text="Stromsparen" />
-              <NavLink href="/pages/rewards" text="Belohnungen" />
+              <AuthenticatedView role="Admin">
+                <NavLink href="/pages/energy-saving" text="Stromsparen" />
+              </AuthenticatedView>
+              <AuthenticatedView role="Admin">
+                <NavLink href="/pages/rewards" text="Belohnungen" />
+              </AuthenticatedView>
               <NavLink href="/pages/devices-overview" text="Geräte" />
               <NavLink href="/pages/personal-information" text="Persönliche Daten" />
               <AuthenticatedView role="Admin">
