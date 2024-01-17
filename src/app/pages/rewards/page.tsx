@@ -12,6 +12,7 @@ import { Incentive, IncentiveInput } from '@/app/models/Incentive';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { LeaderboardMember } from '@/app/models/Member';
+import { AuthenticatedView } from '@/app/components/AuthenticatedView/AuthenticatedView';
 
 const calculateRemainingDays = (endDate: Date): number => {
   const diff = Math.abs(endDate.getTime() - new Date().getTime());
@@ -166,15 +167,17 @@ export default function Rewards() {
         <div className="text-xl sm:text-2xl md:text-4xl font-bold">Belohnungen</div>
         <div className="flex flex-col space-y-5 bg-indigo-50 rounded-sm border-2 border-black p-5">
           <div className="text-lg md:text-xl font-bold text-center">Aktuelle Belohnung</div>
-          <button
-            className={
-              editMode ? 'hidden' : 'Edit justify-center items-center inline-flex space-x-3 bg-primary-600 rounded-full p-2 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow'
-            }
-            onClick={() => setEditMode(true)}
-          >
-            <div className="Bearbeiten text-sm sm:text-base text-white">Bearbeiten</div>
-            <FaEdit class="text-white"></FaEdit>
-          </button>
+          <AuthenticatedView role='Admin'>
+            <button
+              className={
+                editMode ? 'hidden' : 'Edit justify-center items-center inline-flex space-x-3 bg-primary-600 rounded-full p-2 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow'
+              }
+              onClick={() => setEditMode(true)}
+            >
+              <div className="Bearbeiten text-sm sm:text-base text-white">Bearbeiten</div>
+              <FaEdit class="text-white"></FaEdit>
+            </button>
+          </AuthenticatedView>
           <div className={editMode ? 'hidden' : 'text-base md:text-xl font-bold text-center'}>{formData.description}</div>
           <div className={editMode ? 'hidden' : 'text-sm md:text-lg text-right'}>noch {remainingDays} Tag(e)</div>
           <form method="POST" onSubmit={submitForm} className={editMode ? 'flex flex-col items-center space-y-3' : 'hidden'}>
@@ -204,11 +207,13 @@ export default function Rewards() {
             ))}
           </div>
         </div>
-        <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-          <Link href="../pages/energy-consumption">
-            <span className="text-sm sm:text-base text-center text-white font-medium leading-normal">Jetzt Verbrauch zuordnen</span>
-          </Link>
-        </div>
+        <AuthenticatedView role='Admin'>
+          <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+            <Link href="../pages/energy-consumption">
+              <span className="text-sm sm:text-base text-center text-white font-medium leading-normal">Jetzt Verbrauch zuordnen</span>
+            </Link>
+          </div>
+        </AuthenticatedView>
       </div>
     </div>
   );
