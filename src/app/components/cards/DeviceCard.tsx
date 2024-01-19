@@ -47,7 +47,7 @@ export default function DeviceCard(props: DeviceCardProps) {
 
   return (
     <div className="flex items-center justify-center border-2 border-solid border-black">
-      <div className="grid grid-rows-3 bg-primary-100 p-2 md:p-5 space-y-3">
+      <div className="grid grid-rows-3 bg-primary-100 p-5 md:p-7 space-y-3">
         <div className="Wrapper flex justify-center relative">
           <div className="font-bold">{currentDevice.name}</div>
           <div className="DeleteButton absolute top-6 right-0">
