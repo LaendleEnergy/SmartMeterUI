@@ -29,6 +29,13 @@ export default function AddDeviceDialog(props: DialogProps) {
     }));
   };
 
+  const handleDeviceCategoryInput = (selectedValue: any) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      ['categoryName']: selectedValue,
+    }));
+  };
+
   async function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -93,7 +100,7 @@ export default function AddDeviceDialog(props: DialogProps) {
                       <Label name="Name"></Label>
                       <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
                       <Label name="Kategorie"></Label>
-                      <DeviceCategoryDropdown handleInput={handleInput} deviceCategoryName={formData.categoryName}></DeviceCategoryDropdown>
+                      <DeviceCategoryDropdown handleInput={handleDeviceCategoryInput} deviceCategoryName={formData.categoryName}></DeviceCategoryDropdown>
                       <div className="flex grow space-x-8 mt-10 justify-center items-center">
                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                           <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">

@@ -1,12 +1,13 @@
 'use client';
 
-import { Fragment, SetStateAction, Dispatch, useState, FormEvent, useEffect } from 'react';
+import { Fragment, SetStateAction, Dispatch, useState, FormEvent } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import InputAttribute from '@/app/components/input/InputAttribute';
 import Label from '../input/Label';
 import { useRouter } from 'next/navigation';
 import { Device } from '@/app/models/Device';
 import DeviceCategoryDropdown from '../input/DeviceCategoryDropdown';
+import DisplayAttribute from '../input/DisplayAttribute';
 
 interface DialogProps {
   isOpen: boolean;
@@ -29,9 +30,40 @@ export default function EditDeviceDialog(props: DialogProps) {
     }));
   };
 
+  const handleDeviceCategoryInput = (selectedValue: any) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      ['categoryName']: selectedValue,
+    }));
+  };
+
   async function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // Not implemented
+
+    const device: Device = {
+      name: formData.name,
+      categoryName: formData.categoryName,
+    };
+
+    props.setCurrentDevice(device);
+
+    await fetch('http://localhost:8081/device/update', {
+      method: 'POST',
+      body: JSON.stringify(device),
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          res.status === 404 ? router.push('./errors/notfound') : router.push('./errors/error');
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+
     props.setIsOpen(false);
   }
 
@@ -65,10 +97,10 @@ export default function EditDeviceDialog(props: DialogProps) {
                 <div className="flex-col space-y-6">
                   <div className="inline-block w-full max-w-md p-6 text-center justify-center items-center">
                     <form method="POST" onSubmit={submitForm} className="flex flex-col items-center space-y-3">
-                      <Label name="Name"></Label>
-                      <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
+                      <Label name="Name (Keine Änderung möglich)"></Label>
+                      <DisplayAttribute name={formData.name}></DisplayAttribute>
                       <Label name="Kategorie"></Label>
-                      <DeviceCategoryDropdown handleInput={handleInput} deviceCategoryName={formData.categoryName}></DeviceCategoryDropdown>
+                      <DeviceCategoryDropdown handleInput={handleDeviceCategoryInput} deviceCategoryName={formData.categoryName}></DeviceCategoryDropdown>
                       <div className="flex grow space-x-8 mt-10 justify-center items-center">
                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                           <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">

@@ -3,7 +3,6 @@
 import { FaChevronDown, FaCheck } from 'react-icons/fa';
 import { Listbox, Transition } from '@headlessui/react';
 import { Fragment, useEffect, useState } from 'react';
-import { DeviceCategory } from '@/app/models/DeviceCategory';
 import { Device } from '@/app/models/Device';
 
 interface DropdownProps {
