@@ -1,4 +1,4 @@
 export interface Device {
-    name: string;
-    description: string;
+  name: string;
+  categoryName: string;
 }

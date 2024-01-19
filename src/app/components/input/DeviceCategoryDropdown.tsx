@@ -3,28 +3,28 @@
 import { FaChevronDown, FaCheck } from 'react-icons/fa';
 import { Listbox, Transition } from '@headlessui/react';
 import { Fragment, useEffect, useState } from 'react';
-import { ElectricityPricingPlan } from '@/app/models/ElectricityPricingPlan';
+import { DeviceCategory } from '@/app/models/DeviceCategory';
 
 interface DropdownProps {
   handleInput: any;
-  pricingPlanName: string;
+  deviceCategoryName: string;
 }
 
-export default function Dropdown({ handleInput, pricingPlanName }: DropdownProps) {
-  const [data, setData] = useState<ElectricityPricingPlan[]>([{ name: 'Stromtarif auswählen', supplier: '', averagePricePerKwh: 0 }]);
+export default function DeviceCategoryDropdown({ handleInput, deviceCategoryName }: DropdownProps) {
+  const [data, setData] = useState<DeviceCategory[]>([{ name: '' }]);
   const [selected, setSelected] = useState(data[0]);
 
   useEffect(() => {
     (async () => {
       try {
-        fetch('http://localhost:8080/household/getPricingPlans', {
+        fetch('http://localhost:8081/device/getCategories', {
           headers: {
             'Content-Type': 'application/json',
           },
         })
           .then((res) => res.json())
           .then((data) => {
-            let parsedValues: ElectricityPricingPlan[] = [];
+            let parsedValues: DeviceCategory[] = [];
 
             data.map((value: any) => {
               parsedValues.push(JSON.parse(value));
@@ -32,7 +32,7 @@ export default function Dropdown({ handleInput, pricingPlanName }: DropdownProps
 
             setData(parsedValues);
 
-            let initialSelected = parsedValues.find((n: ElectricityPricingPlan) => n.name == pricingPlanName);
+            let initialSelected = parsedValues.find((n: DeviceCategory) => n.name == deviceCategoryName);
 
             if (initialSelected) {
               setSelected(initialSelected);
@@ -42,7 +42,7 @@ export default function Dropdown({ handleInput, pricingPlanName }: DropdownProps
         console.error(error);
       }
     })();
-  }, [pricingPlanName]);
+  }, [deviceCategoryName]);
 
   return (
     <Listbox
@@ -51,7 +51,7 @@ export default function Dropdown({ handleInput, pricingPlanName }: DropdownProps
         handleInput(arg);
         setSelected(arg);
       }}
-      name="pricingPlan"
+      name="categoryName"
     >
       <div className="relative mt-1 p-3">
         <Listbox.Button className="z-20 text-white w-72 sm:w-96 h-14 relative cursor-default rounded bg-blue-500 hover:bg-primary-700 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-white focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-white text-sm sm:text-base">
