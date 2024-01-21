@@ -107,13 +107,16 @@ export default function EnergyConsumptionDiagram() {
 
     async function fetchDeviceCategories() {
         fetch(getDeviceCategoriesUrl, {
-            method: "GET"
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
         }).then((async res => {
             return res.json();
         })).then((res: DeviceCategoryDTO[]) => {
             return res.map(d => (
                     {
-                        value: d.name, label: d.description
+                        value: d.name, label: d.name
                     }
                 )
             );
@@ -126,7 +129,10 @@ export default function EnergyConsumptionDiagram() {
 
     async function fetchTagNames() {
         fetch(getTagNamesUrl, {
-            method: "GET"
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
         }).then((async res => {
             return res.json();
         })).then((res: string[]) => {
@@ -147,7 +153,10 @@ export default function EnergyConsumptionDiagram() {
 
         fetch(getMeasurementAveragedUrl + "startDate=" + formatDateToISOString(startDate)
             + "&endDate=" + formatDateToISOString(endDate) + "&numberOfGroups=100", {
-            method: "GET"
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
         }).then((async res => {
             return res.json();
         })).then((res: AverageMeasurementDTO[]) => {
@@ -184,7 +193,9 @@ export default function EnergyConsumptionDiagram() {
         }
         fetch(labellingFormUrl, {
             method: "POST",
-            headers: {'content-type': 'application/json'},
+            headers: {'content-type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                },
             body: JSON.stringify(
                 new TagDto(
                     averagedMeasurements[selectedBrushDateRange.startIndex].timeStart,

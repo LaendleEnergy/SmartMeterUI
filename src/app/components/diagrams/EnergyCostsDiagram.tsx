@@ -67,7 +67,10 @@ export default function EnergyCostsDiagram() {
 
         fetch(getMeasurementAccumulatedUrl + "startDate=" + formatDateToISOString(startDate)
             + "&endDate=" + formatDateToISOString(endDate) + "&interval=" + selectedInterval, {
-            method: "GET"
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
         }).then((async res => {
             return res.json();
         })).then((res: AccumulatedMeasurementDTO[]) => {
