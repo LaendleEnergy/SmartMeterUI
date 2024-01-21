@@ -37,26 +37,15 @@ import {PacmanLoader} from "react-spinners";
 export default function EnergyConsumptionDiagram() {
 
     // Initial data state
-    const [barChartData, setBarChartData] = useState([
-        {name: "", "Durchschnittliche Leistung in Watt": 0},
-        {name: "", "Durchschnittliche Leistung in Watt": 0}
-    ]);
+    const [barChartData, setBarChartData] = useState<{name: string, "Durchschnittliche Leistung in Watt": number}[]>();
 
     const [averagedMeasurements, setAveragedMeasurements] = useState<AverageMeasurementDTO[]>([]);
 
     const [isInitialized, setIsInitialized] = useState(false);
 
-    const [optionsLabel, setOptionsLabel] = useState(
-        [
-            {value: "Stub Value", label: "Stub Label"},
-        ]
-    );
+    const [optionsLabel, setOptionsLabel] = useState<{value: string, label: string}[]>();
 
-    const [optionsDeviceCategory, setOptionsDeviceCategory] = useState(
-        [
-            {value: "Stub Value", label: "Stub Label"}
-        ]
-    )
+    const [optionsDeviceCategory, setOptionsDeviceCategory] = useState<{value: string, label: string}[]>();
 
 
 
@@ -66,6 +55,9 @@ export default function EnergyConsumptionDiagram() {
     const [startDate, setStartDate] = useState(startDate1);
 
     const [isLoading, setIsLoading] = useState(false);
+
+    const [dataIsAvialable, setDataIsAvailable] = useState(false);
+
 
     const [isAlreadyFetching, setIsAlreadyFetching] = useState(false);
 
@@ -122,6 +114,7 @@ export default function EnergyConsumptionDiagram() {
             );
         }).then((data) => {
             setOptionsDeviceCategory(data);
+            setIsLoading(false);
         }).catch(
             //do nothing
         );
@@ -160,6 +153,12 @@ export default function EnergyConsumptionDiagram() {
         }).then((async res => {
             return res.json();
         })).then((res: AverageMeasurementDTO[]) => {
+            if(res.length == 0){
+                setDataIsAvailable(false);
+            }
+            else{
+                setDataIsAvailable(true);
+            }
             setAveragedMeasurements(res);
             return res.map((measurement: AverageMeasurementDTO) => ({
                         name: (measurement.timeStart + " - " + measurement.timeEnd).replace(
@@ -216,6 +215,7 @@ export default function EnergyConsumptionDiagram() {
 
     if(!isInitialized) {
         setIsInitialized(true);
+        setIsLoading(true);
         //fetch for initialization
         //fetchMeasurementData(startDate, endDate);
         fetchTagNames();
@@ -275,30 +275,37 @@ export default function EnergyConsumptionDiagram() {
                         </div>
                     </div>
                     {barChartIsActivated && (<div>
-                        <BarChart
-                            width={600}
-                            height={300}
-                            data={barChartData}
-                            margin={{top: 5, right: 30, left: 20, bottom: 5}}
-                        >
-                            <CartesianGrid strokeDasharray="3 3"/>
-                            <XAxis dataKey="name" height={50} tick={false} allowDataOverflow={true}>
-                                <Label value="Zeit" dy={8}>
-                                    Zeit
-                                </Label>
-                            </XAxis>
-                            <YAxis>
-                                <Label angle={270} position="left" style={{textAnchor: "middle"}}>
-                                    Durchschnittliche Leistung in Watt
-                                </Label>
-                            </YAxis>
-                            <Tooltip/>
-                            <Legend verticalAlign="top" wrapperStyle={{lineHeight: "40px"}}/>
-                            <ReferenceLine y={0} stroke="#000"/>
-                            <Brush dataKey="name" height={30} stroke="#007aff" tickFormatter={(value) => ""}
-                                   onChange={handleBrushChange}/>
-                            <Bar dataKey="Durchschnittliche Leistung in Watt" fill="#007aff"/>
-                        </BarChart>
+                        {dataIsAvialable && (<div>
+                            <BarChart
+                                width={600}
+                                height={300}
+                                data={barChartData}
+                                margin={{top: 5, right: 30, left: 20, bottom: 5}}
+                            >
+                                <CartesianGrid strokeDasharray="3 3"/>
+                                <XAxis dataKey="name" height={50} tick={false} allowDataOverflow={true}>
+                                    <Label value="Zeit" dy={8}>
+                                        Zeit
+                                    </Label>
+                                </XAxis>
+                                <YAxis>
+                                    <Label angle={270} position="left" style={{textAnchor: "middle"}}>
+                                        Durchschnittliche Leistung in Watt
+                                    </Label>
+                                </YAxis>
+                                <Tooltip/>
+                                <Legend verticalAlign="top" wrapperStyle={{lineHeight: "40px"}}/>
+                                <ReferenceLine y={0} stroke="#000"/>
+                                <Brush dataKey="name" height={30} stroke="#007aff" tickFormatter={(value) => ""}
+                                       onChange={handleBrushChange}/>
+                                <Bar dataKey="Durchschnittliche Leistung in Watt" fill="#007aff"/>
+                            </BarChart>
+                        </div>)}
+                        {!dataIsAvialable && (<div>
+                            <div className="w-150 h-100 bg-indigo-200 rounded-lg border-2 border-zinc-400">
+                                Keine Daten für den ausgewählten Zeitraum verfügbar!
+                            </div>
+                        </div>)}
                     </div>)}
                     <div style={{margin: "10px"}}>
                         Eigene Bezeichnung:
@@ -314,12 +321,14 @@ export default function EnergyConsumptionDiagram() {
                     </div>
                 </div>)}
                 {isLoading && (
-                <div id="pacManLoader" style={{textAlign: "center"}}>
-                    <span className="line-break">
-                        Bitte warten, wir verarbeiten deine Anfrage...
-                    </span>
-                    <PacmanLoader/>
-                </div>
+                    <div id="pacManLoader" style={{margin: "1vw"}}>
+                        <span className="line-break" style={{margin: "1vw"}}>
+                            Bitte warten, wir verarbeiten deine Anfrage...<br/>
+                        </span>
+                        <div style={{display: "flex", justifyContent: "center", margin: "1vw"}}>
+                            <PacmanLoader/>
+                        </div>
+                    </div>
                 )}
             </div>
         )

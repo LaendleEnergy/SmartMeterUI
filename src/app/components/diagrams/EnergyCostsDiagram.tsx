@@ -22,6 +22,7 @@ import Dropdown from "../input/Dropdown";
 import React, {FormEvent, useState} from "react";
 import {PacmanLoader} from "react-spinners";
 import {AccumulatedMeasurementDTO} from "@/app/dto/AccumulatedMeasurementDTO";
+import Select from "react-select";
 
 
 
@@ -30,18 +31,19 @@ import {AccumulatedMeasurementDTO} from "@/app/dto/AccumulatedMeasurementDTO";
 export default function EnergyCostsDiagram() {
 
     // Initial data state
-    const [barChartData, setBarChartData] = useState([
-        {name: "", "Akkumulierte Kosten in Euro": 0},
-        {name: "", "Akkumulierte Kosten in Euro": 0}
-    ]);
+    const [barChartData, setBarChartData] = useState<{name: String, "Akkumulierte Kosten in Euro": number}[]>();
 
     const [isInitialized, setIsInitialized] = useState(false);
 
-    const [endDate, setEndDate] = useState(new Date(2023, 5, 1));
-    const yesterday = new Date(endDate.getFullYear(), endDate.getMonth() - 1, endDate.getDate());
-    const [startDate, setStartDate] = useState(yesterday);
+    const [endDate, setEndDate] = useState(new Date());
+    let lastMonth = new Date();
+    lastMonth.setMonth(lastMonth.getMonth() - 1);
+    const [startDate, setStartDate] = useState(lastMonth);
 
     const [isLoading, setIsLoading] = useState(false);
+    const [dataIsAvialable, setDataIsAvailable] = useState(false);
+
+
 
     const [isAlreadyFetching, setIsAlreadyFetching] = useState(false);
 
@@ -59,14 +61,14 @@ export default function EnergyCostsDiagram() {
 
     const currentDate = new Date();
     const getMeasurementAccumulatedUrl = "http://localhost:9000/measurements/accumulated/?"
-    const [selectedInterval, setInterval] = useState<string>("day");
+    const [selectedInterval, setInterval] = useState<string>("week");
 
 
 
-    async function fetchMeasurementData(startDate: Date, endDate: Date) {
+    async function fetchMeasurementData(startDate: Date, endDate: Date, interval: String) {
 
         fetch(getMeasurementAccumulatedUrl + "startDate=" + formatDateToISOString(startDate)
-            + "&endDate=" + formatDateToISOString(endDate) + "&interval=" + selectedInterval, {
+            + "&endDate=" + formatDateToISOString(endDate) + "&interval=" + interval, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -74,6 +76,12 @@ export default function EnergyCostsDiagram() {
         }).then((async res => {
             return res.json();
         })).then((res: AccumulatedMeasurementDTO[]) => {
+            if(res.length == 0){
+                setDataIsAvailable(false);
+            }
+            else{
+                setDataIsAvailable(true);
+            }
             return res.map((measurement: AccumulatedMeasurementDTO) => ({
                         name: (measurement.timeStart + " - " + measurement.timeEnd).replace(
                             new RegExp("T", "g"), " "
@@ -84,12 +92,12 @@ export default function EnergyCostsDiagram() {
         }).then((data) => {
             setBarChartData(data);
             setIsAlreadyFetching(false);
+            setIsLoading(false);
         })
             .catch(
                 //do nothing
             ).finally(() => {
             setIsAlreadyFetching(false);
-            setIsLoading(false);
         });
     }
 
@@ -97,7 +105,7 @@ export default function EnergyCostsDiagram() {
     if(!isInitialized) {
         setIsInitialized(true);
         setIsLoading(true);
-        fetchMeasurementData(startDate, endDate);
+        fetchMeasurementData(startDate, endDate, selectedInterval);
     }
 
         return (
@@ -119,7 +127,7 @@ export default function EnergyCostsDiagram() {
                                             setStartDate(date);
                                             if (!isAlreadyFetching) {
                                                 setIsAlreadyFetching(true);
-                                                fetchMeasurementData(startDate, endDate);
+                                                fetchMeasurementData(startDate, endDate, selectedInterval);
                                             }
                                         }
                                     }
@@ -137,7 +145,7 @@ export default function EnergyCostsDiagram() {
                                     onChange={date => {
                                         if (date != null) {
                                             setEndDate(date)
-                                            fetchMeasurementData(startDate, endDate);
+                                            fetchMeasurementData(startDate, endDate, selectedInterval);
                                         } else {
                                             console.log("date is null");
                                         }
@@ -149,27 +157,17 @@ export default function EnergyCostsDiagram() {
                     </div>
                     <div style={{margin: "1vw"}}>
                         <label><b>Ausgewaehltes Interval:</b></label>
-                        <Dropdown handleInput={(input: string) => {
-                            switch (input) {
-                                case 'Tag':
-                                    setInterval("day");
-                                    break;
-                                case 'Woche':
-                                    setInterval("week");
-                                    break;
-                                case 'Monat':
-                                    setInterval("month");
-                                    break;
-                                case 'Jahr':
-                                    setInterval("year");
-                                    break;
-                                default:
-                                    setInterval("week");
-                                    break;
-                            }
-                        }} value="Woche" values={["Tag", "Woche", "Monat", "Jahr"]}></Dropdown>
+                        <Select onChange={(selected) => {
+                            setInterval(selected!.value)
+                            fetchMeasurementData(startDate, endDate, selected!.value);
+                        }}  defaultValue={{ value: "week", label: "Woche" }} options={[
+                            { value: "day", label: "Tag" },
+                            { value: "week", label: "Woche" },
+                            { value: "month", label: "Monat" },
+                            { value: "year", label: "Jahr" }
+                        ]} />
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    {dataIsAvialable && (<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                         <BarChart
                             width={600}
                             height={300}
@@ -192,14 +190,23 @@ export default function EnergyCostsDiagram() {
                             <ReferenceLine y={0} stroke="#000"/>
                             <Bar dataKey="Akkumulierte Kosten in Euro" fill="#007aff"/>
                         </BarChart>
-                    </div>
+                    </div>)}
+                    {!dataIsAvialable && (
+                        <div style={{margin: "1vw"}}>
+                            <div style={{margin: "1vw"}} className="w-150 h-100 bg-indigo-200 rounded-lg border-2 border-zinc-400">
+                                Keine Daten fuer ausgewaehlten Zeitraum verfuegbar!
+                            </div>
+                        </div>
+                    )}
                 </div>)}
                 {isLoading && (
-                    <div id="pacManLoader" style={{textAlign: "center"}}>
-                    <span className="line-break">
-                        Bitte warten, wir verarbeiten deine Anfrage...
-                    </span>
-                        <PacmanLoader/>
+                    <div id="pacManLoader" style={{margin: "1vw"}}>
+                        <span className="line-break" style={{margin: "1vw"}}>
+                            Bitte warten, wir verarbeiten deine Anfrage...<br/>
+                        </span>
+                        <div style={{display: "flex", justifyContent: "center", margin: "1vw"}}>
+                            <PacmanLoader/>
+                        </div>
                     </div>
                 )}
             </div>
