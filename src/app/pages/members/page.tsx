@@ -7,6 +7,7 @@ import MemberCard from '@/app/components/cards/MemberCard';
 import AddMemberDialog from '../../components/dialogs/AddMemberDialog';
 import { Member } from '@/app/models/Member';
 import { useRouter } from 'next/navigation';
+import { AuthenticatedView } from '@/app/components/AuthenticatedView/AuthenticatedView';
 
 export default function Members() {
   const [render, setRender] = useState(true);
@@ -69,14 +70,16 @@ export default function Members() {
           <MemberCard key={m.name} member={m} setRender={setRender}></MemberCard>
         ))}
       </div>
-      <div className="flex justify-center items-center">
-        <div className="ActiveButton mt-8 inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-          <button onClick={() => setIsOpen(true)} className="Default text-white text-sm sm:text-base">
-            Neues Mitglied hinzufügen{' '}
-          </button>
-          <FaPlusCircle className="text-white"></FaPlusCircle>
+      <AuthenticatedView role="Admin">
+        <div className="flex justify-center items-center">
+          <div className="ActiveButton mt-8 inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+            <button onClick={() => setIsOpen(true)} className="Default text-white text-sm sm:text-base">
+              Neues Mitglied hinzufügen{' '}
+            </button>
+            <FaPlusCircle className="text-white"></FaPlusCircle>
+          </div>
         </div>
-      </div>
+      </AuthenticatedView>
       <AddMemberDialog isOpen={isOpen} setIsOpen={setIsOpen} setRender={setRender}></AddMemberDialog>
     </div>
   );

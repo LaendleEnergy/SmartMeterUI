@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import AddDeviceCatalog from '@/app/components/dialogs/AddDeviceDialog';
 import { Device } from '@/app/models/Device';
 import { useRouter } from 'next/navigation';
+import { AuthenticatedView } from '@/app/components/AuthenticatedView/AuthenticatedView';
 
 export default function Devices() {
   let [isOpen, setIsOpen] = useState(false);
@@ -71,15 +72,17 @@ export default function Devices() {
             <DeviceCard key={d.name} device={d} setRender={setRender}></DeviceCard>
           ))}
         </div>
-        <div className="flex justify-center items-center">
-          <div className="ActiveButton mt-8 inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-            <button onClick={() => setIsOpen(true)} className="Default text-white text-sm sm:text-base">
-              Neues Gerät hinzufügen{' '}
-            </button>
-            <FaPlusCircle className="text-white"></FaPlusCircle>
+        <AuthenticatedView role="Admin">
+          <div className="flex justify-center items-center">
+            <div className="ActiveButton mt-8 inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+              <button onClick={() => setIsOpen(true)} className="Default text-white text-sm sm:text-base">
+                Neues Gerät hinzufügen{' '}
+              </button>
+              <FaPlusCircle className="text-white"></FaPlusCircle>
+            </div>
           </div>
-        </div>
-        <AddDeviceCatalog isOpen={isOpen} setIsOpen={setIsOpen} setRender={setRender}></AddDeviceCatalog>
+          <AddDeviceCatalog isOpen={isOpen} setIsOpen={setIsOpen} setRender={setRender}></AddDeviceCatalog>
+        </AuthenticatedView>
       </div>
     </div>
   );
