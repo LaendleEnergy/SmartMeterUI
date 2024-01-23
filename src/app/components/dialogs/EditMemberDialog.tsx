@@ -123,7 +123,7 @@ export default function EditMemberDialog(props: DialogProps) {
                       <Label name="Name"></Label>
                       <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
                       <Label name="Geburtsdatum (Optional)"></Label>
-                      <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />
+                      <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} placeholderText="Geburtsdatum eintragen" />
                       {errors.dateOfBirth && <p className="text-red-600 text-sm sm:text-base">{errors.dateOfBirth}</p>}
                       <Label name="Geschlecht (Optional)"></Label>
                       <Dropdown handleInput={handleGenderInput} values={Gender} name="gender" value={formData.gender != null ? formData.gender : 'Geschlecht auswählen'}></Dropdown>

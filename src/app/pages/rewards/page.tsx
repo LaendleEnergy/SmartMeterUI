@@ -184,7 +184,7 @@ export default function Rewards() {
             <Label name="Freitext für Belohnung"></Label>
             <InputAttribute name="description" handleInput={handleInput} placeholder="Belohnung" value={formData.description} required={false}></InputAttribute>
             <Label name="Fälligkeitsdatum für Belohnung"></Label>
-            <DatePicker name="dateOfBirth" selected={formData.endDate} onChange={(date) => handleDateInput(date)} required={false} />
+            <DatePicker name="dateOfBirth" selected={formData.endDate} onChange={(date) => handleDateInput(date)} required={false} placeholderText="MM/DD/YYYY" />
             <div className="flex grow space-x-4 md:space-x-8 mt-10 justify-center items-center">
               <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                 <button onClick={() => setEditMode(false)} className="text-center text-white text-base font-medium leading-normal">

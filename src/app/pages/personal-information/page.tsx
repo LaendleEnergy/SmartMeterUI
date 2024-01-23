@@ -218,10 +218,10 @@ export default function PersonalInformation() {
             value={formData.confirmPassword ? formData.confirmPassword : ''}
           ></InputAttribute>
           <Label name="Geburtsdatum (Optional)"></Label>
-          <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />
+          <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} placeholderText="MM/DD/YYYY" />
           {errors.dateOfBirth && <p className="text-red-600 text-sm sm:text-base">{errors.dateOfBirth}</p>}
           <Label name="Geschlecht (Optional)"></Label>
-          <Dropdown handleInput={handleGenderInput} values={Gender} name="gender" value={formData.gender}></Dropdown>
+          <Dropdown handleInput={handleGenderInput} values={Gender} name="gender" value={formData.gender != null ? formData.gender : 'Geschlecht auswählen'}></Dropdown>
           <div className="flex grow space-x-8 mt-10 justify-center items-center">
             <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
               <button onClick={() => setEditMode(false)} className="text-center text-white text-sm sm:text-base">
