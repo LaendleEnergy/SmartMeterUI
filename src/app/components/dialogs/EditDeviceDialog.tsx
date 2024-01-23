@@ -2,7 +2,7 @@
 
 import { Fragment, SetStateAction, Dispatch, useState, FormEvent } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import InputAttribute from '@/app/components/input/InputAttribute';
+import { DeviceCategoryValidation, validateDeviceCategoryInput } from '../input/Validation';
 import Label from '../input/Label';
 import { useRouter } from 'next/navigation';
 import { Device } from '@/app/models/Device';
@@ -20,6 +20,7 @@ export default function EditDeviceDialog(props: DialogProps) {
   const device = props.device;
   const [formData, setFormData] = useState<Device>({ name: device.name, categoryName: device.categoryName });
   const router = useRouter();
+  const [errors, setErrors] = useState({ categoryName: '' });
 
   const handleInput = (event: any) => {
     const { name, value } = event.currentTarget;
@@ -39,6 +40,14 @@ export default function EditDeviceDialog(props: DialogProps) {
 
   async function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    const inputValidation: DeviceCategoryValidation = { categoryName: formData.categoryName, setErrors: setErrors };
+
+    if (!validateDeviceCategoryInput(inputValidation)) {
+      return;
+    }
+
+    setErrors({ categoryName: '' });
 
     const device: Device = {
       name: formData.name,
@@ -101,6 +110,7 @@ export default function EditDeviceDialog(props: DialogProps) {
                       <DisplayAttribute name={formData.name}></DisplayAttribute>
                       <Label name="Kategorie"></Label>
                       <DeviceCategoryDropdown handleInput={handleDeviceCategoryInput} deviceCategoryName={formData.categoryName}></DeviceCategoryDropdown>
+                      {errors.categoryName && <p className="text-red-600 text-sm sm:text-base">{errors.categoryName}</p>}
                       <div className="flex grow space-x-8 mt-10 justify-center items-center">
                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                           <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">

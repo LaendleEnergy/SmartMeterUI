@@ -103,6 +103,7 @@ export default function AcceptInvitation() {
         <div className="text-sm sm:text-base max-w-[75%]">Nimm deine Einladung, deinem Haushalt beizutreten an, indem du hier deine gewünschten Login-Daten angibst.</div>
         <form method="POST" onSubmit={submitRegistrationForm} className="flex flex-col space-y-5 justify-center items-center">
           <InputAttribute name="emailAddress" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.emailAddress}></InputAttribute>
+          {errors.email && <p className="text-red-600 text-sm sm:text-base">{errors.email}</p>}
           <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
           <InputAttribute name="password" type="password" handleInput={handleInput} placeholder="Passwort" value={formData.password}></InputAttribute>
           <InputAttribute name="confirmPassword" type="password" handleInput={handleInput} placeholder="Passwort wiederholen" value={formData.confirmPassword}></InputAttribute>

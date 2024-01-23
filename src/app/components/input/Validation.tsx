@@ -66,3 +66,20 @@ export function validatePricingPlanAndSupplier(input: PricingPlanAndSupplierVali
 
   return true;
 }
+
+export interface DeviceCategoryValidation {
+  categoryName: string;
+  setErrors: any;
+}
+
+export function validateDeviceCategoryInput(input: DeviceCategoryValidation) {
+  if (!input.categoryName) {
+    input.setErrors((prevState: any) => ({
+      ...prevState,
+      categoryName: 'Dieses Feld bitte ausfüllen.',
+    }));
+    return false;
+  }
+
+  return true;
+}
