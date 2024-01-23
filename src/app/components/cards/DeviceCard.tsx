@@ -27,7 +27,7 @@ export default function DeviceCard(props: DeviceCardProps) {
       return;
     }
 
-    await fetch(`http://localhost:8081/device/${currentDeviceName}`, {
+    await fetch(process.env.NEXT_PUBLIC_HOST_HOUSEHOLDMANAGEMENT + `/device/${currentDeviceName}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

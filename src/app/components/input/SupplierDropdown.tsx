@@ -16,7 +16,7 @@ export default function Dropdown({ handleInput, supplierName }: DropdownProps) {
   useEffect(() => {
     (async () => {
       try {
-        fetch('http://localhost:8080/household/getSuppliers', {
+        fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/household/getSuppliers', {
           headers: {
             'Content-Type': 'application/json',
           },

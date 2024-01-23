@@ -25,7 +25,7 @@ export default function Household() {
 
   const fetchHouseholdData = async () => {
     try {
-      const res = await fetch('http://localhost:8080/household/get', {
+      const res = await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/household/get', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -89,7 +89,7 @@ export default function Household() {
   };
 
   async function deleteAccount() {
-    await fetch('http://localhost:8080/household/delete', {
+    await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/household/delete', {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -122,7 +122,7 @@ export default function Household() {
         supplier: formData.supplier,
       };
 
-      await fetch('http://localhost:8080/household/update', {
+      await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/household/update', {
         method: 'POST',
         body: JSON.stringify(household),
         headers: {

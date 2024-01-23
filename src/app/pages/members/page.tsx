@@ -17,7 +17,7 @@ export default function Members() {
 
   const fetchMemberData = async () => {
     try {
-      const res = await fetch('http://localhost:8080/member/get', {
+      const res = await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/member/get', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

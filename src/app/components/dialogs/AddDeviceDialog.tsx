@@ -54,7 +54,7 @@ export default function AddDeviceDialog(props: DialogProps) {
       categoryName: formData.categoryName,
     };
 
-    await fetch('http://localhost:8081/device/add', {
+    await fetch(process.env.NEXT_PUBLIC_HOST_HOUSEHOLDMANAGEMENT + '/device/add', {
       method: 'POST',
       body: JSON.stringify(device),
       headers: {

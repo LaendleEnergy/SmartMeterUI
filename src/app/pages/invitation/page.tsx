@@ -31,7 +31,7 @@ export default function AcceptInvitation() {
     if (validatePassword(passwordValidation)) {
       setErrors({ password: '', email: '' });
 
-      const validated = await fetch('http://localhost:8080/user/validateEmail', {
+      const validated = await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/user/validateEmail', {
         method: 'POST',
         body: JSON.stringify({ email: formData.emailAddress }),
         headers: {
@@ -64,7 +64,7 @@ export default function AcceptInvitation() {
           dateOfBirth: '',
         };
 
-        await fetch('http://localhost:8080/user/create', {
+        await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/user/create', {
           method: 'POST',
           body: JSON.stringify(newUser),
           headers: {

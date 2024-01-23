@@ -56,7 +56,7 @@ export default function EditDeviceDialog(props: DialogProps) {
 
     props.setCurrentDevice(device);
 
-    await fetch('http://localhost:8081/device/update', {
+    await fetch(process.env.NEXT_PUBLIC_HOST_HOUSEHOLDMANAGEMENT + '/device/update', {
       method: 'POST',
       body: JSON.stringify(device),
       headers: {

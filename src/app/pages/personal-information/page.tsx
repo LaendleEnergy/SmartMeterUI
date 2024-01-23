@@ -37,7 +37,7 @@ export default function PersonalInformation() {
 
   const fetchUserData = async () => {
     try {
-      const res = await fetch('http://localhost:8080/user/get', {
+      const res = await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/user/get', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -120,7 +120,7 @@ export default function PersonalInformation() {
   };
 
   async function deleteUser() {
-    await fetch('http://localhost:8080/user/delete', {
+    await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/user/delete', {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -164,7 +164,7 @@ export default function PersonalInformation() {
         user.dateOfBirth = null;
       }
 
-      await fetch('http://localhost:8080/user/update', {
+      await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/user/update', {
         method: 'POST',
         body: JSON.stringify(user),
         headers: {
