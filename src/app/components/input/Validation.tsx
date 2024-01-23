@@ -25,12 +25,12 @@ export function validatePassword(input: PasswordValidation) {
 }
 
 export interface DateOfBirthValidation {
-  dateOfBirth: Date;
+  dateOfBirth: Date | null;
   setErrors: any;
 }
 
 export function validateDateOfBirth(input: DateOfBirthValidation) {
-  if (input.dateOfBirth > new Date()) {
+  if (input.dateOfBirth == null || input.dateOfBirth > new Date()) {
     input.setErrors((prevState: any) => ({
       ...prevState,
       dateOfBirth: 'Das Geburtsdatum darf nicht in der Zukunft liegen.',

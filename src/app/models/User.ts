@@ -4,7 +4,7 @@ export interface User {
   emailAddress: string | null;
   password: string;
   name: string;
-  dateOfBirth: string;
+  dateOfBirth: string | null;
   gender: string | null;
 }
 
@@ -13,6 +13,6 @@ export interface UserInput {
   password: string;
   confirmPassword: string;
   name: string;
-  dateOfBirth: Date;
+  dateOfBirth: Date | null;
   gender: string;
 }

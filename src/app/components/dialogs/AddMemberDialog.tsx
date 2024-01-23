@@ -19,9 +19,21 @@ interface DialogProps {
 }
 
 export default function AddMemberDialog(props: DialogProps) {
-  const [formData, setFormData] = useState<AddMember>({ name: '', dateOfBirth: new Date(), gender: '' });
+  const [formData, setFormData] = useState<AddMember>({ name: '', dateOfBirth: null, gender: '' });
   const [errors, setErrors] = useState({ dateOfBirth: '' });
   const router = useRouter();
+  const [isDateOfBirthSet, setIsDateOfBirthSet] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsDateOfBirthSet(!isDateOfBirthSet);
+
+    if (!isDateOfBirthSet) {
+      setFormData((prevState) => ({
+        ...prevState,
+        dateOfBirth: null,
+      }));
+    }
+  };
 
   useEffect(() => {});
 
@@ -63,7 +75,7 @@ export default function AddMemberDialog(props: DialogProps) {
 
     const member: Member = {
       name: formData.name,
-      dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : '',
+      dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : null,
       gender: formData.gender == '' ? null : formData.gender,
     };
 
@@ -123,8 +135,12 @@ export default function AddMemberDialog(props: DialogProps) {
                       <Label name="Name"></Label>
                       <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
                       <Label name="Geburtsdatum (Optional)"></Label>
-                      <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} placeholderText="MM/DD/YYYY" />
-                      {errors.dateOfBirth && <p className="text-red-600 text-sm sm:text-base">{errors.dateOfBirth}</p>}
+                      <span className="text-sm sm:text-base">Geburtsdatum hinzufügen?</span>
+                      <input type="checkbox" checked={isDateOfBirthSet} onChange={handleCheckboxChange} />
+                      <div className={isDateOfBirthSet ? '' : 'hidden'}>
+                        <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />
+                        {errors.dateOfBirth && <p className="text-red-600 text-sm sm:text-base">{errors.dateOfBirth}</p>}
+                      </div>
                       <Label name="Geschlecht (Optional)"></Label>
                       <Dropdown handleInput={handleGenderInput} values={Gender} name="gender" value={formData.gender != null ? formData.gender : 'Geschlecht auswählen'}></Dropdown>
                       <div className="flex grow space-x-8 mt-10 justify-center items-center">

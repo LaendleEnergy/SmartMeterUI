@@ -22,6 +22,18 @@ export default function PersonalInformation() {
   const [formData, setFormData] = useState<UserInput>({ emailAddress: '', password: '', confirmPassword: '', name: '', dateOfBirth: new Date(), gender: '' });
   const router = useRouter();
   const [errors, setErrors] = useState({ password: '', dateOfBirth: '' });
+  const [isDateOfBirthSet, setIsDateOfBirthSet] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsDateOfBirthSet(!isDateOfBirthSet);
+
+    if (!isDateOfBirthSet) {
+      setFormData((prevState) => ({
+        ...prevState,
+        dateOfBirth: null,
+      }));
+    }
+  };
 
   const fetchUserData = async () => {
     try {
@@ -40,10 +52,12 @@ export default function PersonalInformation() {
         setDisplayData(data);
 
         Object.keys(data).forEach(function (key) {
-          let value: string | Date;
+          let value: Date | null;
 
           if (key == 'dateOfBirth') {
-            value = data[key] != '' ? new Date(data[key]) : new Date();
+            const dateOfBirthSet = data[key] != '';
+            value = dateOfBirthSet ? new Date(data[key]) : null;
+            setIsDateOfBirthSet(dateOfBirthSet);
           } else {
             value = data[key];
           }
@@ -142,9 +156,13 @@ export default function PersonalInformation() {
         emailAddress: formData.emailAddress,
         password: formData.password,
         name: formData.name,
-        dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : '',
+        dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth.toISOString().substring(0, 10) : null,
         gender: formData.gender == '' ? null : formData.gender,
       };
+
+      if (!isDateOfBirthSet) {
+        user.dateOfBirth = null;
+      }
 
       await fetch('http://localhost:8080/user/update', {
         method: 'POST',
@@ -193,7 +211,7 @@ export default function PersonalInformation() {
           <Label name="E-Mail"></Label>
           <DisplayAttribute name={displayData.emailAddress ? displayData.emailAddress : ''}></DisplayAttribute>
           <Label name="Geburtsdatum (Optional)"></Label>
-          <DisplayAttribute name={displayData.dateOfBirth}></DisplayAttribute>
+          <DisplayAttribute name={displayData.dateOfBirth ? displayData.dateOfBirth : ''}></DisplayAttribute>
           <Label name="Geschlecht (Optional)"></Label>
           <DisplayAttribute name={displayData.gender ? displayData.gender : ''}></DisplayAttribute>
         </div>
@@ -218,8 +236,12 @@ export default function PersonalInformation() {
             value={formData.confirmPassword ? formData.confirmPassword : ''}
           ></InputAttribute>
           <Label name="Geburtsdatum (Optional)"></Label>
-          <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} placeholderText="MM/DD/YYYY" />
-          {errors.dateOfBirth && <p className="text-red-600 text-sm sm:text-base">{errors.dateOfBirth}</p>}
+          <span className="text-sm sm:text-base">Geburtsdatum hinzufügen?</span>
+          <input type="checkbox" checked={isDateOfBirthSet} onChange={handleCheckboxChange} />
+          <div className={isDateOfBirthSet ? '' : 'hidden'}>
+            <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => handleDateInput(date)} required={false} />
+            {errors.dateOfBirth && <p className="text-red-600 text-sm sm:text-base">{errors.dateOfBirth}</p>}
+          </div>
           <Label name="Geschlecht (Optional)"></Label>
           <Dropdown handleInput={handleGenderInput} values={Gender} name="gender" value={formData.gender != null ? formData.gender : 'Geschlecht auswählen'}></Dropdown>
           <div className="flex grow space-x-8 mt-10 justify-center items-center">
