@@ -1,3 +1,5 @@
+'use client';
+
 import {
     XAxis,
     YAxis,
@@ -23,7 +25,7 @@ type ValuePiece = Date | string | null;
 import Toggle from "@/app/components/input/Toggle";
 import Creatable from "react-select/creatable";
 import Select from "react-select";
-import React, {FormEvent, useState} from "react";
+import React, {FormEvent, useEffect, useState} from "react";
 import { MeasurementDTO } from "@/app/dto/MeasurementDTO";
 import {AverageMeasurementDTO} from "@/app/dto/AveragedMeasurementDTO";
 import {DeviceCategoryDTO} from "@/app/dto/DeviceCategoryDTO";
@@ -213,16 +215,16 @@ export default function EnergyConsumptionDiagram() {
     }
 
 
-    if(!isInitialized) {
-        setIsInitialized(true);
-        setIsLoading(true);
-        //fetch for initialization
-        //fetchMeasurementData(startDate, endDate);
-        fetchTagNames();
-        fetchDeviceCategories();
-    }
-
-
+    useEffect(() => {
+        if(!isInitialized) {
+            setIsInitialized(true);
+            setIsLoading(true);
+            //fetch for initialization
+            fetchMeasurementData(startDate, endDate);
+            fetchTagNames();
+            fetchDeviceCategories();
+        }
+    }, [isInitialized, startDate, endDate, fetchMeasurementData, fetchTagNames, fetchDeviceCategories]);
 
 
         return (

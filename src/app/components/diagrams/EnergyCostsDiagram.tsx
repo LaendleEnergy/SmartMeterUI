@@ -1,3 +1,5 @@
+'use client';
+
 import {
     XAxis,
     YAxis,
@@ -19,7 +21,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 type ValuePiece = Date | string | null;
 import Dropdown from "../input/Dropdown";
-import React, {FormEvent, useState} from "react";
+import React, {FormEvent, useEffect, useState} from "react";
 import {PacmanLoader} from "react-spinners";
 import {AccumulatedMeasurementDTO} from "@/app/dto/AccumulatedMeasurementDTO";
 import Select from "react-select";
@@ -29,6 +31,7 @@ import Select from "react-select";
 
 
 export default function EnergyCostsDiagram() {
+
 
     // Initial data state
     const [barChartData, setBarChartData] = useState<{name: String, "Akkumulierte Kosten in Euro": number}[]>();
@@ -102,11 +105,13 @@ export default function EnergyCostsDiagram() {
     }
 
 
-    if(!isInitialized) {
-        setIsInitialized(true);
-        setIsLoading(true);
-        fetchMeasurementData(startDate, endDate, selectedInterval);
-    }
+    useEffect(() => {
+        if (!isInitialized) {
+            setIsInitialized(true);
+            setIsLoading(true);
+            fetchMeasurementData(startDate, endDate, selectedInterval);
+        }
+    }, [isInitialized, startDate, endDate, selectedInterval, fetchMeasurementData]);
 
         return (
             <div style={{textAlign: 'center', alignItems: "center", alignContent: "center"}}>
