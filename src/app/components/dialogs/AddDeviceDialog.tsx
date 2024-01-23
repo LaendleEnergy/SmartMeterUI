@@ -7,6 +7,7 @@ import Label from '../input/Label';
 import { useRouter } from 'next/navigation';
 import { Device } from '@/app/models/Device';
 import DeviceCategoryDropdown from '../input/DeviceCategoryDropdown';
+import { DeviceCategoryValidation, validateDeviceCategoryInput } from '../input/Validation';
 
 interface DialogProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ interface DialogProps {
 
 export default function AddDeviceDialog(props: DialogProps) {
   const [formData, setFormData] = useState<Device>({ name: '', categoryName: '' });
+  const [errors, setErrors] = useState({ categoryName: '' });
   const router = useRouter();
 
   useEffect(() => {});
@@ -38,6 +40,14 @@ export default function AddDeviceDialog(props: DialogProps) {
 
   async function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    const inputValidation: DeviceCategoryValidation = { categoryName: formData.categoryName, setErrors: setErrors };
+
+    if (!validateDeviceCategoryInput(inputValidation)) {
+      return;
+    }
+
+    setErrors({ categoryName: '' });
 
     const device: Device = {
       name: formData.name,
@@ -101,6 +111,7 @@ export default function AddDeviceDialog(props: DialogProps) {
                       <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
                       <Label name="Kategorie"></Label>
                       <DeviceCategoryDropdown handleInput={handleDeviceCategoryInput} deviceCategoryName={formData.categoryName}></DeviceCategoryDropdown>
+                      {errors.categoryName && <p className="text-red-600 text-sm sm:text-base">{errors.categoryName}</p>}
                       <div className="flex grow space-x-8 mt-10 justify-center items-center">
                         <div className="CancelButton bg-gray-400 rounded-full p-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow">
                           <button onClick={() => props.setIsOpen(false)} className="text-center text-white text-base font-medium leading-normal">

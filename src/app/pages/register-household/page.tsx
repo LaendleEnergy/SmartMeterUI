@@ -18,7 +18,7 @@ export default function Register() {
   const [formData, setFormData] = useState<CreateHousehold>({ emailAddress: '', name: '', password: '', confirmPassword: '', pricingPlan: '', supplier: '', deviceId: '' });
   const router = useRouter();
   const data = new FormData();
-  const [errors, setErrors] = useState({ password: '', supplier: '', pricingPlan: '', authentication: '' });
+  const [errors, setErrors] = useState({ password: '', supplier: '', pricingPlan: '', authentication: '', email: '' });
 
   const handleBack = () => {
     setStep(step - 1);
@@ -53,7 +53,7 @@ export default function Register() {
     const passwordValidation: PasswordValidation = { password: formData.password, confirmPassword: formData.confirmPassword || '', setErrors: setErrors };
 
     if (validatePassword(passwordValidation)) {
-      setErrors({ password: '', supplier: '', pricingPlan: '', authentication: '' });
+      setErrors({ password: '', supplier: '', pricingPlan: '', authentication: '', email: '' });
 
       const validated = await fetch('http://localhost:8080/user/validateEmail', {
         method: 'POST',
@@ -88,7 +88,7 @@ export default function Register() {
       } else {
         setErrors((prevState) => ({
           ...prevState,
-          accountForm: 'E-Mail Adresse wird bereits verwendet.',
+          email: 'E-Mail Adresse wird bereits verwendet.',
         }));
       }
     }
@@ -100,7 +100,7 @@ export default function Register() {
     const pricingPlanAndSupplierValidation: PricingPlanAndSupplierValidation = { supplier: formData.supplier, pricingPlan: formData.pricingPlan, setErrors: setErrors };
 
     if (validatePricingPlanAndSupplier(pricingPlanAndSupplierValidation)) {
-      setErrors({ password: '', supplier: '', pricingPlan: '', authentication: '' });
+      setErrors({ password: '', supplier: '', pricingPlan: '', authentication: '', email: '' });
 
       const household: CreateHousehold = {
         emailAddress: formData.emailAddress,
@@ -147,6 +147,7 @@ export default function Register() {
         <form method="POST" onSubmit={submitAccountForm} className="flex flex-col items-center mb-5 space-y-2 p-2 md:p-4 border-2 bg-indigo-50 border-black border-solid">
           <Label name="E-Mail"></Label>
           <InputAttribute name="emailAddress" type="email" handleInput={handleInput} placeholder="E-Mail" value={formData.emailAddress}></InputAttribute>
+          {errors.email && <p className="text-red-600 text-sm sm:text-base">{errors.email}</p>}
           <Label name="Name"></Label>
           <InputAttribute name="name" handleInput={handleInput} placeholder="Name" value={formData.name}></InputAttribute>
           <Label name="Passwort"></Label>
