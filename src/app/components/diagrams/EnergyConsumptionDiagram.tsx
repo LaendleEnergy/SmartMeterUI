@@ -160,6 +160,7 @@ export default function EnergyConsumptionDiagram() {
             }
             else{
                 setDataIsAvailable(true);
+                setBrushDateRange({startIndex: 0 , endIndex: res.length - 1})
             }
             setAveragedMeasurements(res);
             return res.map((measurement: AverageMeasurementDTO) => ({
