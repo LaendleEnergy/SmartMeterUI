@@ -31,6 +31,8 @@ import {AverageMeasurementDTO} from "@/app/dto/AveragedMeasurementDTO";
 import {DeviceCategoryDTO} from "@/app/dto/DeviceCategoryDTO";
 import {TagDto} from "@/app/dto/TagDTO";
 import {PacmanLoader} from "react-spinners";
+import ErrorAlert from "@/app/components/alerts/ErrorAlert";
+import SuccessAlert from "@/app/components/alerts/SuccessAlert";
 
 
 
@@ -40,6 +42,10 @@ export default function EnergyConsumptionDiagram() {
 
     // Initial data state
     const [barChartData, setBarChartData] = useState<{name: string, "Durchschnittliche Leistung in Watt": number}[]>();
+
+    const [submitIsPossible, setSubmitIsPossible] = useState<boolean>(true);
+    const [submitHasFailed, setSubmitHasFailed] = useState<boolean>(false);
+    const [submitSucceeded, setSubmitSucceeded] = useState<boolean>(false);
 
     const [averagedMeasurements, setAveragedMeasurements] = useState<AverageMeasurementDTO[]>([]);
 
@@ -184,10 +190,11 @@ export default function EnergyConsumptionDiagram() {
 
     async function submitLabellingData(){
         if (selectedBrushDateRange === undefined || selectedLabel === undefined || selectedDeviceCategory === undefined){
-            alert("Du musst einen validen Zeitbereich auswählen und bezeichnen!")
+            //alert("Du musst einen validen Zeitbereich auswählen und bezeichnen!")
+            setSubmitIsPossible(false);
             return;
         }
-
+        setSubmitIsPossible(true);
         setIsLoading(true);
         let pacManLoader = document.getElementById('myDiv');
         if (pacManLoader) {
@@ -207,10 +214,14 @@ export default function EnergyConsumptionDiagram() {
             ),
         }).then((res) => {
             if(res.ok){
-                alert("Daten erfolgreich beschrieben!");
+                //alert("Daten erfolgreich beschrieben!");
+                setSubmitSucceeded(true);
+                setSubmitIsPossible(true);
+                setSubmitHasFailed(false);
             }
             else{
-                alert("Fehler beim Senden der Daten!")
+                //alert("Fehler beim Senden der Daten!")
+                setSubmitHasFailed(true);
             }
         }).finally(() => {setIsLoading(false)});
     }
@@ -318,10 +329,16 @@ export default function EnergyConsumptionDiagram() {
                         Gerätetyp:
                         <Select onChange={selected => setDeviceCategory(selected?.value)} options={optionsDeviceCategory}/>
                     </div>
-                    <div style={{margin: "10px"}}
-                         className="ConfirmButton bg-primary-600 border-2 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-                        <button onClick={submitLabellingData} className="Default text-sm font-medium text-white">Bezeichnung hinzufügen</button>
+                    <div>
+                        <div style={{margin: "10px"}}
+                             className="ConfirmButton bg-primary-600 border-2 rounded-full p-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+                            <button onClick={submitLabellingData} className="Default text-sm font-medium text-white">Bezeichnung hinzufügen</button>
+                        </div>
+                        {!submitIsPossible && (ErrorAlert({message: "Du musst einen validen Zeitbereich auswählen und bezeichnen!"}))}
+                        {submitSucceeded && (SuccessAlert({message: "Daten erfolgreich beschrieben!"}))}
+                        {submitHasFailed && (ErrorAlert({message: "Fehler beim Senden der Daten!"}))}
                     </div>
+
                 </div>)}
                 {isLoading && (
                     <div id="pacManLoader" style={{margin: "1vw"}}>
