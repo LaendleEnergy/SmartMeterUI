@@ -167,7 +167,7 @@ export default function Rewards() {
         <div className="text-xl sm:text-2xl md:text-4xl font-bold">Belohnungen</div>
         <div className="flex flex-col space-y-5 bg-indigo-50 rounded-sm border-2 border-black p-5">
           <div className="text-lg md:text-xl font-bold text-center">Aktuelle Belohnung</div>
-          <AuthenticatedView role='Admin'>
+          <AuthenticatedView role="Admin">
             <button
               className={
                 editMode ? 'hidden' : 'Edit justify-center items-center inline-flex space-x-3 bg-primary-600 rounded-full p-2 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow'
@@ -207,13 +207,11 @@ export default function Rewards() {
             ))}
           </div>
         </div>
-        <AuthenticatedView role='Admin'>
-          <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
-            <Link href="../pages/energy-consumption">
-              <span className="text-sm sm:text-base text-center text-white font-medium leading-normal">Jetzt Verbrauch zuordnen</span>
-            </Link>
-          </div>
-        </AuthenticatedView>
+        <div className="ActiveButton inline-flex justify-center items-center bg-primary-600 rounded-full p-3 space-x-3 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow">
+          <Link href="../pages/energy-consumption">
+            <span className="text-sm sm:text-base text-center text-white font-medium leading-normal">Jetzt Verbrauch zuordnen</span>
+          </Link>
+        </div>
       </div>
     </div>
   );

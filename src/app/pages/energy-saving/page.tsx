@@ -134,9 +134,9 @@ export default function EnergySaving() {
           </div>
         </div>
         <div className="SavingGoal flex flex-col space-y-5 bg-indigo-50 rounded-sm border-2 border-black p-5">
-          <AuthenticatedView role='arsch'>
-            <div className="inline-flex space-x-2">
-              <span className="text-base sm:text-lg font-bold">Dein Stromsparziel</span>
+          <div className="inline-flex space-x-2">
+            <span className="text-base sm:text-lg font-bold">Dein Stromsparziel</span>
+            <AuthenticatedView role="Admin">
               <button
                 className={
                   editMode ? 'hidden' : 'Edit justify-center items-center inline-flex space-x-3 bg-primary-600 rounded-full p-2 transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow'
@@ -146,11 +146,10 @@ export default function EnergySaving() {
                 <div className="Bearbeiten text-sm sm:text-base text-white">Bearbeiten</div>
                 <FaEdit class="text-white"></FaEdit>
               </button>
-            </div>
-            <span className={!editMode && !formData.percentage && !formData.timeframe ? 'text-sm sm:text-base' : 'hidden'}>Es wurde noch kein Stromsparziel gesetzt.</span>
-            <span className={editMode || (!formData.percentage && !formData.timeframe) ? 'hidden' : 'text-sm sm:text-base'}>
-            </span>
-          </AuthenticatedView>
+            </AuthenticatedView>
+          </div>
+          <span className={!editMode && !formData.percentage && !formData.timeframe ? 'text-sm sm:text-base' : 'hidden'}>Es wurde noch kein Stromsparziel gesetzt.</span>
+          <span className={editMode || (!formData.percentage && !formData.timeframe) ? 'hidden' : 'text-sm sm:text-base'}></span>
           Einsparung von {formData.percentage}% im Vergleich zum {formData.timeframe}
           <form method="POST" onSubmit={submitForm} className={editMode ? 'flex flex-col items-center space-y-3' : 'hidden'}>
             <Label name="Gewünschte Einsparung in Prozent"></Label>
@@ -187,6 +186,6 @@ export default function EnergySaving() {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 }
