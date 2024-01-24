@@ -70,7 +70,7 @@ export default function Rewards() {
 
   const fetchLeaderboardData = async () => {
     try {
-      const res = await fetch(process.env.NEXT_PUBLIC_HOST_DATACOLLECTOR + '/leaderboard/get', {
+      const res = await fetch(process.env.NEXT_PUBLIC_HOST_HOUSEHOLDMANAGEMENT + '/leaderboard/get', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -137,7 +137,7 @@ export default function Rewards() {
       endDate: formData.endDate ? formData.endDate.toISOString().substring(0, 10) : '',
     };
 
-    await fetch(process.env.NEXT_PUBLIC_HOST_DATACOLLECTOR + '/saving/updateIncentive', {
+    await fetch(process.env.NEXT_PUBLIC_HOST_HOUSEHOLDMANAGEMENT + '/saving/updateIncentive', {
       method: 'POST',
       body: JSON.stringify(incentive),
       headers: {

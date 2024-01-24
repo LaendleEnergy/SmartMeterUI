@@ -89,7 +89,7 @@ export default function EnergySaving() {
       timeframe: formData.timeframe,
     };
 
-    await fetch(process.env.NEXT_PUBLIC_HOST_DATACOLLECTOR + '/saving/updateSavingTarget', {
+    await fetch(process.env.NEXT_PUBLIC_HOST_HOUSEHOLDMANAGEMENT + '/saving/updateSavingTarget', {
       method: 'POST',
       body: JSON.stringify(savingTarget),
       headers: {
