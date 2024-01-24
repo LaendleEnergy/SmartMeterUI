@@ -4,6 +4,8 @@ WORKDIR /frontend
 
 COPY . .
 
+RUN rm .env
+RUN mv env.prod .env
 RUN npm install
 
 RUN npm run build
