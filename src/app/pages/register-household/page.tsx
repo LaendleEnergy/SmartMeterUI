@@ -55,7 +55,7 @@ export default function Register() {
     if (validatePassword(passwordValidation)) {
       setErrors({ password: '', supplier: '', pricingPlan: '', authentication: '', email: '' });
 
-      const validated = await fetch('http://localhost:8080/user/validateEmail', {
+      const validated = await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/user/validateEmail', {
         method: 'POST',
         body: JSON.stringify({ email: formData.emailAddress }),
         headers: {
@@ -111,7 +111,7 @@ export default function Register() {
         deviceId: formData.deviceId,
       };
 
-      await fetch('http://localhost:8080/household/create', {
+      await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/household/create', {
         method: 'POST',
         body: JSON.stringify(household),
         headers: {

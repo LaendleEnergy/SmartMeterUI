@@ -79,7 +79,7 @@ export default function AddMemberDialog(props: DialogProps) {
       gender: formData.gender == '' ? null : formData.gender,
     };
 
-    await fetch('http://localhost:8080/member/add', {
+    await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/member/add', {
       method: 'POST',
       body: JSON.stringify(member),
       headers: {

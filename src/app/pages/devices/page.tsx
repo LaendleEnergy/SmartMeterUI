@@ -17,7 +17,7 @@ export default function Devices() {
 
   const fetchDevices = async () => {
     try {
-      const res = await fetch('http://localhost:8081/device/get', {
+      const res = await fetch(process.env.NEXT_PUBLIC_HOST_HOUSEHOLDMANAGEMENT + '/device/get', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

@@ -4,7 +4,7 @@ interface AuthRequest {
 }
 
 export async function authenticate(props: AuthRequest) {
-    const token = await fetch('http://localhost:8080/user/authenticate', {
+    const token = await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/user/authenticate', {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',

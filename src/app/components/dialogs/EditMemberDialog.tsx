@@ -91,7 +91,7 @@ export default function EditMemberDialog(props: DialogProps) {
 
     props.setCurrentMember(member);
 
-    await fetch('http://localhost:8080/member/update', {
+    await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + '/member/update', {
       method: 'POST',
       body: JSON.stringify(member),
       headers: {

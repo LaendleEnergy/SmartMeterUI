@@ -28,7 +28,7 @@ export default function MemberCard(props: MemberCardProps) {
       return;
     }
 
-    await fetch(`http://localhost:8080/member/remove/${currentMemberId}`, {
+    await fetch(process.env.NEXT_PUBLIC_HOST_ACCOUNTMANAGEMENT + `/member/remove/${currentMemberId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

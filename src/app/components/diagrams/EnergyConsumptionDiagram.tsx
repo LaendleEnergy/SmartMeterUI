@@ -85,10 +85,10 @@ export default function EnergyConsumptionDiagram() {
     const formattedDate = formatDateToISOString(currentDate);
 
 
-    const getMeasurementAveragedUrl = "http://localhost:9000/measurements/averaged/?"
-    const getTagNamesUrl = "http://localhost:9000/measurements/tags/names/all"
-    const getDeviceCategoriesUrl = "http://localhost:9000/deviceCategories/all"
-    const labellingFormUrl = "http://localhost:9000/measurements/tags"
+    const getMeasurementAveragedUrl = process.env.NEXT_PUBLIC_HOST_DATACOLLECTOR + "/measurements/averaged/?"
+    const getTagNamesUrl = process.env.NEXT_PUBLIC_HOST_DATACOLLECTOR + "/measurements/tags/names/all"
+    const getDeviceCategoriesUrl = process.env.NEXT_PUBLIC_HOST_DATACOLLECTOR + "/deviceCategories/all"
+    const labellingFormUrl = process.env.NEXT_PUBLIC_HOST_DATACOLLECTOR + "/measurements/tags"
 
 
     const [barChartIsActivated, setBarChartIsActivated] = useState(true);

@@ -20,7 +20,7 @@ export default function EnergySaving() {
 
   const fetchSavingTargetData = async () => {
     try {
-      const res = await fetch('http://localhost:8081/saving/getCurrentSavingTarget', {
+      const res = await fetch(process.env.NEXT_PUBLIC_HOST_HOUSEHOLDMANAGEMENT + '/saving/getCurrentSavingTarget', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -89,7 +89,7 @@ export default function EnergySaving() {
       timeframe: formData.timeframe,
     };
 
-    await fetch('http://localhost:8081/saving/updateSavingTarget', {
+    await fetch(process.env.NEXT_PUBLIC_HOST_DATACOLLECTOR + '/saving/updateSavingTarget', {
       method: 'POST',
       body: JSON.stringify(savingTarget),
       headers: {

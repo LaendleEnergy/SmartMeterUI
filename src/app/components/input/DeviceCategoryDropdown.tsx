@@ -16,7 +16,7 @@ export default function DeviceCategoryDropdown({ handleInput, deviceCategoryName
   useEffect(() => {
     (async () => {
       try {
-        fetch('http://localhost:8081/device/getCategories', {
+        fetch(process.env.NEXT_PUBLIC_HOST_HOUSEHOLDMANAGEMENT + '/device/getCategories', {
           headers: {
             'Content-Type': 'application/json',
           },

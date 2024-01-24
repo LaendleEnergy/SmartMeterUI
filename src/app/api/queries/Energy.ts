@@ -42,10 +42,10 @@ async function fetchData(resolution: Period, startDate: Date, endDate: Date): Pr
         'numberOfGroups': groups.toString()
     });
 
-    const url = "http://localhost:9000/measurements/averaged?"
-    // const url = `http://localhost:9000/measurements/averaged?${params}`
-    // const url = "http://localhost:9000/measurements?startDate=2022-05-01T00:00:00&endDate=2024-06-01T00:00:00&numberOfGroups=4";
-    // const url = "http://localhost:9000/measurements?startDate=2022-05-01T00:00:00&endDate=2024-06-01T00:00:00&numberOfGroups=4"
+    const url = process.env.NEXT_PUBLIC_HOST_DATACOLLECTOR + "/measurements/averaged?"
+    // const url = `process.env.NEXT_PUBLIC_HOST_DATACOLLECTOR/measurements/averaged?${params}`
+    // const url = "process.env.NEXT_PUBLIC_HOST_DATACOLLECTOR/measurements?startDate=2022-05-01T00:00:00&endDate=2024-06-01T00:00:00&numberOfGroups=4";
+    // const url = "process.env.NEXT_PUBLIC_HOST_DATACOLLECTOR/measurements?startDate=2022-05-01T00:00:00&endDate=2024-06-01T00:00:00&numberOfGroups=4"
 
     const fetched = await fetch(url + params)
     .then(response => response.json());

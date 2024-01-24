@@ -63,7 +63,7 @@ export default function EnergyCostsDiagram() {
     }
 
     const currentDate = new Date();
-    const getMeasurementAccumulatedUrl = "http://localhost:9000/measurements/accumulated/?"
+    const getMeasurementAccumulatedUrl = process.env.NEXT_PUBLIC_HOST_DATACOLLECTOR + "/measurements/accumulated/?"
     const [selectedInterval, setInterval] = useState<string>("week");
 
 
