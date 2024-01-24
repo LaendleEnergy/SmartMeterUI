@@ -52,6 +52,7 @@ export default function EnergySaving() {
           }
 
           setRender(false);
+          setErrors('');
         }
       } catch (error) {
         console.error(error);
@@ -75,21 +76,10 @@ export default function EnergySaving() {
     }));
   };
 
-  function validateForm() {
-    if ((formData.percentage && !formData.timeframe) || (!formData.percentage && formData.timeframe)) {
-      setErrors('Bitte beide Felder ausfüllen.');
-    } else {
-      setErrors('');
-    }
-    setIsFormValid(errors.length == 0);
-  }
-
   async function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    validateForm();
-
-    if (!isFormValid) {
+    if (formData.percentage == 0 || formData.timeframe == '') {
       setErrors('Bitte prüfen Sie Ihre Eingaben.');
       return null;
     }
