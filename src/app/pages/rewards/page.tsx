@@ -82,7 +82,7 @@ export default function Rewards() {
 
       if (res.ok) {
         const data: LeaderboardMember[] = await res.json();
-        setLeaderboardData(data);
+        setLeaderboardData(data.sort((a, b) => b.numberOfCreatedTags - a.numberOfCreatedTags));
         return 200;
       }
       return res.status;
