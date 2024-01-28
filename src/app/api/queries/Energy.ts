@@ -17,6 +17,7 @@ function formatDate(date: Date): string {
   
 
 export default async function getEnergyValues(resolution: Period, startDate: Date, endDate: Date): Promise<EnergyMeasurementPoint[]> {
+    console.log("fetch data", resolution, startDate, endDate);
     if (startDate > endDate) throw new Error("startdate may not be after enddate");
     let data: EnergyMeasurementPoint[] = [];
 
@@ -49,6 +50,8 @@ async function fetchData(resolution: Period, startDate: Date, endDate: Date): Pr
 
     const fetched = await fetch(url + params)
     .then(response => response.json());
+
+    console.log("fetched", fetched);
 
     fetched.forEach((element: { deviceId: number, timeEnd: string; instantaneousActivePowerPlusWAvg: number; }) => {
         var c = new EnergyMeasurementPoint(new MeasurementPeriod(resolution, 1), new Date(element.timeEnd), element.instantaneousActivePowerPlusWAvg * resolution / 60 / 60);
